@@ -272,6 +272,12 @@ section[id] {
   font-size: 0.92rem;
 }
 
+@keyframes float-gentle {
+  0% { transform: translateY(0px); }
+  50% { transform: translateY(-5px); }
+  100% { transform: translateY(0px); }
+}
+
 .admission-badge {
   min-width: 255px;
   padding: 0.9rem 1rem;
@@ -283,6 +289,7 @@ section[id] {
   box-shadow: 0 14px 28px rgba(123, 58, 18, 0.18);
   outline: 1px solid rgba(255, 250, 241, 0.44);
   outline-offset: -6px;
+  animation: float-gentle 6s ease-in-out infinite;
 }
 
 .admission-badge strong {
@@ -437,12 +444,17 @@ section[id] {
   min-height: var(--hero-min-height, calc(100svh - 10.5rem));
 }
 
+@keyframes ken-burns {
+  0% { transform: scale(1.06); }
+  100% { transform: scale(1); }
+}
+
 .hero-slide {
   position: absolute;
   inset: 0;
   opacity: 0;
   pointer-events: none;
-  transition: opacity 0.45s ease;
+  transition: opacity 0.8s ease-in-out;
 }
 
 .hero-slide.is-active {
@@ -453,6 +465,10 @@ section[id] {
 
 .hero-slide img {
   object-fit: cover;
+}
+
+.hero-slide.is-active img {
+  animation: ken-burns 12s ease-out forwards;
 }
 
 .hero-slide__wash {
@@ -471,6 +487,11 @@ section[id] {
   padding: 0 0 1.35rem;
 }
 
+@keyframes slide-up-fade {
+  0% { opacity: 0; transform: translateY(30px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+
 .hero-slide__panel {
   max-width: 340px;
   margin-left: 1rem;
@@ -479,6 +500,11 @@ section[id] {
   border-radius: 0 24px 24px 0;
   border-left: 4px solid var(--saffron);
   box-shadow: 0 18px 28px rgba(82, 45, 12, 0.18);
+  opacity: 0; 
+}
+
+.hero-slide.is-active .hero-slide__panel {
+  animation: slide-up-fade 1.2s cubic-bezier(0.2, 0.8, 0.2, 1) 0.3s forwards;
 }
 
 .hero-slide__content h2 {
