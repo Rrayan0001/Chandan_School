@@ -3,6 +3,7 @@ import Link from "next/link";
 import type { ReactNode } from "react";
 
 import { HeroSlider } from "@/components/HeroSlider";
+import { InfoTicker } from "@/components/InfoTicker";
 import { SiteFooter } from "@/components/SiteFooter";
 import { SiteHeader } from "@/components/SiteHeader";
 import { getSectionPath } from "@/lib/subpage-data";
@@ -86,6 +87,7 @@ export default function HomePage() {
 
       <main className="main-shell">
         <HeroSlider slides={heroSlides} />
+        <InfoTicker />
 
         <div className="content-frame">
           <section className="content-block" id="campus-video">
