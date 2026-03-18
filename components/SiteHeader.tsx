@@ -1,4 +1,5 @@
 import Image from "next/image";
+import Link from "next/link";
 
 import { Navbar } from "@/components/Navbar";
 import { navigation } from "@/lib/site-data";
@@ -9,7 +10,7 @@ export function SiteHeader() {
       <header className="site-header">
         <div className="container site-header__main">
           <div className="brand-block">
-            <div className="brand-block__logo-wrap">
+            <Link href="/" className="brand-block__logo-wrap">
               <Image
                 alt="Chandan Education Society logo"
                 className="brand-block__logo"
@@ -18,7 +19,7 @@ export function SiteHeader() {
                 src="/assets/logo.png"
                 width={82}
               />
-            </div>
+            </Link>
 
             <div className="brand-block__copy">
               <h1>School Chandan</h1>
