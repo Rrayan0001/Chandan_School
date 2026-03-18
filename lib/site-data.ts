@@ -67,7 +67,10 @@ export const navigation: NavItem[] = [
     href: getSectionHref("about-us"),
     children: buildNavigationChildren("about-us")
   },
-  { label: "Mandatory Disclosure", href: "/#resources" },
+  {
+    label: "Admissions",
+    href: getSectionPath("about-us", "admissions")
+  },
   {
     label: "Academics",
     href: getSectionHref("academics"),
@@ -96,7 +99,7 @@ export const navigation: NavItem[] = [
 export const heroSlides: HeroSlide[] = [
   {
     image: "/assets/hero/campus-front.jpg",
-    alt: "Front view of Chandan School campus",
+    alt: "Front view of School Chandan campus",
     title: "Admissions Open",
     subtitle: "Academic Year 2026–27",
     blurb:
@@ -171,20 +174,20 @@ export const videoPreviews: MediaCard[] = [
 
 export const informationCards: MediaCard[] = [
   {
-    title: "About Chandan School",
+    title: "About School Chandan",
     image: "/assets/hero/campus-front.jpg",
     alt: "School building exterior",
     description:
       "Established in 2003, School Chandan is a CBSE school under Chandan Education Society, Bengaluru–Laxmeshwar, growing steadily for over 22 years. Its mission is to bring rural education into the mainstream, nurturing students with excellence, innovation, and human values.",
-    href: "#about-school"
+    href: getSectionPath("about-us", "about-school")
   },
   {
-    title: "School Assembly",
-    image: "/assets/hero/assembly.jpg",
-    alt: "Morning assembly gathering",
+    title: "Admissions Open",
+    image: "/assets/gallery/School-chandan-Prospectus-proof7.jpg",
+    alt: "Admissions and prospectus view",
     description:
-      "Daily assembly gives students a platform for prayer, thought for the day, music, news reading, and confident public participation.",
-    href: "#student-corner"
+      "New admissions for LKG, Class I, V, and VIII are open during April and May. We welcome students eager to grow with academic excellence and strong values.",
+    href: getSectionPath("about-us", "admissions")
   }
 ];
 
@@ -432,7 +435,7 @@ export const galleryPageImages: GalleryImage[] = [
 
 export const contactDetails = {
   address:
-    "Chandan School, Laxmeshwar, Dist. Gadag, Karnataka - 582116",
+    "School Chandan, Laxmeshwar, Dist. Gadag, Karnataka - 582116",
   phonePrimary: "09902256572",
   phoneSecondary: "9620641521",
   email: "schoolchandan@gmail.com",

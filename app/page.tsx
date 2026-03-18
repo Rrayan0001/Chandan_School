@@ -10,9 +10,9 @@ import { contactDetails, galleryPreview, heroSlides, videoPreviews } from "@/lib
 
 const aboutCards = [
   {
-    title: "About Chandan School",
+    title: "About School Chandan",
     image: "/assets/hero/campus-front.jpg",
-    alt: "Chandan School campus building",
+    alt: "School Chandan campus building",
     text: "Established in 2003, School Chandan is a CBSE school under Chandan Education Society, Bengaluru–Laxmeshwar. Growing for over 22 years, it brings rural education into the mainstream with excellence, innovation, and human values.",
     href: getSectionPath("about-us", "about-school")
   },
@@ -254,7 +254,7 @@ export default function HomePage() {
                 loading="lazy"
                 referrerPolicy="no-referrer-when-downgrade"
                 src="https://maps.google.com/maps?q=School%20Chandan%20Laxmeshwar%20Karnataka&t=&z=14&ie=UTF8&iwloc=&output=embed"
-                title="Chandan School map"
+                title="School Chandan map"
               />
             </div>
           </section>

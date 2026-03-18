@@ -125,7 +125,7 @@ export const sectionPages: SectionPage[] = [
       "Built on excellence, innovation, and Indian human values"
     ],
     image: "/assets/hero/campus-front.jpg",
-    imageAlt: "Front view of the Chandan School campus",
+    imageAlt: "Front view of the School Chandan campus",
     imagePosition: "center 55%"
   },
   {
@@ -209,18 +209,44 @@ export const sectionPages: SectionPage[] = [
     intro:
       "School Chandan is guided by a committed leadership team — Secretary Sri T. Ishwar, the late Director Sri H. C. Ratageri, and Principal Sri Ramagiri Bavanavar — united by a shared vision of excellence, values, and rural empowerment.",
     paragraphs: [
-      "Late Sri H. C. Ratageri, an eminent educationist and respected Director of School Chandan, believed that the true purpose of education is to shape responsible citizens. Through his wisdom and leadership, many students have grown to serve the country as IAS and KAS officers, teachers, engineers, doctors, and other distinguished professionals. Though he is no longer with us, his legacy continues to inspire the institution.",
+      "The institution continues to flourish under the guidance of Shri T. Ishwar and Smt. Girija T. Ishwar, who are committed to nurturing quality education in rural communities.",
       "Smt. Girija T. Ishwar and Sri T. Ishwar together support the institution with dedication, ensuring School Chandan remains a centre of quality learning, discipline, and holistic development for children from rural and urban communities alike."
     ],
     highlights: [
       "Secretary: Sri T. Ishwar — Triple Graduate in Engineering",
       "Late Director: Sri H. C. Ratageri — eminent educationist",
       "Principal: Sri Ramagiri Bavanavar",
-      "Alumni serving as IAS/KAS officers, engineers, doctors & teachers"
+      "Co-founder: Smt. Girija T. Ishwar"
     ],
     image: "/assets/gallery/School-chandan-Prospectus-proof4.jpg",
     imageAlt: "Leadership and guest interactions featured by the school",
     imageFit: "contain"
+  },
+  {
+    section: "about-us",
+    slug: "directors-legacy",
+    label: "Director's Legacy",
+    title: "Message from the Director",
+    intro:
+      "Late Sri H. C. Ratageri was an eminent educationist and respected Director of School Chandan, known for his vast experience and deep commitment to nurturing young minds.",
+    paragraphs: [
+      "He believed that the true purpose of education is to shape responsible citizens who contribute positively to society and the nation. Through his wisdom and leadership, many students have grown to achieve success in various fields, serving the country as IAS and KAS officers, teachers, engineers, doctors, and other distinguished professionals.",
+      "Though he is no longer with us, his vision, dedication, and educational values continue to inspire School Chandan, guiding the institution in its mission to provide quality education and shape the leaders of tomorrow."
+    ],
+    highlights: [
+      "Late Sri H. C. Ratageri — Eminent Educationist",
+      "Mission: Shaping responsible citizens for the nation",
+      "Legacy of IAS/KAS, doctors, and engineers",
+      "A lasting source of inspiration for the community"
+    ],
+    image: "/assets/sections/chairman.jpg",
+    imageAlt: "Portrait of Late Sri H. C. Ratageri",
+    imageFit: "contain",
+    callout: {
+      title: "Late Sri H. C. Ratageri — Director, School Chandan",
+      body:
+        "His vision remains the foundation upon which School Chandan continues to grow and inspire thousands of young minds."
+    }
   },
   {
     section: "about-us",
@@ -265,6 +291,56 @@ export const sectionPages: SectionPage[] = [
     imageFit: "contain"
   },
   {
+    section: "about-us",
+    slug: "daily-schedule",
+    label: "Daily Routine",
+    title: "My Day at School Chandan",
+    intro:
+      "Life at School Chandan Residential Campus follows a structured routine designed to nurture discipline, physical fitness, academic excellence, and strong values.",
+    paragraphs: [
+      "The daily schedule helps students develop self-discipline and responsibility while maintaining focus on studies and character development. Each day is a balance of yoga, meditation, morning classes, sports, and dedicated study hours.",
+      "Through structured learning and a supportive atmosphere, the school prepares students to grow into confident, responsible, and successful individuals."
+    ],
+    highlights: [
+      "5:00 am – Early Rising & Yoga/Meditation",
+      "9:15 am – Chandan Session I (Begins with Assembly)",
+      "5:00 pm – Sports & Outdoor Games",
+      "7:00 pm – Arati, Bhajan & Spoorthi Session",
+      "9:00 pm – Night Study Hour",
+      "10:00 pm – Lights Off"
+    ],
+    image: "/assets/hero/sports.jpg",
+    imageAlt: "Students in sports activity",
+    imagePosition: "center 70%",
+    callout: {
+      title: "Daily Schedule Overview",
+      body:
+        "From early morning yoga to evening bhajans and study hours, every minute is planned for holistic growth."
+    }
+  },
+  {
+    section: "about-us",
+    slug: "admissions",
+    label: "Admissions",
+    title: "Admissions Process",
+    intro:
+      "School Chandan welcomes students who are eager to learn, grow, and develop strong values along with academic excellence.",
+    paragraphs: [
+      "New admissions are primarily offered for LKG, Class I, Class V, and Class VIII during April and May. Parents must submit the completed application form to the school office on or before 20th May. A detailed interaction/interview with the student and parents will be conducted prior to admission.",
+      "Required documents include: Transfer Certificate (T.C.) from the previous school, Birth Certificate, and recent passport-size photographs. Admission fee must be submitted via Demand Draft drawn in favour of 'Chandan Education Society', payable at Laxmeshwar."
+    ],
+    highlights: [
+      "Admissions for LKG, Class I, V, and VIII",
+      "Deadline: Applications by 20th May",
+      "Interview required for students and parents",
+      "Payment: DD in favour of Chandan Education Society",
+      "T.C. mandatory for confirmation"
+    ],
+    image: "/assets/gallery/School-chandan-Prospectus-proof7.jpg",
+    imageAlt: "School difference and admissions collage",
+    imageFit: "contain"
+  },
+  {
     section: "academics",
     slug: "faculty",
     label: "Faculty",
@@ -272,7 +348,7 @@ export const sectionPages: SectionPage[] = [
     intro:
       "A committed faculty team is one of the school's strongest assets, guiding students with subject knowledge, patience, and personal attention.",
     paragraphs: [
-      "Teachers at Chandan School focus on clarity, consistency, and classroom discipline. Their role goes beyond delivering lessons - they help students ask questions, correct mistakes, and build confidence step by step.",
+      "Teachers at School Chandan focus on clarity, consistency, and classroom discipline. Their role goes beyond delivering lessons - they help students ask questions, correct mistakes, and build confidence step by step.",
       "The faculty also works closely with parents and school leadership so that academic progress, attendance, and learning habits are supported in a coordinated way."
     ],
     highlights: [
@@ -310,7 +386,7 @@ export const sectionPages: SectionPage[] = [
     label: "Teaching & Learning",
     title: "Teaching & Learning",
     intro:
-      "Teaching at Chandan School combines explanation, practice, participation, and reinforcement so students learn with understanding.",
+      "Teaching at School Chandan combines explanation, practice, participation, and reinforcement so students learn with understanding.",
     paragraphs: [
       "The classroom approach emphasizes clear instruction, repeated practice, spoken participation, and age-appropriate methods that keep students engaged. Activity-based sessions and demonstrations are used where they add value.",
       "Learning is strengthened through revision, subject guidance, practical work, and opportunities for children to express ideas with confidence instead of only memorizing content."
@@ -474,6 +550,29 @@ export const sectionPages: SectionPage[] = [
     imagePosition: "center 35%"
   },
   {
+    section: "student-corner",
+    slug: "unique-programmes",
+    label: "Unique Programmes",
+    title: "Unique Programmes at School Chandan",
+    intro:
+      "Our students are nurtured through a collection of transformative initiatives that go beyond the conventional classroom.",
+    paragraphs: [
+      "Programmes like 'Chandana Spandana' (Interaction & Inspiration Platform) and the 'Day Leader Concept' help students develop leadership from an early age. Our 'Self-Governance Day' and 'Examination Without Supervisor' build trust and integrity within the student body.",
+      "Activities like the Chandan Students Parliament, Karma Yoga, and Sanskrit Chanting ensure that students grow into well-rounded individuals balanced by modern skills and timeless values."
+    ],
+    highlights: [
+      "Chandana Spandana (Interaction Platform)",
+      "Day Leader & Self-Governance Concepts",
+      "Examination Without Supervisor (Trust System)",
+      "Chandan Students Parliament",
+      "Karma Yoga, Hobbies & Sanskrit Chanting",
+      "Simple Living, High Thinking culture"
+    ],
+    image: "/assets/gallery/School-chandan-Prospectus-proof.jpg",
+    imageAlt: "Unique programs collage",
+    imageFit: "contain"
+  },
+  {
     section: "features",
     slug: "library",
     label: "Library",
@@ -482,7 +581,7 @@ export const sectionPages: SectionPage[] = [
       "The library encourages students to read beyond textbooks and grow habits of curiosity, reflection, and independent learning.",
     paragraphs: [
       "A good library adds quiet depth to school life. It introduces children to reference material, story books, and reading routines that improve vocabulary, concentration, and imagination over time.",
-      "At Chandan School, the library supports both academic preparation and personal reading, helping students become more thoughtful and self-directed learners."
+      "At School Chandan, the library supports both academic preparation and personal reading, helping students become more thoughtful and self-directed learners."
     ],
     highlights: [
       "Reading culture that supports independent learning",
@@ -533,7 +632,7 @@ export const sectionPages: SectionPage[] = [
       "Useful preparation for higher-level science learning"
     ],
     image: "/assets/sections/science-lab.jpg",
-    imageAlt: "Science lab learning at Chandan School",
+    imageAlt: "Science lab learning at School Chandan",
     imagePosition: "center 30%"
   },
   {
