@@ -1,9 +1,22 @@
 import type { Metadata } from "next";
 import type { ReactNode } from "react";
+import { Lora, Nunito } from "next/font/google";
 
 import { WelcomePopup } from "@/components/WelcomePopup";
 
 import "./globals.css";
+
+const fontHeading = Lora({ 
+  subsets: ["latin"], 
+  display: "swap", 
+  variable: "--font-heading" 
+});
+
+const fontBody = Nunito({ 
+  subsets: ["latin"], 
+  display: "swap", 
+  variable: "--font-body" 
+});
 
 export const metadata: Metadata = {
   title: "School Chandan | Chandan Education Society",
@@ -18,7 +31,7 @@ export default function RootLayout({
   children: ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="en" className={`${fontHeading.variable} ${fontBody.variable}`}>
       <body>
         {children}
         <WelcomePopup />
