@@ -175,7 +175,7 @@ export const informationCards: MediaCard[] = [
     image: "/assets/hero/campus-front.jpg",
     alt: "School building exterior",
     description:
-      "Established in 2003, School Chandan blends disciplined CBSE academics with Indian values, leadership, and experiential learning so children grow in both knowledge and character.",
+      "Established in 2003, School Chandan is a CBSE school under Chandan Education Society, Bengaluru–Laxmeshwar, growing steadily for over 22 years. Its mission is to bring rural education into the mainstream, nurturing students with excellence, innovation, and human values.",
     href: "#about-school"
   },
   {
@@ -247,10 +247,10 @@ export const featureCards: FeatureCard[] = [
       "Activity-based learning helps students understand mathematical concepts through exploration and visual practice."
   },
   {
-    code: "RL",
-    title: "Robotics Lab",
+    code: "ATL",
+    title: "ATL Innovation Lab",
     description:
-      "Innovation-driven learning encourages models, experimentation, and student imagination beyond textbook lessons."
+      "The Atal Tinkering Lab drives innovation-oriented learning — encouraging experimentation, model-making, and imagination that inspired projects like Chandrayana-I & III appreciated by ISRO."
   },
   {
     code: "DC",

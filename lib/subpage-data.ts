@@ -113,16 +113,16 @@ export const sectionPages: SectionPage[] = [
     label: "About the School",
     title: "About the School",
     intro:
-      "Chandan School is a disciplined and child-centered learning community built to help students grow in academics, confidence, and character.",
+      "Established in 2003, School Chandan — Excellence Beyond Education — is a CBSE school under Chandan Education Society, Bengaluru–Laxmeshwar. Growing steadily for over 22 years, it brings rural education into the mainstream, empowering young minds with excellence, innovation, and human values.",
     paragraphs: [
-      "Established under Chandan Education Society, the school serves families who want strong classroom foundations along with a value-based environment. The campus atmosphere is purposeful, caring, and structured so children feel guided from the moment they step inside.",
-      "From Nursery to Grade 10, the focus stays on steady academic progress, spoken communication, respectful conduct, and opportunities for students to participate in school life with confidence."
+      "The school stands tall today with the support and encouragement of many national and international intellectuals and eminent personalities, including Bharat Ratna Prof. C.N.R. Rao, Dr. A.S. Kiran Kumar (former Chairman, ISRO), Shri Siddaramaiah, IAS/KAS/IPS/IFS officers, and several renowned educationists and Vice-Chancellors. Their guidance continues to strengthen the school's mission to uplift children from rural India toward global opportunities.",
+      "School Chandan is blessed with the visionary legacy of Late Shri H. C. Ratageri, the esteemed Director whose dedication laid the strong foundation of the institution. The school continues to flourish under the guidance of Shri T. Ishwar and Smt. Girija T. Ishwar, committed to nurturing quality education in rural communities."
     ],
     highlights: [
-      "Welcoming campus for Nursery to Grade 10",
-      "Value-based learning with disciplined routines",
-      "Balanced focus on academics, communication, and character",
-      "Supportive school culture under Chandan Education Society"
+      "CBSE school established in 2003 under Chandan Education Society",
+      "22+ years of uplifting rural education into the mainstream",
+      "Supported by Bharat Ratna Prof. C.N.R. Rao & former ISRO Chairman",
+      "Built on excellence, innovation, and Indian human values"
     ],
     image: "/assets/hero/campus-front.jpg",
     imageAlt: "Front view of the Chandan School campus",
@@ -152,53 +152,53 @@ export const sectionPages: SectionPage[] = [
   {
     section: "about-us",
     slug: "chairmans-message",
-    label: "Chairman's Message",
-    title: "Chairman's Message",
+    label: "Secretary's Message",
+    title: "Message from the Secretary",
     intro:
-      "Every school journey becomes meaningful when education is shaped by purpose, discipline, and concern for the child's future.",
+      "Sri T. Ishwar, Secretary of Chandan Education Society, is a triple graduate in Engineering and a dynamic personality who has played a vital role in shaping the vision and ideals of School Chandan.",
     paragraphs: [
-      "The leadership vision behind Chandan School is to make quality education accessible in a setting where values are lived every day. Academic excellence matters, but it is strengthened when students also learn humility, persistence, and service.",
-      "The institution continues to invest in a culture where teachers, parents, and management work together so that each child receives direction, encouragement, and the confidence to aim higher."
+      "He firmly believes that 'Education is the food for the soul.' With this belief, he has dedicated his efforts to bringing quality education to rural communities, ensuring that every child receives opportunities to grow, learn, and succeed irrespective of background.",
+      "Under his guidance, School Chandan, established in 2003, has evolved into a progressive CBSE institution that blends academic excellence with strong Indian cultural values, nurturing students to become confident, responsible, and socially conscious individuals. Sri T. Ishwar envisions School Chandan as a centre of holistic learning where knowledge, discipline, character, and leadership come together to shape the leaders of tomorrow."
     ],
     highlights: [
-      "Education with character at the center",
-      "Long-term focus on student growth and responsibility",
-      "Partnership between management, teachers, and parents",
-      "Commitment to quality learning in a disciplined environment"
+      "Education is the food for the soul — Sri T. Ishwar",
+      "Triple graduate in Engineering & dynamic leader",
+      "Committed to quality rural education since 2003",
+      "Vision: holistic learning with knowledge, discipline & leadership"
     ],
     image: "/assets/sections/chairman.jpg",
     imageAlt: "Leadership collage from the school prospectus",
     imageFit: "contain",
     callout: {
-      title: "Leadership Note",
+      title: "Sri T. Ishwar — Secretary, Chandan Education Society",
       body:
-        "Chandan School continues to grow with the belief that a child's education should strengthen both intellect and values."
+        "Education is the food for the soul. Every child deserves opportunities to grow, learn, and succeed — irrespective of background."
     }
   },
   {
     section: "about-us",
     slug: "principals-message",
     label: "Principal's Message",
-    title: "Principal's Message",
+    title: "Message from the Principal",
     intro:
-      "A good school day is built on discipline, warmth, clear routines, and a belief that every child can improve with guidance.",
+      "Sri Ramagiri Bavanavar, Principal of School Chandan, believes that education is not only about academic success but also about shaping character, values, and responsibility.",
     paragraphs: [
-      "At Chandan School, daily learning is shaped through focused classroom instruction, regular assessment, and a school culture that encourages punctuality, presentation, and participation. Students are expected to work sincerely, and teachers support them with patient guidance.",
-      "We believe children do their best when school and home move in the same direction. Open communication with parents and close attention to each student's progress help create that shared path."
+      "At School Chandan, our goal is to create an environment where students develop curiosity, confidence, discipline, and a lifelong love for learning. We strive to provide a balanced education that blends strong academic foundations with cultural values, leadership skills, and holistic development.",
+      "Through dedicated teaching, innovative learning practices, and a supportive atmosphere, we encourage every student to discover their unique potential and grow into responsible citizens. Our committed teachers and staff work together to guide students with care, inspiration, and discipline — preparing them to face the challenges of the modern world while remaining rooted in strong moral values."
     ],
     highlights: [
-      "Consistent focus on discipline and care",
-      "Teacher guidance that supports steady improvement",
-      "Parent-school partnership for better outcomes",
-      "A campus culture that builds confidence and responsibility"
+      "Education shapes character, values, and responsibility",
+      "Balanced academics with cultural values and leadership",
+      "Every student encouraged to discover their unique potential",
+      "Teachers guide with care, inspiration, and discipline"
     ],
     image: "/assets/sections/classroom-activity.jpg",
     imageAlt: "Students engaged in classroom activity",
     imagePosition: "center 35%",
     callout: {
-      title: "From the Principal's Desk",
+      title: "Sri Ramagiri Bavanavar — Principal, School Chandan",
       body:
-        "Children flourish when encouragement and expectations move together, and that balance remains central to school life."
+        "I warmly invite parents and students to be part of the School Chandan family — where learning becomes meaningful and every child is encouraged to strive for excellence."
     }
   },
   {
@@ -207,16 +207,16 @@ export const sectionPages: SectionPage[] = [
     label: "School Management",
     title: "School Management",
     intro:
-      "The management team provides the direction, continuity, and support that help the school maintain quality across academics, operations, and student welfare.",
+      "School Chandan is guided by a committed leadership team — Secretary Sri T. Ishwar, the late Director Sri H. C. Ratageri, and Principal Sri Ramagiri Bavanavar — united by a shared vision of excellence, values, and rural empowerment.",
     paragraphs: [
-      "School management oversees long-term planning, staff support, infrastructure improvement, and the systems that keep daily school life smooth and organized. This steady oversight creates confidence for both families and faculty.",
-      "By combining institutional vision with practical campus support, the management helps ensure that students learn in a safe environment with clear expectations and meaningful opportunities."
+      "Late Sri H. C. Ratageri, an eminent educationist and respected Director of School Chandan, believed that the true purpose of education is to shape responsible citizens. Through his wisdom and leadership, many students have grown to serve the country as IAS and KAS officers, teachers, engineers, doctors, and other distinguished professionals. Though he is no longer with us, his legacy continues to inspire the institution.",
+      "Smt. Girija T. Ishwar and Sri T. Ishwar together support the institution with dedication, ensuring School Chandan remains a centre of quality learning, discipline, and holistic development for children from rural and urban communities alike."
     ],
     highlights: [
-      "Steady leadership and institutional planning",
-      "Support for academics, staffing, and campus development",
-      "Attention to student welfare and school culture",
-      "Clear systems that help daily operations run smoothly"
+      "Secretary: Sri T. Ishwar — Triple Graduate in Engineering",
+      "Late Director: Sri H. C. Ratageri — eminent educationist",
+      "Principal: Sri Ramagiri Bavanavar",
+      "Alumni serving as IAS/KAS officers, engineers, doctors & teachers"
     ],
     image: "/assets/gallery/School-chandan-Prospectus-proof4.jpg",
     imageAlt: "Leadership and guest interactions featured by the school",
@@ -372,16 +372,18 @@ export const sectionPages: SectionPage[] = [
     label: "Achievements",
     title: "Achievements",
     intro:
-      "Student achievements at Chandan School reflect hard work, teacher support, and a culture that encourages every child to participate and improve.",
+      "School Chandan students have earned recognition nationally and internationally across academics, science, and leadership — a testimony to the school's philosophy of nurturing excellence beyond education.",
     paragraphs: [
-      "The school celebrates academic performance, cultural participation, leadership roles, and recognition earned through competitions and public events. Achievement is seen not only in final results but also in effort, growth, and confidence.",
-      "By giving students opportunities to perform, present, compete, and represent the school, Chandan helps young learners discover their strengths and carry them forward with pride."
+      "School Chandan achieved 1st place in the World in the IAIS Examination conducted by the University of Australia, competing among participants from 28 countries and over 5 lakh students. The school has also launched an Artificial Rocket — Chandrayana-I & Chandrayana-III Project — appreciated by the ISRO Chairman and senior ISRO scientists.",
+      "Students have been selected for the Science Outreach Programme by the C.N.R. Rao Education Foundation and Jawaharlal Nehru Centre for Advanced Scientific Research, with 400+ participants annually. The school has been selected for the N.M.O. (Nobel Mind Tech Olympiad, Hyderabad) to send projects to NASA, California. School Chandan also maintains a consistent 100% pass rate in CBSE Class 10 Board Examinations every year."
     ],
     highlights: [
-      "Recognition in academics and school events",
-      "Platform for leadership, performance, and participation",
-      "Encouragement for student confidence and self-expression",
-      "A culture that values progress as well as outcomes"
+      "1st in the World — IAIS Exam (28 countries, 5 lakh participants)",
+      "Chandrayana-I & III rocket project appreciated by ISRO",
+      "Selected for NASA project via NMO, Hyderabad",
+      "National Inspire Award, Chintana Award & All India GK Award",
+      "Students met Dr. A.P.J. Abdul Kalam & Bharat Ratna Prof. C.N.R. Rao",
+      "Consistent 100% CBSE Class 10 results every year"
     ],
     image: "/assets/gallery/School-chandan-Prospectus-proof6.jpg",
     imageAlt: "Achievements and cultural highlights collage",
@@ -578,23 +580,23 @@ export const sectionPages: SectionPage[] = [
   },
   {
     section: "features",
-    slug: "robotics-lab",
-    label: "Robotics Lab",
-    title: "Robotics Lab",
+    slug: "atl-innovation-lab",
+    label: "ATL Innovation Lab",
+    title: "ATL Innovation Lab",
     intro:
-      "Innovation spaces like the robotics lab open a door to experimentation, creativity, and future-ready thinking.",
+      "The Atal Tinkering Lab (ATL) at School Chandan is a dedicated innovation space that has powered award-winning projects and inspired student creativity at the national level.",
     paragraphs: [
-      "Robotics-inspired learning encourages students to observe, build, test, and improve ideas. It develops patience, teamwork, and the willingness to learn by trying something new.",
-      "Even at an early level, this type of exposure helps children see that science and technology can be active, creative, and exciting."
+      "Under the ATL programme, School Chandan students designed and launched Chandrayana-I & Chandrayana-III — artificial rocket projects that were appreciated by the ISRO Chairman and senior ISRO scientists. The lab fosters a culture of scientific inquiry, model-making, and hands-on experimentation.",
+      "Students from the ATL Innovation Lab have been selected for the Science Outreach Programme by the C.N.R. Rao Education Foundation as well as the Nobel Mind Tech Olympiad (NMO, Hyderabad) with recognition to send projects to NASA, California."
     ],
     highlights: [
-      "Encourages experimentation and innovation",
-      "Supports teamwork, logic, and problem solving",
-      "Builds confidence through making and testing",
-      "Future-facing exposure beyond textbook learning"
+      "Chandrayana-I & III rocket projects appreciated by ISRO",
+      "Selected for C.N.R. Rao Foundation Science Outreach Programme",
+      "NMO selection to send projects to NASA, California",
+      "Culture of tinkering, experimentation, and innovation"
     ],
     image: "/assets/sections/science-lab.jpg",
-    imageAlt: "Practical lab-based learning environment",
+    imageAlt: "ATL Innovation Lab and science learning environment",
     imagePosition: "center 32%"
   },
   {

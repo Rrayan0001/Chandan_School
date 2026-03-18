@@ -13,7 +13,7 @@ const aboutCards = [
     title: "About Chandan School",
     image: "/assets/hero/campus-front.jpg",
     alt: "Chandan School campus building",
-    text: "Established in 2003, School Chandan is a CBSE school under Chandan Education Society, built on excellence, innovation, and human values.",
+    text: "Established in 2003, School Chandan is a CBSE school under Chandan Education Society, Bengaluru–Laxmeshwar. Growing for over 22 years, it brings rural education into the mainstream with excellence, innovation, and human values.",
     href: getSectionPath("about-us", "about-school")
   },
   {
@@ -197,13 +197,14 @@ export default function HomePage() {
 
           <section className="content-block content-block--split" id="chairman-message">
             <article className="quote-panel">
-              <SectionHeading title="From Principal's Desk" />
+              <SectionHeading title="From the Principal's Desk" />
               <blockquote>
-                Education is not only about academic success but also about
-                shaping character, values, and responsibility.
+                At School Chandan, we believe that education is not only about
+                academic success but also about shaping character, values, and
+                responsibility.
               </blockquote>
               <p className="quote-panel__author">
-                Sri Ramagiri Bavanavar | Principal, School Chandan
+                Sri Ramagiri Bavanavar &nbsp;|&nbsp; Principal, School Chandan
               </p>
               <ReadMoreButton href={getSectionPath("about-us", "principals-message")}>
                 Read more
