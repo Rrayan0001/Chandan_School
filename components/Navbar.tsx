@@ -16,7 +16,7 @@ export function Navbar({ items }: NavbarProps) {
     <div className="nav-shell">
       <div className="container nav-shell__inner">
         <Link className="nav-shell__brand" href="/">
-          Chandan School
+          School Chandan
         </Link>
 
         <button

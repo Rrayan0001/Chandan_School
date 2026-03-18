@@ -57,7 +57,7 @@ export function WelcomePopup() {
 
         <div className="welcome-popup__media">
           <Image
-            alt="Front view of Chandan School campus"
+            alt="Front view of School Chandan campus"
             fill
             priority
             sizes="(max-width: 900px) 92vw, 860px"
@@ -66,12 +66,12 @@ export function WelcomePopup() {
           />
 
           <div className="welcome-popup__caption">
-            <p className="welcome-popup__eyebrow">Welcome to Chandan School</p>
+            <p className="welcome-popup__eyebrow">Welcome to School Chandan</p>
             <h2 id="welcome-popup-title">
               A warm campus for learning, values, and confident growth.
             </h2>
             <p className="welcome-popup__text">
-              Chandan School, Laxmeshwar under Chandan Education Society.
+              School Chandan, Laxmeshwar under Chandan Education Society.
             </p>
           </div>
         </div>

@@ -33,12 +33,12 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 
   if (!page) {
     return {
-      title: "Page Not Found | Chandan School"
+      title: "Page Not Found | School Chandan"
     };
   }
 
   return {
-    title: `${page.title} | Chandan School`,
+    title: `${page.title} | School Chandan`,
     description: page.intro
   };
 }

@@ -14,10 +14,10 @@ export default function GalleryPage() {
         <section className="gallery-page__hero">
           <div className="container gallery-page__hero-inner">
             <span className="section-heading__eyebrow">School Gallery</span>
-            <h1>Chandan School Photo Gallery</h1>
+            <h1>School Chandan Photo Gallery</h1>
             <p>
               A full gallery page presenting the supplied campus, classroom,
-              activity, cultural, and achievement visuals from Chandan School.
+              activity, cultural, and achievement visuals from School Chandan.
             </p>
             <Link className="button-link button-link--gold" href="/">
               Back to Home

@@ -38,7 +38,7 @@ export function SiteFooter() {
       <div className="container site-footer__grid">
         <div>
           <h3>School Information</h3>
-          <p className="site-footer__title">Chandan School</p>
+          <p className="site-footer__title">School Chandan</p>
           <p>Established with a focus on disciplined and value-based education.</p>
         </div>
 
@@ -93,7 +93,7 @@ export function SiteFooter() {
 
       <div className="site-footer__bottom">
         <div className="container site-footer__bottom-inner">
-          <p>© 2026 Chandan School. All Rights Reserved</p>
+          <p>© 2026 School Chandan. All Rights Reserved</p>
 
           <div className="social-links" aria-label="Social media links">
             {socialLinks.map((link) => (
