@@ -437,7 +437,7 @@ export const contactDetails = {
   address:
     "School Chandan, Laxmeshwar, Dist. Gadag, Karnataka - 582116",
   phonePrimary: "09902256572",
-  phoneSecondary: "9620641521",
+  phoneSecondary: "9620642521",
   email: "schoolchandan@gmail.com",
   affiliation: "Affiliated to CBSE / State Board",
   locationLabel: "School Chandan, Laxmeshwar, Karnataka"
