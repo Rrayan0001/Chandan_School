@@ -22,7 +22,7 @@ export function SiteHeader() {
             </Link>
 
             <div className="brand-block__copy">
-              <h1>School Chandan</h1>
+              <h1>School <span>Chandan</span></h1>
               <p className="brand-block__subtitle">Under Chandan Education Society</p>
               <p className="brand-block__meta">
                 Bangalore - Laxmeshwar | Affiliated to CBSE / State Board
