@@ -115,6 +115,49 @@ export default async function SectionDetailPage({ params }: PageProps) {
                       ))}
                     </div>
                   </div>
+
+                  {page.tableData ? (
+                    <div className="section-page__table-wrap" style={{ marginTop: "3rem", overflowX: "auto" }}>
+                      <table style={{ width: "100%", borderCollapse: "collapse", textAlign: "left", minWidth: "500px" }}>
+                        <thead>
+                          <tr>
+                            {page.tableData.columns.map((col) => (
+                              <th 
+                                key={col} 
+                                style={{ 
+                                  padding: "1rem", 
+                                  borderBottom: `2px solid ${group.theme.accent}`,
+                                  color: group.theme.accent,
+                                  fontWeight: 600,
+                                  fontSize: "1.1rem"
+                                }}
+                              >
+                                {col}
+                              </th>
+                            ))}
+                          </tr>
+                        </thead>
+                        <tbody>
+                          {page.tableData.rows.map((row, rowIndex) => (
+                            <tr key={rowIndex} style={{ borderBottom: "1px solid #eaeaea" }}>
+                              {row.map((cell, cellIndex) => (
+                                <td 
+                                  key={cellIndex} 
+                                  style={{ 
+                                    padding: "1rem",
+                                    color: "#444",
+                                    fontWeight: cellIndex === 0 ? 600 : 400
+                                  }}
+                                >
+                                  {cell}
+                                </td>
+                              ))}
+                            </tr>
+                          ))}
+                        </tbody>
+                      </table>
+                    </div>
+                  ) : null}
                 </div>
               </article>
 

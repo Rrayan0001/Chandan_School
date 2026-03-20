@@ -156,7 +156,7 @@ export default function HomePage() {
               </article>
 
               <article className="info-column" id="institution">
-                <h3>About Chandan</h3>
+                <h3>About School Chandan</h3>
                 <p>
                   Guided by the legacy of Late Shri H. C. Ratageri and the
                   support of Sri T. Ishwar and Smt. Girija T. Ishwar, the
@@ -241,10 +241,13 @@ export default function HomePage() {
                 </p>
                 <p>
                   <strong>Phone:</strong> {contactDetails.phonePrimary} /{" "}
-                  {contactDetails.phoneSecondary}
+                  {contactDetails.phoneSecondary} / {contactDetails.phoneTertiary}
                 </p>
                 <p>
                   <strong>Email:</strong> {contactDetails.email}
+                </p>
+                <p>
+                  <strong>Affiliation:</strong> {contactDetails.affiliation}
                 </p>
               </div>
             </div>

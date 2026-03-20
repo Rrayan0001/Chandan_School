@@ -3,9 +3,9 @@ import Link from "next/link";
 import { getSectionPath } from "@/lib/subpage-data";
 
 const socialLinks = [
-  { label: "Facebook", href: "/#contact", kind: "facebook" as const },
-  { label: "Instagram", href: "/#contact", kind: "instagram" as const },
-  { label: "YouTube", href: "/#contact", kind: "youtube" as const }
+  { label: "Facebook", href: "https://www.facebook.com/SchoolChandanLaxmeshwar", kind: "facebook" as const },
+  { label: "Instagram", href: "https://www.instagram.com/SchoolChandanLxr", kind: "instagram" as const },
+  { label: "YouTube", href: "https://www.youtube.com/@SchoolChandan", kind: "youtube" as const }
 ];
 
 function SocialIcon({ kind }: { kind: "facebook" | "instagram" | "youtube" }) {

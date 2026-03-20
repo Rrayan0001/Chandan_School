@@ -1569,7 +1569,7 @@ section[id] {
 .info-ticker__track {
   display: flex;
   width: max-content;
-  animation: ticker-scroll 35s linear infinite;
+  animation: ticker-scroll 55s linear infinite;
 }
 
 .info-ticker__track:hover {

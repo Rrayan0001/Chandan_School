@@ -435,10 +435,11 @@ export const galleryPageImages: GalleryImage[] = [
 
 export const contactDetails = {
   address:
-    "School Chandan, Laxmeshwar, Dist. Gadag, Karnataka - 582116",
-  phonePrimary: "09902256572",
-  phoneSecondary: "9620642521",
-  email: "schoolchandan@gmail.com",
-  affiliation: "Affiliated to CBSE / State Board",
+    "Sighli Road, Laxmeshwar, Dist: Gadag, Karnataka - 582116",
+  phonePrimary: "9448432414",
+  phoneSecondary: "7619162017",
+  phoneTertiary: "9945163848",
+  email: "schoolchandanlxr@gmail.com",
+  affiliation: "Affiliated to CBSE (Affiliation No: 830305)",
   locationLabel: "School Chandan, Laxmeshwar, Karnataka"
 };

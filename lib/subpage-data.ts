@@ -20,6 +20,11 @@ export type SectionGroup = {
   theme: SectionTheme;
 };
 
+export type TableData = {
+  columns: string[];
+  rows: string[][];
+};
+
 export type SectionPage = {
   section: SectionKey;
   slug: string;
@@ -28,6 +33,7 @@ export type SectionPage = {
   intro: string;
   paragraphs: string[];
   highlights: string[];
+  tableData?: TableData;
   image: string;
   imageAlt: string;
   imageFit?: "cover" | "contain";
@@ -37,6 +43,7 @@ export type SectionPage = {
     body: string;
   };
 };
+
 
 export const sectionGroups: SectionGroup[] = [
   {
@@ -309,6 +316,27 @@ export const sectionPages: SectionPage[] = [
       "9:00 pm – Night Study Hour",
       "10:00 pm – Lights Off"
     ],
+    tableData: {
+      columns: ["Time", "Activity"],
+      rows: [
+        ["5:00 am – 5:30 am", "Early Rising"],
+        ["5:30 am – 6:30 am", "Yoga & Meditation"],
+        ["6:30 am – 7:15 am", "Self Cleaning & Bath"],
+        ["7:30 am – 8:30 am", "Morning Classes"],
+        ["8:30 am – 9:00 am", "Breakfast"],
+        ["9:15 am – 1:20 pm", "Chandan Session – I (Begins with Assembly)"],
+        ["1:20 pm – 1:50 pm", "Lunch Break"],
+        ["1:55 pm – 4:00 pm", "Chandan Session – II"],
+        ["4:00 pm – 4:20 pm", "Reporting / Snacks"],
+        ["4:20 pm – 5:00 pm", "Self Cleaning & Washing"],
+        ["5:00 pm – 5:50 pm", "Sports & Games"],
+        ["6:00 pm – 7:00 pm", "Study Hour"],
+        ["7:00 pm – 7:40 pm", "Arati, Bhajan & Spoorthi Session"],
+        ["8:00 pm – 8:30 pm", "Dinner"],
+        ["9:00 pm – 10:00 pm", "Study Hour"],
+        ["10:00 pm", "Lights Off"]
+      ]
+    },
     image: "/assets/hero/sports.jpg",
     imageAlt: "Students in sports activity",
     imagePosition: "center 70%",

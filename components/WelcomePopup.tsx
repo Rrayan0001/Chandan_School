@@ -68,10 +68,12 @@ export function WelcomePopup() {
           <div className="welcome-popup__caption">
             <p className="welcome-popup__eyebrow">Welcome to School Chandan</p>
             <h2 id="welcome-popup-title">
-              A warm campus for learning, values, and confident growth.
+              Excellence Beyond Education
             </h2>
             <p className="welcome-popup__text">
-              School Chandan, Laxmeshwar under Chandan Education Society.
+              Laxmeshwar | Affiliated to CBSE (Affiliation No: 830305)
+              <br />
+              Under Chandan Education Society
             </p>
           </div>
         </div>
