@@ -44,7 +44,7 @@ export function SiteHeader() {
             </div>
             <div className="header-info__item">
               <span className="header-info__label">Phone</span>
-              <span className="header-info__value">9448432414</span>
+              <span className="header-info__value">9448432414, 9945163848</span>
             </div>
           </div>
         </div>
