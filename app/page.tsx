@@ -6,6 +6,8 @@ import { HeroSlider } from "@/components/HeroSlider";
 import { InfoTicker } from "@/components/InfoTicker";
 import { SiteFooter } from "@/components/SiteFooter";
 import { SiteHeader } from "@/components/SiteHeader";
+import { BackToTop } from "@/components/BackToTop";
+import { PageAnimations } from "@/components/PageAnimations";
 import { getSectionPath } from "@/lib/subpage-data";
 import { contactDetails, galleryPreview, heroSlides, videoPreviews } from "@/lib/site-data";
 
@@ -75,7 +77,7 @@ function ReadMoreButton({
 }) {
   return (
     <Link className="button-link button-link--plain" href={href}>
-      {children}
+      {children} →
     </Link>
   );
 }
@@ -84,18 +86,28 @@ export default function HomePage() {
   return (
     <div className="page-shell" id="top">
       <SiteHeader />
+      <PageAnimations />
 
       <main className="main-shell">
         <HeroSlider slides={heroSlides} />
         <InfoTicker />
 
         <div className="content-frame">
-          <section className="content-block" id="campus-video">
+          <section
+            className="content-block"
+            id="campus-video"
+            data-aos="fade-up"
+          >
             <SectionHeading title="Campus Videos" />
 
             <div className="simple-grid simple-grid--two">
-              {videoPreviews.map((video) => (
-                <article className="simple-card" key={video.title}>
+              {videoPreviews.map((video, i) => (
+                <article
+                  className="simple-card"
+                  key={video.title}
+                  data-aos="zoom-in"
+                  data-aos-delay={i * 150}
+                >
                   <div className="simple-card__media simple-card__media--video">
                     <Image
                       alt={video.alt}
@@ -116,12 +128,21 @@ export default function HomePage() {
             </div>
           </section>
 
-          <section className="content-block" id="about-school">
+          <section
+            className="content-block"
+            id="about-school"
+            data-aos="fade-up"
+          >
             <SectionHeading title="About School" />
 
             <div className="simple-grid simple-grid--two">
-              {aboutCards.map((card) => (
-                <article className="simple-card" key={card.title}>
+              {aboutCards.map((card, i) => (
+                <article
+                  className="simple-card"
+                  key={card.title}
+                  data-aos="fade-right"
+                  data-aos-delay={i * 150}
+                >
                   <div className="simple-card__media">
                     <Image
                       alt={card.alt}
@@ -140,9 +161,13 @@ export default function HomePage() {
             </div>
           </section>
 
-          <section className="content-block" id="timings">
+          <section
+            className="content-block"
+            id="timings"
+            data-aos="fade-up"
+          >
             <div className="info-columns">
-              <article className="info-column">
+              <article className="info-column" data-aos="fade-up" data-aos-delay="0">
                 <h3>School Timing</h3>
                 <div className="timing-lines">
                   <p>Monday to Friday</p>
@@ -155,7 +180,7 @@ export default function HomePage() {
                 </ReadMoreButton>
               </article>
 
-              <article className="info-column" id="institution">
+              <article className="info-column" id="institution" data-aos="fade-up" data-aos-delay="150">
                 <h3>About School Chandan</h3>
                 <p>
                   Guided by the legacy of Late Shri H. C. Ratageri and the
@@ -167,7 +192,7 @@ export default function HomePage() {
                 </ReadMoreButton>
               </article>
 
-              <article className="info-column" id="events">
+              <article className="info-column" id="events" data-aos="fade-up" data-aos-delay="300">
                 <h3>Events</h3>
                 <ul className="link-list">
                   <li>Investiture Ceremony</li>
@@ -180,12 +205,22 @@ export default function HomePage() {
             </div>
           </section>
 
-          <section className="content-block" id="resources">
+          <section
+            className="content-block"
+            id="resources"
+            data-aos="fade-up"
+          >
             <SectionHeading title="Academics & School Information" />
 
             <div className="info-columns info-columns--four">
-              {academicBlocks.map((block) => (
-                <article className="info-column" id={block.id} key={block.title}>
+              {academicBlocks.map((block, i) => (
+                <article
+                  className="info-column"
+                  id={block.id}
+                  key={block.title}
+                  data-aos="fade-up"
+                  data-aos-delay={i * 100}
+                >
                   <h3>{block.title}</h3>
                   <ul className="link-list">
                     {block.items.map((item) => (
@@ -197,7 +232,11 @@ export default function HomePage() {
             </div>
           </section>
 
-          <section className="content-block content-block--split" id="chairman-message">
+          <section
+            className="content-block content-block--split"
+            id="chairman-message"
+            data-aos="fade-up"
+          >
             <article className="quote-panel">
               <SectionHeading title="From the Principal's Desk" />
               <blockquote>
@@ -213,7 +252,7 @@ export default function HomePage() {
               </ReadMoreButton>
             </article>
 
-            <article className="gallery-panel" id="gallery">
+            <article className="gallery-panel" id="gallery" data-aos="fade-left">
               <SectionHeading title="Gallery" />
               <div className="gallery-strip">
                 {galleryTiles.map((item) => (
@@ -231,7 +270,11 @@ export default function HomePage() {
             </article>
           </section>
 
-          <section className="content-block content-block--contact" id="contact">
+          <section
+            className="content-block content-block--contact"
+            id="contact"
+            data-aos="fade-up"
+          >
             <div className="contact-panel">
               <SectionHeading title="Contact Us" />
 
@@ -252,7 +295,7 @@ export default function HomePage() {
               </div>
             </div>
 
-            <div className="map-panel">
+            <div className="map-panel" data-aos="fade-left" data-aos-delay="200">
               <iframe
                 allowFullScreen
                 className="map-frame"
@@ -267,6 +310,7 @@ export default function HomePage() {
       </main>
 
       <SiteFooter />
+      <BackToTop />
     </div>
   );
 }

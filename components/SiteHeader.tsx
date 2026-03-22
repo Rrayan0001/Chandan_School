@@ -9,35 +9,44 @@ export function SiteHeader() {
     <>
       <header className="site-header">
         <div className="container site-header__main">
+          {/* Left — Logo */}
           <div className="brand-block">
             <Link href="/" className="brand-block__logo-wrap">
               <Image
                 alt="Chandan Education Society logo"
                 className="brand-block__logo"
-                height={82}
+                height={75}
                 priority
                 src="/assets/logo.png"
-                width={82}
+                width={75}
               />
             </Link>
-
-            <div className="brand-block__copy">
-              <h1>School <span>Chandan</span></h1>
-              <p className="brand-block__subtitle">Excellence Beyond Education</p>
-              <p className="brand-block__meta">
-                Under Chandan Education Society
-              </p>
-              <p className="brand-block__meta">
-                Laxmeshwar | Affiliated to CBSE (Affiliation No: 830305)
-              </p>
-            </div>
           </div>
 
-          <aside className="admission-badge">
-            <strong>Admission Open</strong>
-            <p>Academic Year 2026-27</p>
-            <span>From Nursery to Grade 10</span>
-          </aside>
+          {/* Center — School Name & Tagline */}
+          <div className="brand-center">
+            <h1>School <span>Chandan</span></h1>
+            <p className="brand-center__tagline">Excellence Beyond Education</p>
+            <p className="brand-center__society">
+              Under Chandan Education Society
+            </p>
+          </div>
+
+          {/* Right — Info Block */}
+          <div className="header-info">
+            <div className="header-info__item">
+              <span className="header-info__label">Estd</span>
+              <span className="header-info__value">2003</span>
+            </div>
+            <div className="header-info__item">
+              <span className="header-info__label">CBSE</span>
+              <span className="header-info__value">830305</span>
+            </div>
+            <div className="header-info__item">
+              <span className="header-info__label">Phone</span>
+              <span className="header-info__value">9448432414</span>
+            </div>
+          </div>
         </div>
       </header>
 

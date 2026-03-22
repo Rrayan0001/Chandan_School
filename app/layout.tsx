@@ -3,6 +3,7 @@ import type { ReactNode } from "react";
 import { Lora, Nunito } from "next/font/google";
 
 import { WelcomePopup } from "@/components/WelcomePopup";
+import { AOSInit } from "@/components/AOSInit";
 
 import "./globals.css";
 
@@ -33,6 +34,7 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${fontHeading.variable} ${fontBody.variable}`}>
       <body>
+        <AOSInit />
         {children}
         <WelcomePopup />
       </body>
