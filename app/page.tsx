@@ -12,6 +12,7 @@ import { PageAnimations } from "@/components/PageAnimations";
 import { getSectionPath } from "@/lib/subpage-data";
 import { contactDetails, galleryPreview, heroSlides } from "@/lib/site-data";
 import { VideoPlayer } from "@/components/ui/video-player";
+import { CardStack, type CardStackItem } from "@/components/ui/card-stack";
 
 /* ── Data ── */
 
@@ -231,56 +232,59 @@ export default function HomePage() {
               description="Watch our school tours, student activities, and special interactions."
             />
 
-            <div className="simple-grid simple-grid--three">
-              <article className="simple-card" data-aos="zoom-in" data-aos-delay="0">
-                <div className="simple-card__media simple-card__media--video" style={{ height: 'auto', padding: 0 }}>
-                  <VideoPlayer src="/assets/videos/campus-tour.mp4" poster="/assets/gallery/School-chandan-Prospectus-proof.jpg" />
-                </div>
-                <div className="simple-card__body">
-                  <h3>School Campus Tour</h3>
-                  <p>A guided walk through the main school block, classrooms, and student facilities.</p>
-                </div>
-              </article>
-
-              <article className="simple-card" data-aos="zoom-in" data-aos-delay="150">
-                <div className="simple-card__media simple-card__media--video" style={{ height: 'auto', padding: 0 }}>
-                  <VideoPlayer src="/assets/videos/activities.mp4" poster="/assets/gallery/School-chandan-Prospectus-proof2.jpg" />
-                </div>
-                <div className="simple-card__body">
-                  <h3>School Activities &amp; Events</h3>
-                  <p>Showcasing assemblies, cultural events, celebrations, and vibrant student life.</p>
-                </div>
-              </article>
-
-              <article className="simple-card" data-aos="zoom-in" data-aos-delay="0">
-                <div className="simple-card__media simple-card__media--video" style={{ height: 'auto', padding: 0 }}>
-                  <VideoPlayer src="/assets/videos/activities2.mp4" poster="/assets/gallery/School-chandan-Prospectus-proof3.jpg" />
-                </div>
-                <div className="simple-card__body">
-                  <h3>Student Performances</h3>
-                  <p>A glimpse into the diverse talents and performances of our students.</p>
-                </div>
-              </article>
-
-              <article className="simple-card" data-aos="zoom-in" data-aos-delay="150">
-                <div className="simple-card__media simple-card__media--video" style={{ height: 'auto', padding: 0 }}>
-                  <VideoPlayer src="/assets/videos/ALL%20SCIENTIST_Review.mp4" poster="/assets/sections/science-lab.jpg" />
-                </div>
-                <div className="simple-card__body">
-                  <h3>Scientist Review</h3>
-                  <p>Highlights from the science exhibition and expert reviews.</p>
-                </div>
-              </article>
-
-              <article className="simple-card" data-aos="zoom-in" data-aos-delay="0">
-                <div className="simple-card__media simple-card__media--video" style={{ height: 'auto', padding: 0 }}>
-                  <VideoPlayer src="/assets/videos/INTRACTION%20WITH%20DR%20A%20S%20KIRAN%20KUMAR%20SIR_480p.mp4" poster="/assets/sections/chairman.jpg" />
-                </div>
-                <div className="simple-card__body">
-                  <h3>Interaction with Dr. A.S. Kiran Kumar</h3>
-                  <p>An inspiring interaction with the former ISRO Chairman.</p>
-                </div>
-              </article>
+            <div style={{ marginTop: "2rem", display: "flex", justifyContent: "center" }}>
+              <CardStack
+                items={[
+                  {
+                    id: 1,
+                    title: "School Campus Tour",
+                    description: "A guided walk through the main school block, classrooms, and student facilities.",
+                    videoSrc: "/assets/videos/campus-tour.mp4",
+                    poster: "/assets/gallery/School-chandan-Prospectus-proof.jpg"
+                  },
+                  {
+                    id: 2,
+                    title: "School Activities & Events",
+                    description: "Showcasing assemblies, cultural events, celebrations, and vibrant student life.",
+                    videoSrc: "/assets/videos/activities.mp4",
+                    poster: "/assets/gallery/School-chandan-Prospectus-proof2.jpg"
+                  },
+                  {
+                    id: 3,
+                    title: "Student Performances",
+                    description: "A glimpse into the diverse talents and performances of our students.",
+                    videoSrc: "/assets/videos/activities2.mp4",
+                    poster: "/assets/gallery/School-chandan-Prospectus-proof3.jpg"
+                  },
+                  {
+                    id: 4,
+                    title: "Scientist Review",
+                    description: "Highlights from the science exhibition and expert reviews.",
+                    videoSrc: "/assets/videos/ALL%20SCIENTIST_Review.mp4",
+                    poster: "/assets/sections/science-lab.jpg"
+                  },
+                  {
+                    id: 5,
+                    title: "Interaction with Dr. A.S. Kiran Kumar",
+                    description: "An inspiring interaction with the former ISRO Chairman.",
+                    videoSrc: "/assets/videos/INTRACTION%20WITH%20DR%20A%20S%20KIRAN%20KUMAR%20SIR_480p.mp4",
+                    poster: "/assets/sections/chairman.jpg"
+                  }
+                ] as CardStackItem[]}
+                cardWidth={600}
+                cardHeight={380}
+                renderCard={(item, { active }) => (
+                  <div className="simple-card" style={{ height: "100%", margin: 0 }}>
+                    <div className="simple-card__media simple-card__media--video" style={{ height: "65%", padding: 0 }}>
+                      <VideoPlayer src={item.videoSrc!} poster={item.poster!} />
+                    </div>
+                    <div className="simple-card__body" style={{ height: "35%", background: "var(--panel)" }}>
+                      <h3>{item.title}</h3>
+                      <p style={{ margin: 0, marginTop: "0.4rem" }}>{item.description}</p>
+                    </div>
+                  </div>
+                )}
+              />
             </div>
           </section>
 
