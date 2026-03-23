@@ -84,11 +84,11 @@ export default async function SectionDetailPage({ params }: PageProps) {
                     alt={page.imageAlt}
                     fill
                     priority
-                    sizes="(max-width: 900px) 100vw, 70vw"
+                    sizes="(max-width: 1100px) 100vw, 70vw"
                     src={page.image}
                     style={{
                       objectFit: page.imageFit ?? "cover",
-                      objectPosition: page.imagePosition ?? "center center"
+                      objectPosition: page.imagePosition ?? "center 20%"
                     }}
                   />
                 </div>

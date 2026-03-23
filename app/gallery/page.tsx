@@ -33,9 +33,9 @@ export default function GalleryPage() {
                   <Image
                     alt={image.alt}
                     fill
-                    sizes="(max-width: 900px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                    sizes="(max-width: 1100px) 100vw, (max-width: 1200px) 50vw, 33vw"
                     src={image.image}
-                    style={{ objectPosition: image.position ?? "center center" }}
+                    style={{ objectPosition: image.position ?? "center 20%" }}
                   />
                 </div>
                 <div className="gallery-page__body">

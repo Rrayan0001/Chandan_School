@@ -106,15 +106,7 @@ export const heroSlides: HeroSlide[] = [
       "A welcoming campus under Chandan Education Society, designed to help every learner grow with confidence and discipline.",
     position: "center 62%"
   },
-  {
-    image: "/assets/hero/transport.jpg",
-    alt: "School transport and students on campus",
-    title: "Safe & Reliable Transport",
-    subtitle: "From Nursery to Grade 10",
-    blurb:
-      "Organized transport support and caring supervision help families feel secure every school day.",
-    position: "center 40%"
-  },
+
   {
     image: "/assets/hero/assembly.jpg",
     alt: "Students participating in school assembly",
@@ -149,7 +141,16 @@ export const heroSlides: HeroSlide[] = [
     subtitle: "Fitness, teamwork, yoga, and outdoor games for holistic growth",
     blurb:
       "Physical education is built into campus life to develop strength, discipline, and team spirit.",
-    position: "center 70%"
+    position: "center 25%"
+  },
+  {
+    image: "/assets/hero/transport.jpg",
+    alt: "School transport and students on campus",
+    title: "Safe & Reliable Transport",
+    subtitle: "From Nursery to Grade 10",
+    blurb:
+      "Organized transport support and caring supervision help families feel secure every school day.",
+    position: "center 40%"
   }
 ];
 
@@ -281,7 +282,7 @@ export const eventCards: EventCard[] = [
   },
   {
     title: "Annual Day",
-    image: "/assets/sections/annual-day.jpg",
+    image: "/assets/sections/15.JPG",
     alt: "Students performing on annual day",
     description:
       "A vibrant showcase of music, dance, theatre, and cultural expression that celebrates every student's talent.",
@@ -304,7 +305,7 @@ export const eventCards: EventCard[] = [
     description:
       "Sports, yoga, and playground activities nurture teamwork, perseverance, and joyful physical development.",
     href: "/gallery",
-    position: "center 72%"
+    position: "center 25%"
   }
 ];
 
@@ -349,7 +350,7 @@ export const galleryPreview: GalleryImage[] = [
     caption: "Yoga, games, and healthy routines as part of daily development.",
     image: "/assets/hero/sports.jpg",
     alt: "Sports and wellness",
-    position: "center 72%"
+    position: "center 25%"
   }
 ];
 
@@ -406,28 +407,28 @@ export const galleryPageImages: GalleryImage[] = [
   {
     title: "Photo Gallery",
     caption: "A broad collage of performances, celebrations, learning, and school events.",
-    image: "/assets/gallery/School-chandan-Prospectus-proof8.jpg",
+    image: "/assets/gallery/School-chandan-Prospectus-proof.jpg",
     alt: "Photo gallery collage",
     position: "center 40%"
   },
   {
     title: "Student Exploration",
     caption: "Memorable field-based exposure and student visits around aviation awareness.",
-    image: "/assets/gallery/School-chandan-Prospectus-proof9.jpg",
+    image: "/assets/gallery/School-chandan-Prospectus-proof2.jpg",
     alt: "Student exploration collage",
     position: "center 50%"
   },
   {
     title: "Transport & Annual Celebrations",
     caption: "Transport facilities, gatherings, stage programs, and school community moments.",
-    image: "/assets/gallery/School-chandan-Prospectus-proof10.jpg",
+    image: "/assets/gallery/School-chandan-Prospectus-proof3.jpg",
     alt: "Transport and annual celebrations collage",
     position: "center 42%"
   },
   {
     title: "Exposure & Campus Visits",
     caption: "Student interaction, experiential visits, and memorable institutional moments.",
-    image: "/assets/gallery/School-chandan-Prospectus-proof11.jpg",
+    image: "/assets/gallery/School-chandan-Prospectus-proof4.jpg",
     alt: "Exposure and campus visits collage",
     position: "center 52%"
   }

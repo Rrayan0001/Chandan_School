@@ -152,9 +152,9 @@ export const sectionPages: SectionPage[] = [
       "Respect, discipline, and responsibility in daily life",
       "Holistic growth through classroom and co-curricular exposure"
     ],
-    image: "/assets/hero/classroom.jpg",
+    image: "/assets/gallery/School-chandan-Prospectus-proof2.jpg",
     imageAlt: "Students learning in a classroom setting",
-    imagePosition: "right 18%"
+    imagePosition: "center 20%"
   },
   {
     section: "about-us",
@@ -199,9 +199,9 @@ export const sectionPages: SectionPage[] = [
       "Every student encouraged to discover their unique potential",
       "Teachers guide with care, inspiration, and discipline"
     ],
-    image: "/assets/sections/classroom-activity.jpg",
+    image: "/assets/gallery/School-chandan-Prospectus-proof.jpg",
     imageAlt: "Students engaged in classroom activity",
-    imagePosition: "center 35%",
+    imagePosition: "center 20%",
     callout: {
       title: "Sri Ramagiri Bavanavar — Principal, School Chandan",
       body:
@@ -272,9 +272,9 @@ export const sectionPages: SectionPage[] = [
       "Admissions and enquiry guidance during office hours",
       "Advance communication helps avoid class disruption"
     ],
-    image: "/assets/hero/campus-front.jpg",
+    image: "/assets/gallery/School-chandan-Prospectus-proof3.jpg",
     imageAlt: "Students in front of the school campus",
-    imagePosition: "center 58%"
+    imagePosition: "center 20%"
   },
   {
     section: "about-us",
@@ -339,7 +339,7 @@ export const sectionPages: SectionPage[] = [
     },
     image: "/assets/hero/sports.jpg",
     imageAlt: "Students in sports activity",
-    imagePosition: "center 70%",
+    imagePosition: "center 25%",
     callout: {
       title: "Daily Schedule Overview",
       body:
@@ -405,8 +405,9 @@ export const sectionPages: SectionPage[] = [
       "Focus on concept mastery along with performance",
       "Clear preparation habits for board-facing classes"
     ],
-    image: "/assets/hero/classroom.jpg",
-    imageAlt: "Students in a structured learning environment"
+    image: "/assets/gallery/School-chandan-Prospectus-proof2.jpg",
+    imageAlt: "Students in a structured learning environment",
+    imagePosition: "center 20%"
   },
   {
     section: "academics",
@@ -425,9 +426,9 @@ export const sectionPages: SectionPage[] = [
       "Activity-based sessions where useful",
       "Reinforcement through revision and teacher support"
     ],
-    image: "/assets/sections/classroom-activity.jpg",
+    image: "/assets/hero/classroom.jpg",
     imageAlt: "Students participating in active learning",
-    imagePosition: "center 32%"
+    imagePosition: "center 20%"
   },
   {
     section: "academics",
@@ -446,8 +447,9 @@ export const sectionPages: SectionPage[] = [
       "Student records maintained through school administration",
       "Families advised to connect in advance for timelines"
     ],
-    image: "/assets/hero/campus-front.jpg",
-    imageAlt: "School building front view for administrative support"
+    image: "/assets/gallery/School-chandan-Prospectus-proof6.jpg",
+    imageAlt: "School building front view for administrative support",
+    imagePosition: "center 20%"
   },
   {
     section: "student-corner",
@@ -466,7 +468,7 @@ export const sectionPages: SectionPage[] = [
       "Guidance that balances discipline with care",
       "Shared responsibility for student well-being"
     ],
-    image: "/assets/gallery/School-chandan-Prospectus-proof8.jpg",
+    image: "/assets/gallery/School-chandan-Prospectus-proof3.jpg",
     imageAlt: "Student life collage from the school gallery",
     imageFit: "contain"
   },
@@ -510,9 +512,9 @@ export const sectionPages: SectionPage[] = [
       "Better alignment between lessons and assessments",
       "Transparent academic expectations for families"
     ],
-    image: "/assets/hero/classroom.jpg",
+    image: "/assets/gallery/School-chandan-Prospectus-proof2.jpg",
     imageAlt: "Students focused during classroom instruction",
-    imagePosition: "right 16%"
+    imagePosition: "center 20%"
   },
   {
     section: "student-corner",
@@ -573,7 +575,7 @@ export const sectionPages: SectionPage[] = [
       "Cultural expression alongside academic life",
       "Memorable school-wide community moments"
     ],
-    image: "/assets/sections/annual-day.jpg",
+    image: "/assets/sections/15.JPG",
     imageAlt: "Students performing during a school event",
     imagePosition: "center 35%"
   },
@@ -680,7 +682,7 @@ export const sectionPages: SectionPage[] = [
       "Supports classroom instruction with technology",
       "Builds confidence in a modern learning environment"
     ],
-    image: "/assets/gallery/School-chandan-Prospectus-proof5.jpg",
+    image: "/assets/gallery/School-chandan-Prospectus-proof3.jpg",
     imageAlt: "School facility collage including digital learning spaces",
     imageFit: "contain"
   },
@@ -701,9 +703,9 @@ export const sectionPages: SectionPage[] = [
       "Improves confidence in problem solving",
       "Helps students connect theory with application"
     ],
-    image: "/assets/sections/classroom-activity.jpg",
+    image: "/assets/gallery/School-chandan-Prospectus-proof2.jpg",
     imageAlt: "Students engaged in activity-based learning",
-    imagePosition: "center 33%"
+    imagePosition: "center 20%"
   },
   {
     section: "features",
@@ -766,7 +768,7 @@ export const sectionPages: SectionPage[] = [
     ],
     image: "/assets/hero/sports.jpg",
     imageAlt: "Students involved in sports and wellness activities",
-    imagePosition: "center 72%"
+    imagePosition: "center 25%"
   },
   {
     section: "activities",
@@ -785,7 +787,7 @@ export const sectionPages: SectionPage[] = [
       "Encourages group responsibility and participation",
       "Creates memorable exposure linked to learning"
     ],
-    image: "/assets/gallery/School-chandan-Prospectus-proof9.jpg",
+    image: "/assets/gallery/School-chandan-Prospectus-proof5.jpg",
     imageAlt: "Student field trip and exploration collage",
     imageFit: "contain"
   },
@@ -806,9 +808,9 @@ export const sectionPages: SectionPage[] = [
       "Encourages creativity, teamwork, and expression",
       "Balances academic effort with joyful engagement"
     ],
-    image: "/assets/sections/annual-day.jpg",
+    image: "/assets/hero/culture.jpg",
     imageAlt: "Students participating in co-curricular stage activity",
-    imagePosition: "center 35%"
+    imagePosition: "center 20%"
   }
 ];
 
