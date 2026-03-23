@@ -273,17 +273,6 @@ export default function HomePage() {
                 ] as CardStackItem[]}
                 cardWidth={600}
                 cardHeight={380}
-                renderCard={(item, { active }) => (
-                  <div className="simple-card" style={{ height: "100%", margin: 0 }}>
-                    <div className="simple-card__media simple-card__media--video" style={{ height: "65%", padding: 0 }}>
-                      <VideoPlayer src={item.videoSrc!} poster={item.poster!} />
-                    </div>
-                    <div className="simple-card__body" style={{ height: "35%", background: "var(--panel)" }}>
-                      <h3>{item.title}</h3>
-                      <p style={{ margin: 0, marginTop: "0.4rem" }}>{item.description}</p>
-                    </div>
-                  </div>
-                )}
               />
             </div>
           </section>

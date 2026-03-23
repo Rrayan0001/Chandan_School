@@ -4,6 +4,7 @@ import * as React from "react";
 import { motion, AnimatePresence, useReducedMotion } from "framer-motion";
 import { SquareArrowOutUpRight } from "lucide-react";
 import Link from "next/link";
+import { VideoPlayer } from "./video-player";
 import "./card-stack.css";
 
 export type CardStackItem = {
@@ -316,6 +317,20 @@ export function CardStack<T extends CardStackItem>({
 }
 
 function DefaultFanCard({ item }: { item: CardStackItem }) {
+  if (item.videoSrc) {
+    return (
+      <div className="simple-card" style={{ height: "100%", margin: 0, border: "none", borderRadius: "1rem" }}>
+        <div className="simple-card__media simple-card__media--video" style={{ height: "55%", padding: 0 }}>
+          <VideoPlayer src={item.videoSrc} poster={item.poster || ""} />
+        </div>
+        <div className="simple-card__body" style={{ height: "45%", background: "var(--panel)" }}>
+          <h3 style={{ margin: 0, color: "var(--red-dark)", fontSize: "1.1rem" }}>{item.title}</h3>
+          <p style={{ margin: 0, marginTop: "0.5rem", color: "var(--text-soft)", fontSize: "0.92rem", lineHeight: 1.6 }}>{item.description}</p>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="cs-card-default">
       <div className="cs-card-default__img-layer">
