@@ -79,7 +79,10 @@ export default async function SectionDetailPage({ params }: PageProps) {
                   <p className="section-page__intro">{page.intro}</p>
                 </header>
 
-                <div className="section-page__image">
+                <div 
+                  className="section-page__image"
+                  style={page.imageAspectRatio ? { aspectRatio: page.imageAspectRatio } : undefined}
+                >
                   <Image
                     alt={page.imageAlt}
                     fill

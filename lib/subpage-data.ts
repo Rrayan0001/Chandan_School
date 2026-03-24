@@ -38,6 +38,7 @@ export type SectionPage = {
   imageAlt: string;
   imageFit?: "cover" | "contain";
   imagePosition?: string;
+  imageAspectRatio?: string;
   callout?: {
     title: string;
     body: string;
@@ -176,6 +177,8 @@ export const sectionPages: SectionPage[] = [
     image: "/assets/T_ishwar.jpeg",
     imageAlt: "Sri T. Ishwar — Secretary, Chandan Education Society",
     imageFit: "cover",
+    imagePosition: "center 15%",
+    imageAspectRatio: "3 / 4",
     callout: {
       title: "Sri T. Ishwar — Secretary, Chandan Education Society",
       body:
@@ -201,7 +204,8 @@ export const sectionPages: SectionPage[] = [
     ],
     image: "/assets/principal.jpeg",
     imageAlt: "Sri Ramagiri Bavanavar — Principal, School Chandan",
-    imagePosition: "center 20%",
+    imagePosition: "center 15%",
+    imageAspectRatio: "3 / 4",
     callout: {
       title: "Sri Ramagiri Bavanavar — Principal, School Chandan",
       body:
@@ -227,7 +231,9 @@ export const sectionPages: SectionPage[] = [
     ],
     image: "/assets/founder.jpeg",
     imageAlt: "Late Sri H. C. Ratageri — Esteemed Director and Founder",
-    imageFit: "cover"
+    imageFit: "cover",
+    imagePosition: "center 15%",
+    imageAspectRatio: "3 / 4"
   },
   {
     section: "about-us",
