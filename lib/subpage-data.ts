@@ -173,9 +173,9 @@ export const sectionPages: SectionPage[] = [
       "Committed to quality rural education since 2003",
       "Vision: holistic learning with knowledge, discipline & leadership"
     ],
-    image: "/assets/sections/chairman.jpg",
-    imageAlt: "Leadership collage from the school prospectus",
-    imageFit: "contain",
+    image: "/assets/T_ishwar.jpeg",
+    imageAlt: "Sri T. Ishwar — Secretary, Chandan Education Society",
+    imageFit: "cover",
     callout: {
       title: "Sri T. Ishwar — Secretary, Chandan Education Society",
       body:
@@ -199,8 +199,8 @@ export const sectionPages: SectionPage[] = [
       "Every student encouraged to discover their unique potential",
       "Teachers guide with care, inspiration, and discipline"
     ],
-    image: "/assets/gallery/School-chandan-Prospectus-proof.jpg",
-    imageAlt: "Students engaged in classroom activity",
+    image: "/assets/principal.jpeg",
+    imageAlt: "Sri Ramagiri Bavanavar — Principal, School Chandan",
     imagePosition: "center 20%",
     callout: {
       title: "Sri Ramagiri Bavanavar — Principal, School Chandan",
@@ -225,9 +225,9 @@ export const sectionPages: SectionPage[] = [
       "Principal: Sri Ramagiri Bavanavar",
       "Co-founder: Smt. Girija T. Ishwar"
     ],
-    image: "/assets/gallery/School-chandan-Prospectus-proof4.jpg",
-    imageAlt: "Leadership and guest interactions featured by the school",
-    imageFit: "contain"
+    image: "/assets/founder.jpeg",
+    imageAlt: "Late Sri H. C. Ratageri — Esteemed Director and Founder",
+    imageFit: "cover"
   },
   {
     section: "about-us",
