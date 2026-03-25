@@ -293,10 +293,10 @@ export default function HomePage() {
                   <Image src="/assets/cm/CM_1.jpg" alt="CM Visit Moment 1" fill sizes="(max-width: 1100px) 100vw, 50vw" />
                 </div>
                 <div className="cm-img-wrap">
-                  <Image src="/assets/cm/CM_2.jpg" alt="CM Visit Moment 2" fill sizes="(max-width: 1100px) 50vw, 25vw" />
+                  <Image src="/assets/cm/CM_2.JPG" alt="CM Visit Moment 2" fill sizes="(max-width: 1100px) 50vw, 25vw" />
                 </div>
                 <div className="cm-img-wrap">
-                  <Image src="/assets/cm/CM_3.jpg" alt="CM Visit Moment 3" fill sizes="(max-width: 1100px) 50vw, 25vw" />
+                  <Image src="/assets/cm/CM_3.JPG" alt="CM Visit Moment 3" fill sizes="(max-width: 1100px) 50vw, 25vw" />
                 </div>
               </div>
             </div>
