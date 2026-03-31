@@ -2,8 +2,10 @@ import type { Metadata } from "next";
 import type { ReactNode } from "react";
 import { Lora, Nunito } from "next/font/google";
 
-import { WelcomePopup } from "@/components/WelcomePopup";
 import { AOSInit } from "@/components/AOSInit";
+import { WelcomeFlow } from "@/components/WelcomeFlow";
+import { WhatsAppButton } from "@/components/WhatsAppButton";
+import { GoogleTranslate } from "@/components/GoogleTranslate";
 
 import "./globals.css";
 
@@ -35,8 +37,11 @@ export default function RootLayout({
     <html lang="en" className={`${fontHeading.variable} ${fontBody.variable}`}>
       <body>
         <AOSInit />
+        <GoogleTranslate />
         {children}
-        <WelcomePopup />
+        <WhatsAppButton />
+        {/* WelcomeFlow runs the animation then shows the popup */}
+        <WelcomeFlow />
       </body>
     </html>
   );

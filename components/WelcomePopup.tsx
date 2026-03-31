@@ -3,80 +3,83 @@
 import Image from "next/image";
 import { useEffect, useState } from "react";
 
-export function WelcomePopup() {
-  const [isOpen, setIsOpen] = useState(true);
+interface WelcomePopupProps {
+  /** When true the popup becomes visible. Starts hidden so animation can play first. */
+  isVisible?: boolean;
+}
+
+export function WelcomePopup({ isVisible = false }: WelcomePopupProps) {
+  const [isOpen, setIsOpen] = useState(false);
+
+  // Open as soon as parent says we're visible
+  useEffect(() => {
+    if (isVisible) {
+      setIsOpen(true);
+    }
+  }, [isVisible]);
 
   useEffect(() => {
-    if (!isOpen) {
-      return;
-    }
-
-    const handleKeyDown = (event: KeyboardEvent) => {
-      if (event.key === "Escape") {
-        setIsOpen(false);
-      }
-    };
+    if (!isOpen) return;
 
     const previousOverflow = document.body.style.overflow;
     document.body.style.overflow = "hidden";
-    window.addEventListener("keydown", handleKeyDown);
 
     return () => {
       document.body.style.overflow = previousOverflow;
-      window.removeEventListener("keydown", handleKeyDown);
     };
   }, [isOpen]);
 
-  if (!isOpen) {
-    return null;
-  }
+  if (!isOpen) return null;
 
   return (
-    <div className="welcome-popup" role="presentation">
-      <button
-        aria-label="Close welcome popup"
-        className="welcome-popup__backdrop"
-        onClick={() => setIsOpen(false)}
-        type="button"
-      />
+    <div className="welcome-popup welcome-popup--locked" role="presentation">
+      {/* Non-clickable backdrop */}
+      <div className="welcome-popup__backdrop" />
 
+      {/* Under-development card — no close button, no dismiss */}
       <div
         aria-labelledby="welcome-popup-title"
         aria-modal="true"
-        className="welcome-popup__dialog"
+        className="welcome-popup__dialog welcome-popup__dialog--dev"
         role="dialog"
       >
-        <button
-          aria-label="Close welcome popup"
-          className="welcome-popup__close"
-          onClick={() => setIsOpen(false)}
-          type="button"
-        >
-          ×
-        </button>
+        {/* Badge */}
+        <div className="wpu-badge">🚧 Website Under Development</div>
 
-        <div className="welcome-popup__media">
+        {/* Logo */}
+        <div className="wpu-logo-wrap">
           <Image
-            alt="Front view of School Chandan campus"
+            src="/assets/logo.png"
+            alt="School Chandan logo"
             fill
-            priority
-            sizes="(max-width: 900px) 92vw, 860px"
-            src="/assets/hero/campus-front.jpg"
-            style={{ objectPosition: "center 56%" }}
+            sizes="80px"
+            className="wpu-logo"
           />
-
-          <div className="welcome-popup__caption">
-            <p className="welcome-popup__eyebrow">Welcome to School Chandan</p>
-            <h2 id="welcome-popup-title">
-              Excellence Beyond Education
-            </h2>
-            <p className="welcome-popup__text">
-              Laxmeshwar | Affiliated to CBSE (Affiliation No: 830305)
-              <br />
-              Under Chandan Education Society
-            </p>
-          </div>
         </div>
+
+        {/* Headline */}
+        <h2 id="welcome-popup-title" className="wpu-headline">
+          We&apos;re Building{" "}
+          <span className="wpu-headline--accent">Something Great</span>
+        </h2>
+
+        {/* Body */}
+        <p className="wpu-body">
+          The website for <strong>School Chandan</strong> is currently under
+          active development. We&apos;re working hard to deliver a modern,
+          reliable, and high-quality experience.
+        </p>
+
+        {/* Launch date */}
+        <div className="wpu-launch">
+          🗓️ Launching on <strong>2nd April 2026</strong>
+        </div>
+
+        {/* Footer */}
+        <p className="wpu-footer">
+          © 2026 School Chandan · Chandan Education Society. All rights
+          reserved.
+        </p>
       </div>
     </div>
   );
