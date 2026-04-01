@@ -19,7 +19,7 @@ export function GoogleTranslate() {
         new window.google.translate.TranslateElement(
           {
             pageLanguage: "en",
-            includedLanguages: "en,hi,kn,te,ta,mr,ur",
+            includedLanguages: "en,kn",
             layout: 0, // SIMPLE layout
             autoDisplay: false,
           },

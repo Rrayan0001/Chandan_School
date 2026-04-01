@@ -37,7 +37,6 @@ export default function RootLayout({
     <html lang="en" className={`${fontHeading.variable} ${fontBody.variable}`}>
       <body>
         <AOSInit />
-        <GoogleTranslate />
         {children}
         <WhatsAppButton />
         {/* WelcomeFlow runs the animation then shows the popup */}

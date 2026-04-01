@@ -3,6 +3,7 @@ import Link from "next/link";
 
 import { Navbar } from "@/components/Navbar";
 import { navigation } from "@/lib/site-data";
+import { GoogleTranslate } from "@/components/GoogleTranslate";
 
 export function SiteHeader() {
   return (
@@ -34,17 +35,27 @@ export function SiteHeader() {
 
           {/* Right — Info Block */}
           <div className="header-info">
-            <div className="header-info__item">
-              <span className="header-info__label">Estd</span>
-              <span className="header-info__value">2003</span>
+            <div className="header-info-row">
+              <div className="header-info__item">
+                <span className="header-info__label">Estd</span>
+                <span className="header-info__value">2003</span>
+              </div>
+              <div className="header-info__item">
+                <span className="header-info__label">CBSE</span>
+                <span className="header-info__value">830305</span>
+              </div>
             </div>
-            <div className="header-info__item">
-              <span className="header-info__label">CBSE</span>
-              <span className="header-info__value">830305</span>
-            </div>
-            <div className="header-info__item">
-              <span className="header-info__label">Phone</span>
-              <span className="header-info__value">9448432414, 9945163848</span>
+            
+            <div className="header-info-row">
+              <div className="header-info__item">
+                <span className="header-info__label">Phone</span>
+                <span className="header-info__value">9448432414, 9945163848</span>
+              </div>
+              
+              {/* Language Switcher integrated here */}
+              <div className="header-lang">
+                <GoogleTranslate />
+              </div>
             </div>
           </div>
         </div>

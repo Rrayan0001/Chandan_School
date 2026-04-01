@@ -12,10 +12,10 @@ export function WelcomeAnimation({ onFinished }: WelcomeAnimationProps) {
 
   useEffect(() => {
     // Phase 1: Logo enters (0 – 800ms handled by CSS)
-    // Phase 2: Hold for ~2s
+    // Phase 2: Hold for ~1.2s
     const holdTimer = setTimeout(() => {
       setPhase("exit");
-    }, 2800);
+    }, 1200);
 
     return () => clearTimeout(holdTimer);
   }, []);
