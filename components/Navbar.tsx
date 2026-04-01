@@ -5,6 +5,8 @@ import { useState } from "react";
 
 import type { NavItem } from "@/lib/site-data";
 
+import { SocialLinksList } from "./SocialLinks";
+
 type NavbarProps = {
   items: NavItem[];
 };
@@ -22,15 +24,20 @@ export function Navbar({ items }: NavbarProps) {
         <button
           aria-controls="mobile-navigation"
           aria-expanded={mobileOpen}
-          className="nav-toggle"
+          className={`nav-toggle ${mobileOpen ? 'is-active' : ''}`}
           onClick={() => setMobileOpen((current) => !current)}
           type="button"
         >
-          <span />
-          <span />
-          <span />
-          Menu
+          <div className="hamburger">
+            <span />
+            <span />
+            <span />
+          </div>
+          <span className="nav-toggle__text">Menu</span>
         </button>
+
+        {/* Mobile Socials (Visible in header before opening menu) */}
+        <SocialLinksList className="nav-socials site-nav--mobile-only" />
 
         <nav aria-label="Primary" className="site-nav site-nav--desktop">
           <ul className="site-nav__desktop-list">
@@ -61,6 +68,9 @@ export function Navbar({ items }: NavbarProps) {
             ))}
           </ul>
         </nav>
+
+        {/* Desktop Socials */}
+        <SocialLinksList className="nav-socials site-nav--desktop" />
       </div>
 
       <div
@@ -112,6 +122,11 @@ export function Navbar({ items }: NavbarProps) {
               ))}
             </ul>
           </nav>
+
+          {/* Mobile Socials */}
+          <div className="nav-mobile-footer">
+            <SocialLinksList className="social-links social-links--mobile" />
+          </div>
         </div>
       </div>
     </div>
