@@ -123,10 +123,6 @@ export function Navbar({ items }: NavbarProps) {
             </ul>
           </nav>
 
-          {/* Mobile Socials */}
-          <div className="nav-mobile-footer">
-            <SocialLinksList className="social-links social-links--mobile" />
-          </div>
         </div>
       </div>
     </div>

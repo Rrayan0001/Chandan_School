@@ -548,6 +548,10 @@ section[id] {
   min-width: 120px; /* Balance against brand width if necessary */
 }
 
+.site-nav--mobile-only {
+  display: none;
+}
+
 .nav-socials .social-link {
   width: 1.9rem;
   height: 1.9rem;
