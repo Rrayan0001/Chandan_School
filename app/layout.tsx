@@ -24,7 +24,7 @@ const fontBody = Nunito({
 export const metadata: Metadata = {
   title: "School Chandan | Chandan Education Society",
   description:
-    "A professional Next.js school website for School Chandan under Chandan Education Society, Bangalore - Laxmeshwar.",
+    "A professional Next.js school website for School Chandan, An Institution of Chandan Education Society, Bangalore - Laxmeshwar.",
   metadataBase: new URL("https://chandan-school.local")
 };
 

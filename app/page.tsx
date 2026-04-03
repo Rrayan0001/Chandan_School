@@ -154,7 +154,7 @@ export default function HomePage() {
                   At School Chandan we believe faithful administration, exceptional vision, and refined character shape not just academic excellence but also moral responsibility, humility, academic strength, and national values.
                 </p>
                 <p>
-                  Established in 2003 under Chandan Education Society, the school has grown for over 22 years, bringing rural education into the mainstream with innovation and human values.
+                  Established in 2003, An Institution of Chandan Education Society, the school has grown for over 22 years, bringing rural education into the mainstream with innovation and human values.
                 </p>
                 <div className="about-split__stats">
                   <div className="about-stat">

@@ -29,7 +29,7 @@ export function SiteHeader() {
             <h1>School <span>Chandan</span></h1>
             <p className="brand-center__tagline">Excellence Beyond Education</p>
             <p className="brand-center__society">
-              Under Chandan Education Society
+              An Institution of Chandan Education Society
             </p>
           </div>
 

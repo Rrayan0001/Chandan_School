@@ -121,13 +121,13 @@ export const sectionPages: SectionPage[] = [
     label: "About the School",
     title: "About the School",
     intro:
-      "Established in 2003, School Chandan — Excellence Beyond Education — is a CBSE school under Chandan Education Society, Bengaluru–Laxmeshwar. Growing steadily for over 22 years, it brings rural education into the mainstream, empowering young minds with excellence, innovation, and human values.",
+      "Established in 2003, School Chandan — Excellence Beyond Education — is a CBSE school, An Institution of Chandan Education Society, Bengaluru–Laxmeshwar. Growing steadily for over 22 years, it brings rural education into the mainstream, empowering young minds with excellence, innovation, and human values.",
     paragraphs: [
       "The school stands tall today with the support and encouragement of many national and international intellectuals and eminent personalities, including Bharat Ratna Prof. C.N.R. Rao, Dr. A.S. Kiran Kumar (former Chairman, ISRO), Shri Siddaramaiah, IAS/KAS/IPS/IFS officers, and several renowned educationists and Vice-Chancellors. Their guidance continues to strengthen the school's mission to uplift children from rural India toward global opportunities.",
       "School Chandan is blessed with the visionary legacy of Late Shri H. C. Ratageri, the esteemed Director whose dedication laid the strong foundation of the institution. The school continues to flourish under the guidance of Shri T. Ishwar and Smt. Girija T. Ishwar, committed to nurturing quality education in rural communities."
     ],
     highlights: [
-      "CBSE school established in 2003 under Chandan Education Society",
+      "CBSE school established in 2003, An Institution of Chandan Education Society",
       "22+ years of uplifting rural education into the mainstream",
       "Supported by Bharat Ratna Prof. C.N.R. Rao & former ISRO Chairman",
       "Built on excellence, innovation, and Indian human values"

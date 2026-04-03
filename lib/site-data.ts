@@ -103,7 +103,7 @@ export const heroSlides: HeroSlide[] = [
     title: "Admissions Open",
     subtitle: "Academic Year 2026–27",
     blurb:
-      "A welcoming campus under Chandan Education Society, designed to help every learner grow with confidence and discipline.",
+      "A welcoming campus, An Institution of Chandan Education Society, designed to help every learner grow with confidence and discipline.",
     position: "center 62%"
   },
 
@@ -179,7 +179,7 @@ export const informationCards: MediaCard[] = [
     image: "/assets/hero/campus-front.jpg",
     alt: "School building exterior",
     description:
-      "Established in 2003, School Chandan is a CBSE school under Chandan Education Society, Bengaluru–Laxmeshwar, growing steadily for over 22 years. Its mission is to bring rural education into the mainstream, nurturing students with excellence, innovation, and human values.",
+      "Established in 2003, School Chandan is a CBSE school, An Institution of Chandan Education Society, Bengaluru–Laxmeshwar, growing steadily for over 22 years. Its mission is to bring rural education into the mainstream, nurturing students with excellence, innovation, and human values.",
     href: getSectionPath("about-us", "about-school")
   },
   {
