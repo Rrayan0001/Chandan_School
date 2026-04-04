@@ -230,11 +230,10 @@ export const sectionPages: SectionPage[] = [
       "Principal: Sri Ramagiri Bavanavar",
       "Co-founder: Smt. Girija T. Ishwar"
     ],
-    image: "/assets/founder.jpeg",
-    imageAlt: "Late Sri H. C. Ratageri — Esteemed Director and Founder",
+    image: "/assets/sections/management-assembly.jpg",
+    imageAlt: "Students and management team during a school assembly",
     imageFit: "cover",
-    imagePosition: "center 15%",
-    imageAspectRatio: "3 / 4"
+    imagePosition: "center 30%"
   },
   {
     section: "about-us",
