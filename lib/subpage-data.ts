@@ -39,6 +39,11 @@ export type SectionPage = {
   imageFit?: "cover" | "contain";
   imagePosition?: string;
   imageAspectRatio?: string;
+  galleryImages?: {
+    image: string;
+    alt: string;
+    position?: string;
+  }[];
   callout?: {
     title: string;
     body: string;
@@ -413,9 +418,9 @@ export const sectionPages: SectionPage[] = [
       "Focus on concept mastery along with performance",
       "Clear preparation habits for board-facing classes"
     ],
-    image: "/assets/gallery/School-chandan-Prospectus-proof2.jpg",
-    imageAlt: "Students in a structured learning environment",
-    imagePosition: "center 20%"
+    image: "/assets/sections/examination-curriculum.png",
+    imageAlt: "School Chandan Examination Curriculum details",
+    imagePosition: "top"
   },
   {
     section: "academics",
@@ -436,27 +441,6 @@ export const sectionPages: SectionPage[] = [
     ],
     image: "/assets/hero/classroom.jpg",
     imageAlt: "Students participating in active learning",
-    imagePosition: "center 20%"
-  },
-  {
-    section: "academics",
-    slug: "transfer-certificates",
-    label: "Transfer Certificates",
-    title: "Transfer Certificates",
-    intro:
-      "Administrative support for transfer certificates is handled with clarity so families can complete the process smoothly when needed.",
-    paragraphs: [
-      "The school maintains student records carefully and offers guidance on the steps required for transfer-related documentation. Families are encouraged to contact the office for current requirements and timelines.",
-      "A simple, well-coordinated process helps ensure that certificates, records, and related formalities are completed with proper verification and communication."
-    ],
-    highlights: [
-      "Office guidance for certificate-related queries",
-      "Document process handled with clarity and care",
-      "Student records maintained through school administration",
-      "Families advised to connect in advance for timelines"
-    ],
-    image: "/assets/gallery/School-chandan-Prospectus-proof6.jpg",
-    imageAlt: "School building front view for administrative support",
     imagePosition: "center 20%"
   },
   {
@@ -583,7 +567,7 @@ export const sectionPages: SectionPage[] = [
       "Cultural expression alongside academic life",
       "Memorable school-wide community moments"
     ],
-    image: "/assets/sections/15.JPG",
+    image: "/assets/sections/annual-day.jpg",
     imageAlt: "Students performing during a school event",
     imagePosition: "center 35%"
   },
@@ -608,6 +592,35 @@ export const sectionPages: SectionPage[] = [
     ],
     image: "/assets/gallery/School-chandan-Prospectus-proof.jpg",
     imageAlt: "Unique programs collage",
+    imageFit: "contain"
+  },
+  {
+    section: "features",
+    slug: "unique-programs",
+    label: "Unique Programs",
+    title: "Unique Programs at School Chandan",
+    intro:
+      "Our students are nurtured through unique programmes that go beyond the conventional classroom and build leadership, confidence, discipline, and creativity.",
+    paragraphs: [
+      "These initiatives help students grow through participation, responsibility, self-governance, cultural expression, and meaningful interaction with school life.",
+      "The programmes reflect School Chandan's belief in character building, holistic growth, and the Simple Living, High Thinking culture."
+    ],
+    highlights: [
+      "Chandana Spandana (Interaction & Inspiration Platform)",
+      "Day Leader Concept",
+      "Self-Governance Day",
+      "Examination Without Supervisor",
+      "Creative Assembly",
+      "Chandan Students Parliament",
+      "Karma Yoga, Hobbies & Sports",
+      "Chandan Sangeetha Asthana & Chandan Band Music",
+      "Competitive Exams Training",
+      "Simple Living, High Thinking culture",
+      "Athithi Devo Bhava",
+      "And many more transformative initiatives"
+    ],
+    image: "/assets/gallery/School-chandan-Prospectus-proof.jpg",
+    imageAlt: "Unique programmes and student initiatives collage",
     imageFit: "contain"
   },
   {
@@ -651,6 +664,43 @@ export const sectionPages: SectionPage[] = [
     image: "/assets/hero/assembly.jpg",
     imageAlt: "Morning assembly scenes from the school",
     imageFit: "contain"
+  },
+  {
+    section: "features",
+    slug: "sports-ground",
+    label: "Sports Ground",
+    title: "Sports & Physical Excellence",
+    intro:
+      "Sports and physical activities are part of everyday school life, helping students build strength, teamwork, and confidence.",
+    paragraphs: [
+      "At School Chandan, we believe physical fitness is the heart of a balanced education. Students engage in yoga, outdoor games, and team sports to build strength, discipline, and team spirit.",
+      "The sports programme encourages healthy habits, coordination, and leadership while giving students an active break from classroom learning.",
+    ],
+    highlights: [
+      "Team sports that build leadership and cooperation",
+      "Yoga and wellness for physical and mental balance",
+      "Daily fitness routines that support discipline",
+      "Outdoor play that keeps school life active and healthy"
+    ],
+    image: "/assets/hero/sports.jpg",
+    imageAlt: "Students participating in sports and physical activities",
+    imageFit: "cover",
+    imagePosition: "center 25%",
+    imageAspectRatio: "4 / 2.25",
+    galleryImages: [
+      {
+        image: "/assets/sports/sports1.JPG",
+        alt: "Team sports activity at School Chandan"
+      },
+      {
+        image: "/assets/sports/sports2.JPG",
+        alt: "Physical fitness activity at School Chandan"
+      },
+      {
+        image: "/assets/sports/sports3.JPG",
+        alt: "Yoga and wellness activity at School Chandan"
+      }
+    ]
   },
   {
     section: "features",

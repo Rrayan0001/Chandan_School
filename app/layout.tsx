@@ -34,7 +34,7 @@ export default function RootLayout({
   children: ReactNode;
 }>) {
   return (
-    <html lang="en" className={`${fontHeading.variable} ${fontBody.variable}`}>
+    <html lang="en" className={`${fontHeading.variable} ${fontBody.variable}`} data-scroll-behavior="smooth">
       <body>
         <AOSInit />
         {children}

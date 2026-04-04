@@ -82,12 +82,6 @@ const campusPhotos = [
   { image: "/assets/gallery/School-chandan-Prospectus-proof7.jpg", label: "Student Calling", span: "" },
 ];
 
-const sportsPhotos = [
-  { image: "/assets/sports/sports1.JPG", label: "Team Sports", description: "Fostering teamwork and leadership through competitive play." },
-  { image: "/assets/sports/sports2.JPG", label: "Physical Fitness", description: "Daily routines that build strength, stamina, and discipline." },
-  { image: "/assets/sports/sports3.JPG", label: "Yoga & Wellness", description: "Nurturing the mind and body through mindfulness and balance." },
-];
-
 /* ── Helpers ── */
 
 function SectionHeading({
@@ -149,7 +143,7 @@ export default function HomePage() {
                 <div className="about-split__quote">
                   <span className="about-split__quote-mark">"</span>
                   <p>Nurture the unbounded talent of rural India to inspire extraordinary accomplishments by embracing values, instilling excellence, and fuelling limitless aspirations.</p>
-                  <cite>— Dr. Anand Rao, Founder</cite>
+                  <cite>— Sri T. Ishwar, Founder</cite>
                 </div>
               </div>
 
@@ -192,6 +186,7 @@ export default function HomePage() {
                     <Image
                       alt={card.alt!}
                       fill
+                      priority={i === 0}
                       sizes="(max-width: 1100px) 100vw, 33vw"
                       src={card.image!}
                       style={{ objectPosition: "center 25%" }}
@@ -235,7 +230,7 @@ export default function HomePage() {
           <section className="content-block" id="campus-video" data-aos="fade-up">
             <SectionHeading
               title="Campus Videos & Highlights"
-              description="Watch our school tours, student activities, and special interactions."
+              description="Watch our student activities and special interactions with Bharata Ratna Prof. C.N.R. Rao, ISRO Chairman A.S. Kiran Kumar and other dignitaries."
             />
 
             <div style={{ marginTop: "2rem", display: "flex", justifyContent: "center" }}>
@@ -287,7 +282,7 @@ export default function HomePage() {
           <section className="content-block" id="cm-highlight" data-aos="fade-up">
             <SectionHeading
               title="A Memorable Visit"
-              description="Highlights from the honourable Chief Minister Siddaramaiah's visit to School Chandan."
+              description="Highlights from the honourable Chief Minister Siddaramaiah's visit to School Chandan. 10th annual science outreach programme inauguration and Chandan-shree 2025 award ceremony."
             />
 
             <div className="cm-grid">
@@ -308,40 +303,24 @@ export default function HomePage() {
             </div>
           </section>
 
-          {/* ── 6. Sports & Physical Excellence ── */}
-          <section className="content-block" id="sports-wellness" data-aos="fade-up">
-            <SectionHeading 
-              title="Sports & Physical Excellence" 
-              description="At School Chandan, we believe physical fitness is the heart of a balanced education. Our students engage in yoga, outdoor games, and team sports to build strength, discipline, and team spirit."
+          {/* ── 5.5. Prof CNR Rao Visit ── */}
+          <section className="content-block" id="cnrao-visit" data-aos="fade-up">
+            <SectionHeading
+              title="A Memorable Visit by Prof. C.N.R. Rao"
+              description="An inspiring day when the eminent scientist Prof. C.N.R. Rao visited School Chandan, interacting with our enthusiastic students and leaving a lasting impact."
             />
 
-            <div className="simple-grid--three" style={{ marginTop: "2.5rem" }}>
-              {sportsPhotos.map((photo, i) => (
-                <div 
-                  className="sports-card" 
-                  key={i}
-                  data-aos="zoom-in"
-                  data-aos-delay={i * 100}
-                >
-                  <div className="sports-card__image">
-                    <Image
-                      alt={photo.label}
-                      fill
-                      sizes="(max-width: 1100px) 100vw, 33vw"
-                      src={photo.image}
-                      style={{ objectFit: "cover" }}
-                    />
-                  </div>
-                  <div className="sports-card__content">
-                    <h3>{photo.label}</h3>
-                    <p>{photo.description}</p>
-                  </div>
-                </div>
-              ))}
+            <div className="cnrao-gallery" data-aos="fade-up">
+              <div className="cnrao-gallery__item" data-aos="fade-right">
+                <Image src="/assets/cnrao/home_page1_new.jpg" alt="Prof C.N.R. Rao interacting with the school" fill sizes="(max-width: 1100px) 50vw, 40vw" style={{ objectFit: "cover" }} />
+              </div>
+              <div className="cnrao-gallery__item" data-aos="fade-left" data-aos-delay="100">
+                <Image src="/assets/cnrao/home_page2_new.jpg" alt="Prof C.N.R. Rao and school events" fill sizes="(max-width: 1100px) 50vw, 40vw" style={{ objectFit: "cover" }} />
+              </div>
             </div>
           </section>
 
-          {/* ── 7. Vibrant Campus Gallery ── */}
+          {/* ── 6. Vibrant Campus Gallery ── */}
           <section className="content-block" id="gallery" data-aos="fade-up">
             <SectionHeading title="Vibrant Campus" />
 
@@ -391,19 +370,19 @@ export default function HomePage() {
                   <p className="testimonial-card__text">
                     &ldquo;My child&rsquo;s confidence has grown tremendously since joining School Chandan. The teachers genuinely care about each student&rsquo;s progress.&rdquo;
                   </p>
-                  <cite className="testimonial-card__author">Anand Rao — Parent</cite>
+                  <cite className="testimonial-card__author">Mahantesh Ratageri (Parent)</cite>
                 </div>
                 <div className="testimonial-card">
                   <p className="testimonial-card__text">
                     &ldquo;The school&rsquo;s focus on values and discipline sets it apart. We are proud to be part of the School Chandan family.&rdquo;
                   </p>
-                  <cite className="testimonial-card__author">Sinna — Parent &amp; Alumni</cite>
+                  <cite className="testimonial-card__author">Manoj B (Alumni)</cite>
                 </div>
                 <div className="testimonial-card">
                   <p className="testimonial-card__text">
                     &ldquo;An exceptional institution that has nurtured our children with a perfect blend of academics and character building.&rdquo;
                   </p>
-                  <cite className="testimonial-card__author">Shri Ratnaval — Parent</cite>
+                  <cite className="testimonial-card__author">Veeresh Alagawadi (Parent)</cite>
                 </div>
               </div>
             </article>

@@ -91,7 +91,7 @@ export const navigation: NavItem[] = [
     href: getSectionHref("activities"),
     children: buildNavigationChildren("activities")
   },
-  { label: "Sports", href: "/#sports-wellness" },
+  { label: "Sports", href: getSectionPath("features", "sports-ground") },
   { label: "Resources", href: "/#resources" },
   { label: "Contact Us", href: "/#contact" }
 ];
@@ -107,15 +107,14 @@ export const heroSlides: HeroSlide[] = [
     position: "center 62%"
   },
   {
-    image: "/assets/hero/band.jpg",
+    image: "/assets/hero/band1.jpg",
     alt: "Students in the school band performing together",
     title: "Harmony & Discipline",
     subtitle: "Developing teamwork, focus, and musical talent through our school band",
     blurb:
       "A culture of collaboration that inspires students to perform with confidence and professional spirit.",
-    position: "center 25%"
+    position: "center 20%"
   },
-
   {
     image: "/assets/sections/annual-day.jpg",
     alt: "Students and staff celebrating annual day on campus",
@@ -285,7 +284,7 @@ export const eventCards: EventCard[] = [
   },
   {
     title: "Annual Day",
-    image: "/assets/sections/15.JPG",
+    image: "/assets/sections/annual-day.jpg",
     alt: "Students performing on annual day",
     description:
       "A vibrant showcase of music, dance, theatre, and cultural expression that celebrates every student's talent.",
@@ -424,9 +423,9 @@ export const galleryPageImages: GalleryImage[] = [
   {
     title: "Transport & Annual Celebrations",
     caption: "Transport facilities, gatherings, stage programs, and school community moments.",
-    image: "/assets/gallery/School-chandan-Prospectus-proof3.jpg",
-    alt: "Transport and annual celebrations collage",
-    position: "center 42%"
+    image: "/assets/hero/transport.jpg",
+    alt: "School Chandan reliable transport buses and community celebrations",
+    position: "center center"
   },
   {
     title: "Exposure & Campus Visits",

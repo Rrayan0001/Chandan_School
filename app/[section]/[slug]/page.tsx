@@ -80,7 +80,7 @@ export default async function SectionDetailPage({ params }: PageProps) {
                 </header>
 
                 <div 
-                  className="section-page__image"
+                  className={`section-page__image${page.galleryImages?.length ? " section-page__image--compact" : ""}`}
                   style={page.imageAspectRatio ? { aspectRatio: page.imageAspectRatio } : undefined}
                 >
                   <Image
@@ -95,6 +95,25 @@ export default async function SectionDetailPage({ params }: PageProps) {
                     }}
                   />
                 </div>
+
+                {page.galleryImages?.length ? (
+                  <div className="section-page__media-gallery">
+                    {page.galleryImages.map((item) => (
+                      <div className="section-page__media-gallery-item" key={item.alt}>
+                        <Image
+                          alt={item.alt}
+                          fill
+                          sizes="(max-width: 1100px) 100vw, 22vw"
+                          src={item.image}
+                          style={{
+                            objectFit: "cover",
+                            objectPosition: item.position ?? "center center"
+                          }}
+                        />
+                      </div>
+                    ))}
+                  </div>
+                ) : null}
 
                 <div className="section-page__body">
                   {page.paragraphs.map((paragraph) => (
