@@ -252,9 +252,11 @@ export const sectionPages: SectionPage[] = [
       "Legacy of IAS/KAS, doctors, and engineers",
       "A lasting source of inspiration for the community"
     ],
-    image: "/assets/sections/chairman.jpg",
-    imageAlt: "Portrait of Late Sri H. C. Ratageri",
-    imageFit: "contain",
+    image: "/assets/founder.jpeg",
+    imageAlt: "Portrait of Late Sri H. C. Ratageri — Esteemed Director and Founder",
+    imageFit: "cover",
+    imagePosition: "center 15%",
+    imageAspectRatio: "3 / 4",
     callout: {
       title: "Late Sri H. C. Ratageri — Director, School Chandan",
       body:
