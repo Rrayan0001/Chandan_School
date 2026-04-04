@@ -114,7 +114,8 @@ export default async function SectionDetailPage({ params }: PageProps) {
                       {page.highlights.map((highlight) => (
                         <div
                           className={`section-page__highlight${
-                            highlight.toLowerCase().includes("i warmly invite parents and students")
+                            highlight.toLowerCase().includes("i warmly invite parents and students") ||
+                            highlight.toLowerCase().includes("not only syllabus")
                               ? " section-page__highlight--emphasis"
                               : ""
                           }`}

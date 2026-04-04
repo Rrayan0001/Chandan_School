@@ -1891,6 +1891,19 @@ section[id] {
   line-height: 1.65;
 }
 
+.section-page__highlight--emphasis {
+  padding: 0.45rem 0.65rem;
+  color: #ffffff;
+  font-weight: 600;
+  background: linear-gradient(90deg, #2f5798 0%, #1f3f74 100%);
+  border-radius: 4px;
+}
+
+.section-page__highlight--emphasis::before {
+  content: "";
+  margin-right: 0;
+}
+
 .section-page__sidebar {
   position: sticky;
   top: 5rem;
@@ -2811,5 +2824,4 @@ section[id] {
 .goog-te-banner-frame {
   display: none !important;
 }
-
 

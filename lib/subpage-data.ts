@@ -151,11 +151,12 @@ export const sectionPages: SectionPage[] = [
       "Strong academic foundations with concept clarity",
       "Confidence in spoken communication and presentation",
       "Respect, discipline, and responsibility in daily life",
-      "Holistic growth through classroom and co-curricular exposure"
+      "Holistic growth through classroom and co-curricular exposure",
+      "School Chandan is not only syllabus, textbooks, exams, marks, percentage oriented school but also a man-making, character-creating school."
     ],
-    image: "/assets/gallery/School-chandan-Prospectus-proof2.jpg",
-    imageAlt: "Students learning in a classroom setting",
-    imagePosition: "center 20%"
+    image: "/assets/sections/vision-mission-sports.jpg",
+    imageAlt: "Students participating in school sports and physical activities",
+    imagePosition: "center 25%"
   },
   {
     section: "about-us",
