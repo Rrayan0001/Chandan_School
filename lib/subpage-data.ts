@@ -753,9 +753,9 @@ export const sectionPages: SectionPage[] = [
       "Supports spoken language and concept reinforcement",
       "Adds structure and energy to classroom delivery"
     ],
-    image: "/assets/hero/classroom.jpg",
-    imageAlt: "Modern classroom environment at the school",
-    imagePosition: "right 18%"
+    image: "/assets/sections/digital-lab.jpg",
+    imageAlt: "Students learning in the modern digital classroom and lab environment",
+    imagePosition: "center 30%"
   },
   {
     section: "activities",

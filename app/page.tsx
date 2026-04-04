@@ -82,6 +82,12 @@ const campusPhotos = [
   { image: "/assets/gallery/School-chandan-Prospectus-proof7.jpg", label: "Student Calling", span: "" },
 ];
 
+const sportsPhotos = [
+  { image: "/assets/sports/sports1.JPG", label: "Team Sports", description: "Fostering teamwork and leadership through competitive play." },
+  { image: "/assets/sports/sports2.JPG", label: "Physical Fitness", description: "Daily routines that build strength, stamina, and discipline." },
+  { image: "/assets/sports/sports3.JPG", label: "Yoga & Wellness", description: "Nurturing the mind and body through mindfulness and balance." },
+];
+
 /* ── Helpers ── */
 
 function SectionHeading({
@@ -302,7 +308,40 @@ export default function HomePage() {
             </div>
           </section>
 
-          {/* ── 6. Vibrant Campus Gallery ── */}
+          {/* ── 6. Sports & Physical Excellence ── */}
+          <section className="content-block" id="sports-wellness" data-aos="fade-up">
+            <SectionHeading 
+              title="Sports & Physical Excellence" 
+              description="At School Chandan, we believe physical fitness is the heart of a balanced education. Our students engage in yoga, outdoor games, and team sports to build strength, discipline, and team spirit."
+            />
+
+            <div className="simple-grid--three" style={{ marginTop: "2.5rem" }}>
+              {sportsPhotos.map((photo, i) => (
+                <div 
+                  className="sports-card" 
+                  key={i}
+                  data-aos="zoom-in"
+                  data-aos-delay={i * 100}
+                >
+                  <div className="sports-card__image">
+                    <Image
+                      alt={photo.label}
+                      fill
+                      sizes="(max-width: 1100px) 100vw, 33vw"
+                      src={photo.image}
+                      style={{ objectFit: "cover" }}
+                    />
+                  </div>
+                  <div className="sports-card__content">
+                    <h3>{photo.label}</h3>
+                    <p>{photo.description}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </section>
+
+          {/* ── 7. Vibrant Campus Gallery ── */}
           <section className="content-block" id="gallery" data-aos="fade-up">
             <SectionHeading title="Vibrant Campus" />
 

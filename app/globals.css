@@ -2345,7 +2345,48 @@ section[id] {
   }
 }
 
-/* --- Village Ticker Marquee --- */
+/* ── Sports Card ── */
+.sports-card {
+  background: #ffffff;
+  border-radius: 1.5rem;
+  overflow: hidden;
+  box-shadow: 0 12px 32px rgba(123, 58, 18, 0.08);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  border: 1px solid rgba(123, 58, 18, 0.05);
+}
+
+.sports-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 20px 48px rgba(123, 58, 18, 0.15);
+}
+
+.sports-card__image {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 4 / 3;
+}
+
+.sports-card__content {
+  padding: 1.75rem;
+  flex-grow: 1;
+}
+
+.sports-card__content h3 {
+  font-family: var(--font-heading);
+  font-size: 1.4rem;
+  color: var(--red-dark);
+  margin-bottom: 0.75rem;
+  font-weight: 700;
+}
+
+.sports-card__content p {
+  color: var(--text-soft);
+  font-size: 0.95rem;
+  line-height: 1.6;
+}
 
 .info-ticker {
   background: var(--red-dark);
