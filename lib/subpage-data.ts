@@ -758,27 +758,6 @@ export const sectionPages: SectionPage[] = [
     imagePosition: "right 18%"
   },
   {
-    section: "features",
-    slug: "sports-ground",
-    label: "Sports Ground",
-    title: "Sports Ground",
-    intro:
-      "The sports ground gives students an essential space for movement, teamwork, and physical confidence.",
-    paragraphs: [
-      "Physical activity is a meaningful part of school life. Outdoor games, drill, yoga, and group exercise help students develop coordination, stamina, and positive habits that support long-term well-being.",
-      "The sports ground also teaches children how to cooperate, compete fairly, and enjoy the discipline that comes from practice and effort."
-    ],
-    highlights: [
-      "Outdoor space for games, drill, and fitness",
-      "Promotes teamwork and healthy competition",
-      "Supports stamina, discipline, and coordination",
-      "An important part of holistic student development"
-    ],
-    image: "/assets/hero/sports.jpg",
-    imageAlt: "Students involved in sports and wellness activities",
-    imagePosition: "center 25%"
-  },
-  {
     section: "activities",
     slug: "field-trips",
     label: "Field Trips",

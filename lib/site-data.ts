@@ -271,12 +271,6 @@ export const featureCards: FeatureCard[] = [
     description:
       "Projector-supported instruction, spoken English sessions, and interactive teaching make lessons more engaging."
   },
-  {
-    code: "SG",
-    title: "Sports Ground",
-    description:
-      "Outdoor play, yoga, and fitness-oriented routines promote teamwork, stamina, and healthy habits."
-  }
 ];
 
 export const eventCards: EventCard[] = [
