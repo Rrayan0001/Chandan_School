@@ -112,7 +112,14 @@ export default async function SectionDetailPage({ params }: PageProps) {
                     <h2>Key Highlights</h2>
                     <div className="section-page__highlights">
                       {page.highlights.map((highlight) => (
-                        <div className="section-page__highlight" key={highlight}>
+                        <div
+                          className={`section-page__highlight${
+                            highlight.toLowerCase().includes("i warmly invite parents and students")
+                              ? " section-page__highlight--emphasis"
+                              : ""
+                          }`}
+                          key={highlight}
+                        >
                           {highlight}
                         </div>
                       ))}

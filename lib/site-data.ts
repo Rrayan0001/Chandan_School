@@ -144,7 +144,7 @@ export const heroSlides: HeroSlide[] = [
     position: "center 25%"
   },
   {
-    image: "/assets/hero/transport.jpg",
+    image: "/assets/hero/CM_1.JPG",
     alt: "School transport and students on campus",
     title: "Safe & Reliable Transport",
     subtitle: "From Nursery to Grade 10",
