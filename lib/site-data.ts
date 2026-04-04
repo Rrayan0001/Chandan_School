@@ -108,13 +108,13 @@ export const heroSlides: HeroSlide[] = [
   },
 
   {
-    image: "/assets/hero/assembly.jpg",
-    alt: "Students participating in school assembly",
+    image: "/assets/sections/annual-day.jpg",
+    alt: "Students and staff celebrating annual day on campus",
     title: "Discipline • Knowledge • Values",
     subtitle: "Morning assembly, prayer, thought for the day, and student participation",
     blurb:
       "Each day begins with togetherness, leadership, and purposeful routines that shape character.",
-    position: "center top"
+    position: "center 20%"
   },
   {
     image: "/assets/hero/classroom.jpg",
