@@ -106,6 +106,15 @@ export const heroSlides: HeroSlide[] = [
       "A welcoming campus, An Institution of Chandan Education Society, designed to help every learner grow with confidence and discipline.",
     position: "center 62%"
   },
+  {
+    image: "/assets/hero/band.jpg",
+    alt: "Students in the school band performing together",
+    title: "Harmony & Discipline",
+    subtitle: "Developing teamwork, focus, and musical talent through our school band",
+    blurb:
+      "A culture of collaboration that inspires students to perform with confidence and professional spirit.",
+    position: "center 25%"
+  },
 
   {
     image: "/assets/sections/annual-day.jpg",
