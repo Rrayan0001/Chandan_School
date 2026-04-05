@@ -5,7 +5,6 @@ import { Lora, Nunito } from "next/font/google";
 import { AOSInit } from "@/components/AOSInit";
 import { WelcomeFlow } from "@/components/WelcomeFlow";
 import { WhatsAppButton } from "@/components/WhatsAppButton";
-import { GoogleTranslate } from "@/components/GoogleTranslate";
 
 import "./globals.css";
 

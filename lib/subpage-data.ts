@@ -48,6 +48,15 @@ export type SectionPage = {
     title: string;
     body: string;
   };
+  subSections?: {
+    title: string;
+    body?: string;
+    images?: {
+      image: string;
+      alt: string;
+      position?: string;
+    }[];
+  }[];
 };
 
 
@@ -700,6 +709,18 @@ export const sectionPages: SectionPage[] = [
         image: "/assets/sports/sports3.JPG",
         alt: "Yoga and wellness activity at School Chandan"
       }
+    ],
+    subSections: [
+      {
+        title: "Yoga",
+        body: "Yoga and meditation are deeply integrated into our daily routine to promote mindfulness, physical well-being, and mental clarity among students. Regular practice helps students build concentration and maintain physical fitness.",
+        images: [
+          { image: "/assets/sports/yoga.jpg", alt: "Students doing yoga" },
+          { image: "/assets/sports/yoga1.jpg", alt: "Yoga poses" },
+          { image: "/assets/sports/yoga2.jpg", alt: "Yoga group activity" },
+          { image: "/assets/sports/yoga3.jpg", alt: "Meditation and focus" }
+        ]
+      }
     ]
   },
   {
@@ -740,8 +761,8 @@ export const sectionPages: SectionPage[] = [
       "Supports classroom instruction with technology",
       "Builds confidence in a modern learning environment"
     ],
-    image: "/assets/gallery/School-chandan-Prospectus-proof3.jpg",
-    imageAlt: "School facility collage including digital learning spaces",
+    image: "/assets/Computer_LAB.jpeg",
+    imageAlt: "Computer Lab at School Chandan",
     imageFit: "contain"
   },
   {
@@ -782,9 +803,9 @@ export const sectionPages: SectionPage[] = [
       "NMO selection to send projects to NASA, California",
       "Culture of tinkering, experimentation, and innovation"
     ],
-    image: "/assets/sections/science-lab.jpg",
-    imageAlt: "ATL Innovation Lab and science learning environment",
-    imagePosition: "center 32%"
+    image: "/assets/ATL_LAB.jpeg",
+    imageAlt: "ATL Innovation Lab",
+    imageFit: "contain"
   },
   {
     section: "features",

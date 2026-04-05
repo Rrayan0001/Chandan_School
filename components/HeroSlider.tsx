@@ -88,7 +88,7 @@ export function HeroSlider({ slides }: HeroSliderProps) {
             <Image
               alt={slide.alt}
               fill
-              priority={index === 0}
+              priority={index <= 1}
               quality={90}
               sizes="100vw"
               src={slide.image}

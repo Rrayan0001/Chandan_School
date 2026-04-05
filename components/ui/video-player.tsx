@@ -20,6 +20,10 @@ export interface VideoPlayerProps extends React.VideoHTMLAttributes<HTMLVideoEle
   className?: string;
 }
 
+function isYouTubeEmbed(src: string) {
+  return src.includes("youtube.com/embed/");
+}
+
 export const VideoPlayer = React.forwardRef<HTMLVideoElement, VideoPlayerProps>(
   (
     {
@@ -32,6 +36,19 @@ export const VideoPlayer = React.forwardRef<HTMLVideoElement, VideoPlayerProps>(
     },
     ref,
   ) => {
+    if (isYouTubeEmbed(src)) {
+      return (
+        <div className={`vp-container ${className}`} style={{ position: "relative", width: "100%", height: "100%" }}>
+          <iframe
+            src={`${src}?rel=0&modestbranding=1`}
+            title="YouTube video"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            allowFullScreen
+            style={{ width: "100%", height: "100%", border: "none", borderRadius: "0.5rem" }}
+          />
+        </div>
+      );
+    }
     const [isPlaying, setIsPlaying] = React.useState(false);
     const [currentTime, setCurrentTime] = React.useState(0);
     const [duration, setDuration] = React.useState(0);

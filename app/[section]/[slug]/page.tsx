@@ -120,6 +120,32 @@ export default async function SectionDetailPage({ params }: PageProps) {
                     <p key={paragraph}>{paragraph}</p>
                   ))}
 
+                  {page.subSections?.map((sub) => (
+                    <div key={sub.title} className="section-page__subsection" style={{ marginTop: "3rem" }}>
+                      <h2>{sub.title}</h2>
+                      {sub.body ? <p>{sub.body}</p> : null}
+                      
+                      {sub.images?.length ? (
+                        <div className="section-page__media-gallery" style={{ marginTop: "1.5rem" }}>
+                          {sub.images.map((item) => (
+                            <div className="section-page__media-gallery-item" key={item.alt}>
+                              <Image
+                                alt={item.alt}
+                                fill
+                                sizes="(max-width: 1100px) 100vw, 22vw"
+                                src={item.image}
+                                style={{
+                                  objectFit: "cover",
+                                  objectPosition: item.position ?? "center center"
+                                }}
+                              />
+                            </div>
+                          ))}
+                        </div>
+                      ) : null}
+                    </div>
+                  ))}
+
                   {page.callout ? (
                     <div className="section-page__callout">
                       <span>{page.callout.title}</span>

@@ -10,9 +10,9 @@ import { SiteHeader } from "@/components/SiteHeader";
 import { BackToTop } from "@/components/BackToTop";
 import { PageAnimations } from "@/components/PageAnimations";
 import { getSectionPath } from "@/lib/subpage-data";
-import { contactDetails, galleryPreview, heroSlides } from "@/lib/site-data";
+import { contactDetails, heroSlides } from "@/lib/site-data";
 import { VideoPlayer } from "@/components/ui/video-player";
-import { CardStack, type CardStackItem } from "@/components/ui/card-stack";
+import { YoutubeCarousel } from "@/components/YoutubeCarousel";
 
 /* ── Data ── */
 
@@ -233,49 +233,28 @@ export default function HomePage() {
               description="Watch our student activities and special interactions with Bharata Ratna Prof. C.N.R. Rao, ISRO Chairman A.S. Kiran Kumar and other dignitaries."
             />
 
-            <div style={{ marginTop: "2rem", display: "flex", justifyContent: "center" }}>
-              <CardStack
-                items={[
+            <YoutubeCarousel items={[
                   {
-                    id: 1,
-                    title: "School Campus Tour",
-                    description: "A guided walk through the main school block, classrooms, and student facilities.",
-                    videoSrc: "/assets/videos/campus-tour.mp4",
-                    poster: "/assets/gallery/School-chandan-Prospectus-proof.jpg"
-                  },
-                  {
-                    id: 2,
+                    id: "DVmeB-Hi-34",
                     title: "School Activities & Events",
                     description: "Showcasing assemblies, cultural events, celebrations, and vibrant student life.",
-                    videoSrc: "/assets/videos/activities.mp4",
-                    poster: "/assets/gallery/School-chandan-Prospectus-proof2.jpg"
                   },
                   {
-                    id: 3,
-                    title: "Student Performances",
-                    description: "A glimpse into the diverse talents and performances of our students.",
-                    videoSrc: "/assets/videos/activities2.mp4",
-                    poster: "/assets/gallery/School-chandan-Prospectus-proof3.jpg"
+                    id: "e6VkcwPset4",
+                    title: "C.N. Rao Visit",
+                    description: "An inspiring visit and interaction with the legendary scientist C.N. Rao.",
                   },
                   {
-                    id: 4,
-                    title: "Scientist Review",
+                    id: "AgKcCv7JnV4",
+                    title: "School Exhibition",
                     description: "Highlights from the science exhibition and expert reviews.",
-                    videoSrc: "/assets/videos/ALL%20SCIENTIST_Review.mp4",
-                    poster: "/assets/sections/science-lab.jpg"
                   },
                   {
-                    id: 5,
-                    title: "Interaction with Dr. A.S. Kiran Kumar",
-                    description: "An inspiring interaction with the former ISRO Chairman.",
-                    videoSrc: "/assets/videos/INTRACTION%20WITH%20DR%20A%20S%20KIRAN%20KUMAR%20SIR_480p.mp4",
-                    poster: "/assets/sections/chairman.jpg"
-                  }
-                ] as CardStackItem[]}
-                cardWidth={600}
-                cardHeight={380}
-              />
-            </div>
+                    id: "V2OehYIJI4E",
+                    title: "T. Ishwar Interaction",
+                    description: "An inspiring interaction and address by T. Ishwar.",
+                  },
+                ]} />
           </section>
 
           {/* ── 5. A Memorable Visit (CM) ── */}
