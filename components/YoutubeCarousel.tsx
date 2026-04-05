@@ -39,22 +39,22 @@ export function YoutubeCarousel({ items }: { items: YoutubeItem[] }) {
 
       {/* Controls */}
       <div style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: "1rem", marginTop: "1.2rem" }}>
-        <button onClick={prev} aria-label="Previous video" style={{ background: "none", border: "1.5px solid #ccc", borderRadius: "50%", width: 38, height: 38, display: "flex", alignItems: "center", justifyContent: "center", cursor: "pointer", color: "#444" }}>
+        <button onClick={prev} aria-label="Previous video" style={{ background: "none", border: "1.5px solid #ccc", borderRadius: "50%", width: 44, height: 44, display: "flex", alignItems: "center", justifyContent: "center", cursor: "pointer", color: "#444", flexShrink: 0 }}>
           <ChevronLeft size={20} />
         </button>
 
-        <div style={{ display: "flex", gap: "0.4rem" }}>
+        <div style={{ display: "flex", gap: "0.5rem", alignItems: "center" }}>
           {items.map((item, i) => (
             <button
               key={item.id}
               onClick={() => setActive(i)}
               aria-label={`Go to ${item.title}`}
-              style={{ width: i === active ? 20 : 8, height: 8, borderRadius: 9999, border: "none", cursor: "pointer", transition: "all 0.3s", background: i === active ? "var(--red-dark, #b91c1c)" : "#ccc", padding: 0 }}
+              style={{ width: i === active ? 20 : 10, height: 10, borderRadius: 9999, border: "none", cursor: "pointer", transition: "all 0.3s", background: i === active ? "var(--red-dark, #b91c1c)" : "#ccc", padding: 0 }}
             />
           ))}
         </div>
 
-        <button onClick={next} aria-label="Next video" style={{ background: "none", border: "1.5px solid #ccc", borderRadius: "50%", width: 38, height: 38, display: "flex", alignItems: "center", justifyContent: "center", cursor: "pointer", color: "#444" }}>
+        <button onClick={next} aria-label="Next video" style={{ background: "none", border: "1.5px solid #ccc", borderRadius: "50%", width: 44, height: 44, display: "flex", alignItems: "center", justifyContent: "center", cursor: "pointer", color: "#444", flexShrink: 0 }}>
           <ChevronRight size={20} />
         </button>
       </div>

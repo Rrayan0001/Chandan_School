@@ -174,7 +174,7 @@ export default async function SectionDetailPage({ params }: PageProps) {
 
                   {page.tableData ? (
                     <div className="section-page__table-wrap" style={{ marginTop: "3rem", overflowX: "auto" }}>
-                      <table style={{ width: "100%", borderCollapse: "collapse", textAlign: "left", minWidth: "500px" }}>
+                      <table style={{ width: "100%", borderCollapse: "collapse", textAlign: "left", minWidth: "320px" }}>
                         <thead>
                           <tr>
                             {page.tableData.columns.map((col) => (

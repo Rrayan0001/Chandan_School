@@ -32,7 +32,8 @@ export function HeroSlider({ slides }: HeroSliderProps) {
 
     const updateHeroHeight = () => {
       const chromeHeight = (header?.offsetHeight ?? 0) + (nav?.offsetHeight ?? 0);
-      setHeroMinHeight(Math.max(window.innerHeight - chromeHeight, 320));
+      const maxHero = window.innerHeight * 0.72;
+      setHeroMinHeight(Math.min(Math.max(window.innerHeight - chromeHeight - 80, 320), maxHero));
     };
 
     updateHeroHeight();

@@ -10,7 +10,6 @@ import { SiteHeader } from "@/components/SiteHeader";
 import { PageAnimations } from "@/components/PageAnimations";
 import { getSectionPath } from "@/lib/subpage-data";
 import { contactDetails, heroSlides } from "@/lib/site-data";
-import { VideoPlayer } from "@/components/ui/video-player";
 import { YoutubeCarousel } from "@/components/YoutubeCarousel";
 
 /* ── Data ── */
@@ -263,20 +262,15 @@ export default function HomePage() {
               description="Highlights from the honourable Chief Minister Siddaramaiah's visit to School Chandan. 10th annual science outreach programme inauguration and Chandan-shree 2025 award ceremony."
             />
 
-            <div className="cm-grid">
-              <div className="cm-grid__video" data-aos="fade-right" data-aos-delay="100">
-                <VideoPlayer src="/assets/videos/CM%20Siddaharamiah.mp4" poster="/assets/cm/CM_1.jpg" />
+            <div className="cm-photo-grid">
+              <div className="cm-photo-grid__wide" data-aos="fade-up">
+                <Image src="/assets/cm/CM_1.jpg" alt="CM Siddaramaiah visiting School Chandan" fill sizes="100vw" style={{ objectFit: "contain", objectPosition: "center center", background: "#ffffff" }} />
               </div>
-              <div className="cm-grid__images" data-aos="fade-left" data-aos-delay="200">
-                <div className="cm-img-wrap">
-                  <Image src="/assets/cm/CM_1.jpg" alt="CM Visit Moment 1" fill sizes="(max-width: 1100px) 100vw, 50vw" />
-                </div>
-                <div className="cm-img-wrap">
-                  <Image src="/assets/cm/CM_2.JPG" alt="CM Visit Moment 2" fill sizes="(max-width: 1100px) 50vw, 25vw" />
-                </div>
-                <div className="cm-img-wrap">
-                  <Image src="/assets/cm/CM_3.JPG" alt="CM Visit Moment 3" fill sizes="(max-width: 1100px) 50vw, 25vw" />
-                </div>
+              <div className="cm-photo-grid__half" data-aos="fade-up" data-aos-delay="100">
+                <Image src="/assets/cm/CM_2.JPG" alt="CM Visit Moment 2" fill sizes="(max-width: 640px) 50vw, 33vw" style={{ objectFit: "cover" }} />
+              </div>
+              <div className="cm-photo-grid__half" data-aos="fade-up" data-aos-delay="200">
+                <Image src="/assets/cm/CM_3.JPG" alt="CM Visit Moment 3" fill sizes="(max-width: 640px) 50vw, 33vw" style={{ objectFit: "cover" }} />
               </div>
             </div>
           </section>

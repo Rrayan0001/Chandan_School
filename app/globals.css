@@ -463,8 +463,8 @@ section[id] {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  min-height: 3.2rem;
-  gap: 1.5rem;
+  min-height: 2.4rem;
+  gap: 1rem;
 }
 
 .nav-shell__brand {
@@ -581,10 +581,10 @@ section[id] {
   display: inline-flex;
   align-items: center;
   position: relative;
-  min-height: 3.2rem;
-  padding: 0 0.7rem;
+  min-height: 2.4rem;
+  padding: 0 0.6rem;
   color: #2a3040;
-  font-size: 0.92rem;
+  font-size: 0.88rem;
   font-weight: 600;
   white-space: nowrap;
   letter-spacing: 0.01em;
@@ -697,7 +697,8 @@ section[id] {
 
 .hero-slider__viewport {
   position: relative;
-  min-height: var(--hero-min-height, 65svh);
+  min-height: var(--hero-min-height, 55svh);
+  max-height: 72svh;
 }
 
 @keyframes ken-burns {
@@ -739,7 +740,8 @@ section[id] {
   z-index: 2;
   display: flex;
   align-items: flex-end;
-  min-height: var(--hero-min-height, 65svh);
+  min-height: var(--hero-min-height, 55svh);
+  max-height: 72svh;
   padding: 0 0 2rem;
 }
 
@@ -1487,6 +1489,49 @@ section[id] {
   margin-top: 1.5rem;
 }
 
+/* CM Photo Grid (3 images, no video) */
+.cm-photo-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.75rem;
+  margin-top: 1.5rem;
+}
+
+.cm-photo-grid__wide {
+  grid-column: 1 / -1;
+  position: relative;
+  aspect-ratio: 16 / 5;
+  border-radius: 12px;
+  overflow: hidden;
+  -webkit-mask-image: linear-gradient(to right, transparent 0%, black 8%, black 92%, transparent 100%);
+  mask-image: linear-gradient(to right, transparent 0%, black 8%, black 92%, transparent 100%);
+}
+
+.cm-photo-grid__half {
+  position: relative;
+  aspect-ratio: 16 / 10;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 6px 16px rgba(0,0,0,0.08);
+}
+
+@media (max-width: 640px) {
+  .cm-photo-grid {
+    grid-template-columns: 1fr 1fr;
+    gap: 0.5rem;
+  }
+
+  .cm-photo-grid__wide {
+    aspect-ratio: 16 / 8;
+    border-radius: 10px;
+  }
+
+  .cm-photo-grid__half {
+    aspect-ratio: 1 / 1;
+    border-radius: 10px;
+  }
+}
+
 .cm-grid__video {
   width: 100%;
   border-radius: 12px;
@@ -1827,7 +1872,7 @@ section[id] {
 .section-page__image {
   position: relative;
   aspect-ratio: 16 / 10;
-  max-width: 400px;
+  max-width: min(400px, 100%);
   margin: 0 auto 2rem;
   border-radius: 1rem;
   overflow: hidden;
@@ -2335,20 +2380,43 @@ section[id] {
     display: none;
   }
 
+  /* Hero: fixed 16/9 rectangle on mobile so full image is visible */
+  .hero-slider {
+    --hero-min-height: 0px;
+  }
+
+  .hero-slider__viewport {
+    min-height: unset !important;
+    aspect-ratio: 4 / 3;
+    height: auto;
+  }
+
+  .hero-slide__content {
+    min-height: unset !important;
+  }
+
+  .hero-slide__content {
+    position: absolute;
+    inset: 0;
+    padding: 0 0 1rem;
+  }
+
   /* Hero panel: full-width at bottom on mobile */
   .hero-slide__panel {
     max-width: calc(100% - 1.4rem);
     margin-left: 0.7rem;
     margin-right: 0.7rem;
     border-radius: 12px;
+    padding: 0.7rem 0.9rem;
   }
 
   .hero-slide__content h2 {
-    font-size: 1.05rem;
+    font-size: clamp(0.82rem, 3.5vw, 1rem);
   }
 
   .hero-slide__subtitle {
-    font-size: 0.82rem;
+    font-size: clamp(0.7rem, 2.8vw, 0.85rem);
+    margin-top: 0.2rem;
   }
 
   /* Hero arrows smaller on mobile */
@@ -2358,10 +2426,10 @@ section[id] {
     font-size: 1.2rem;
   }
 
-  /* Hero dots larger tap targets */
+  /* Hero dots */
   .hero-slider__dot {
-    width: 0.6rem;
-    height: 0.6rem;
+    width: 0.55rem;
+    height: 0.55rem;
   }
 
   /* Bento: single column on phones */
@@ -2527,6 +2595,29 @@ section[id] {
   .footer-list li {
     font-size: 0.85rem;
   }
+
+  /* About stats: tighter gap on phones */
+  .about-split__stats {
+    gap: 1rem;
+    flex-wrap: wrap;
+  }
+
+  /* Admission badge: no min-width on phones */
+  .admission-badge {
+    min-width: 0;
+    width: 100%;
+  }
+
+  /* Section page image: full width on phones */
+  .section-page__image {
+    max-width: 100%;
+  }
+
+  /* Table: allow horizontal scroll */
+  .section-page__table-wrap {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
 }
 
 /* ── Sports Card ── */
@@ -2680,8 +2771,8 @@ section[id] {
 
 @media (max-width: 640px) {
   .back-to-top {
-    bottom: 1.2rem;
-    right: 1.2rem;
+    bottom: 5rem;
+    right: 1rem;
     width: 2.5rem;
     height: 2.5rem;
     font-size: 1.1rem;
