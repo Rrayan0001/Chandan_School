@@ -7,7 +7,6 @@ import { HeroSlider } from "@/components/HeroSlider";
 import { InfoTicker } from "@/components/InfoTicker";
 import { SiteFooter } from "@/components/SiteFooter";
 import { SiteHeader } from "@/components/SiteHeader";
-import { BackToTop } from "@/components/BackToTop";
 import { PageAnimations } from "@/components/PageAnimations";
 import { getSectionPath } from "@/lib/subpage-data";
 import { contactDetails, heroSlides } from "@/lib/site-data";
@@ -394,7 +393,6 @@ export default function HomePage() {
       </main>
 
       <SiteFooter />
-      <BackToTop />
     </div>
   );
 }
