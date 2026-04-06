@@ -492,8 +492,8 @@ export const sectionPages: SectionPage[] = [
       "Students met Dr. A.P.J. Abdul Kalam & Bharat Ratna Prof. C.N.R. Rao",
       "Consistent 100% CBSE Class 10 results every year"
     ],
-    image: "/assets/gallery/School-chandan-Prospectus-proof6.jpg",
-    imageAlt: "Achievements and cultural highlights collage",
+    image: "/assets/sections/student_corner_achievement.jpeg",
+    imageAlt: "School Chandan students achievements layout",
     imageFit: "contain"
   },
   {
