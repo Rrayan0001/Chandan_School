@@ -2,7 +2,7 @@ import React from 'react';
 
 const TICKER_ITEMS = [
   "Excellence in Rural Education",
-  "CBSE & State Board Curriculum",
+  "CBSE Curriculum",
   "Holistic Student Development",
   "Dedicated & Experienced Faculty",
   "Indian Human Values",

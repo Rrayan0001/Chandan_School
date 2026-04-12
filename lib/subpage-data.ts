@@ -135,15 +135,15 @@ export const sectionPages: SectionPage[] = [
     label: "About the School",
     title: "About the School",
     intro:
-      "Established in 2003, School Chandan — Excellence Beyond Education — is a CBSE school, An Institution of Chandan Education Society, Bengaluru–Laxmeshwar. Growing steadily for over 22 years, it brings rural education into the mainstream, empowering young minds with excellence, innovation, and human values.",
+      "<strong>A MAN MAKING SCHOOL</strong> — Established in 2003, School Chandan — Excellence Beyond Education — is a CBSE school, An Institution of Chandan Education Society, Bengaluru–Laxmeshwar. Growing steadily for over 22 years, it brings rural education into the mainstream, empowering young minds with excellence, innovation, and human values.",
     paragraphs: [
-      "The school stands tall today with the support and encouragement of many national and international intellectuals and eminent personalities, including Bharat Ratna Prof. C.N.R. Rao, Dr. A.S. Kiran Kumar (former Chairman, ISRO), Shri Siddaramaiah, IAS/KAS/IPS/IFS officers, and several renowned educationists and Vice-Chancellors. Their guidance continues to strengthen the school's mission to uplift children from rural India toward global opportunities.",
+      "The school stands tall today with the support and encouragement of many national and international intellectuals and eminent personalities: Bharat Ratna Prof. C.N.R. Rao, Dr. A.S. Kiran Kumar (former Chairman, ISRO), Shri Siddaramaiah, IAS/KAS/IPS/IFS officers, and several renowned educationists and Vice-Chancellors. Their guidance continues to strengthen the school's mission to uplift children from rural India toward global opportunities.",
       "School Chandan is blessed with the visionary legacy of Late Shri H. C. Ratageri, the esteemed Director whose dedication laid the strong foundation of the institution. The school continues to flourish under the guidance of Shri T. Ishwar and Smt. Girija T. Ishwar, committed to nurturing quality education in rural communities."
     ],
     highlights: [
       "CBSE school established in 2003, An Institution of Chandan Education Society",
       "22+ years of uplifting rural education into the mainstream",
-      "Supported by Bharat Ratna Prof. C.N.R. Rao & former ISRO Chairman",
+      "Supported by Bharat Ratna Prof. C.N.R. Rao & Dr. A.S. Kiran Kumar (former ISRO Chairman)",
       "Built on excellence, innovation, and Indian human values"
     ],
     image: "/assets/hero/campus-front.jpg",
@@ -416,7 +416,7 @@ export const sectionPages: SectionPage[] = [
     label: "Examination Curriculum",
     title: "Examination Curriculum",
     intro:
-      "The examination system is designed to support readiness, revision, and strong academic foundations rather than last-minute pressure.",
+      "The examination system is designed to support readiness, revision, and strong academic foundations rather than last-minute pressure.<br><br><strong style='background: #fef3c7; padding: 0.2rem 0.6rem; border-radius: 4px; color: #92400e; font-style: italic;'>Examination Without Supervision</strong>",
     paragraphs: [
       "Curriculum planning follows a structured academic path with unit-based progress, regular practice, and timely assessments. This helps students stay aligned with syllabus expectations throughout the year.",
       "Examinations, revisions, class tests, and follow-up guidance are used together so that students understand where they are improving and where additional effort is needed."
@@ -427,9 +427,9 @@ export const sectionPages: SectionPage[] = [
       "Focus on concept mastery along with performance",
       "Clear preparation habits for board-facing classes"
     ],
-    image: "/assets/sections/examination-curriculum.png",
-    imageAlt: "School Chandan Examination Curriculum details",
-    imagePosition: "top"
+    image: "/assets/gallery/School-chandan-Prospectus-proof4.jpg",
+    imageAlt: "Students with blazer attending exam",
+    imageFit: "contain"
   },
   {
     section: "academics",
@@ -599,9 +599,19 @@ export const sectionPages: SectionPage[] = [
       "Karma Yoga, Hobbies & Sanskrit Chanting",
       "Simple Living, High Thinking culture"
     ],
-    image: "/assets/gallery/School-chandan-Prospectus-proof.jpg",
-    imageAlt: "Unique programs collage",
-    imageFit: "contain"
+    image: "/assets/cnrao/home_page1_new.jpg",
+    imageAlt: "CN Rao and Dr Kiran Kumar at School Chandan",
+    imageFit: "contain",
+    galleryImages: [
+      { image: "/assets/cnrao/home_page2_new.jpg", alt: "Interaction with CN Rao and Dr Kiran Kumar" },
+      { image: "/assets/gallery/School-chandan-Prospectus-proof.jpg", alt: "Unique Programme Activity 1" },
+      { image: "/assets/gallery/School-chandan-Prospectus-proof2.jpg", alt: "Unique Programme Activity 2" },
+      { image: "/assets/gallery/School-chandan-Prospectus-proof3.jpg", alt: "Unique Programme Activity 3" },
+      { image: "/assets/gallery/School-chandan-Prospectus-proof4.jpg", alt: "Unique Programme Activity 4" },
+      { image: "/assets/gallery/School-chandan-Prospectus-proof5.jpg", alt: "Unique Programme Activity 5" },
+      { image: "/assets/gallery/School-chandan-Prospectus-proof6.jpg", alt: "Unique Programme Activity 6" },
+      { image: "/assets/gallery/School-chandan-Prospectus-proof7.jpg", alt: "Unique Programme Activity 7" }
+    ]
   },
   {
     section: "features",

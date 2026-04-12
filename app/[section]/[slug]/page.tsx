@@ -76,7 +76,7 @@ export default async function SectionDetailPage({ params }: PageProps) {
 
                   <span className="section-page__eyebrow">{group.label}</span>
                   <h1>{page.title}</h1>
-                  <p className="section-page__intro">{page.intro}</p>
+                  <p className="section-page__intro" dangerouslySetInnerHTML={{ __html: page.intro }} />
                 </header>
 
                 <div 

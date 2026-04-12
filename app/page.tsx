@@ -239,8 +239,8 @@ export default function HomePage() {
                   },
                   {
                     id: "e6VkcwPset4",
-                    title: "C.N. Rao Visit",
-                    description: "An inspiring visit and interaction with the legendary scientist C.N. Rao.",
+                    title: "Honorable Chief Minister Visit",
+                    description: "An inspiring visit and interaction with the Honorable Chief Minister Shri Siddaramaiah.",
                   },
                   {
                     id: "AgKcCv7JnV4",
