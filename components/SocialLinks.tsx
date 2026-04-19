@@ -2,7 +2,7 @@ import Link from "next/link";
 
 export const socialLinks = [
   { label: "Facebook", href: "https://www.facebook.com/SchoolChandanLaxmeshwar", kind: "facebook" as const },
-  { label: "Instagram", href: "https://www.instagram.com/SchoolChandanLxr", kind: "instagram" as const },
+  { label: "Instagram", href: "https://www.instagram.com/school_chandan?utm_source=ig_web_button_share_sheet&igsh=ODdmZWVhMTFiMw%3D%3D", kind: "instagram" as const },
   { label: "YouTube", href: "https://www.youtube.com/@SchoolChandan", kind: "youtube" as const }
 ];
 
