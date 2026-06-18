@@ -1,10 +1,13 @@
 "use client";
 
 import Image from "next/image";
+import Link from "next/link";
 import { useEffect, useState } from "react";
 import type { CSSProperties } from "react";
 
 import type { HeroSlide } from "@/lib/site-data";
+
+const ADMISSION_KEY = "admission_open";
 
 type HeroSliderProps = {
   slides: HeroSlide[];
@@ -13,10 +16,23 @@ type HeroSliderProps = {
 export function HeroSlider({ slides }: HeroSliderProps) {
   const [activeIndex, setActiveIndex] = useState(0);
   const [heroMinHeight, setHeroMinHeight] = useState<number | null>(null);
+  // Default true — shows tag unless admin explicitly turned it off
+  const [showAdmissionTag, setShowAdmissionTag] = useState(true);
 
   if (slides.length === 0) {
     return null;
   }
+
+  // Load admission state from localStorage and listen for admin changes
+  useEffect(() => {
+    const read = () => {
+      const stored = localStorage.getItem(ADMISSION_KEY);
+      setShowAdmissionTag(stored === null ? true : stored === "true");
+    };
+    read();
+    window.addEventListener("storage", read);
+    return () => window.removeEventListener("storage", read);
+  }, []);
 
   useEffect(() => {
     const intervalId = window.setInterval(() => {
@@ -99,6 +115,12 @@ export function HeroSlider({ slides }: HeroSliderProps) {
 
             <div className="container hero-slide__content">
               <div className="hero-slide__panel">
+                {showAdmissionTag && (
+                  <Link href="/about-us/admissions" className="hero-slide__tag">
+                    <span className="hero-slide__tag-dot" />
+                    Admission Open
+                  </Link>
+                )}
                 <h2>{slide.title}</h2>
                 <p className="hero-slide__subtitle">{slide.subtitle}</p>
               </div>

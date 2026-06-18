@@ -100,7 +100,7 @@ export const heroSlides: HeroSlide[] = [
   {
     image: "/assets/hero/campus-front.jpg",
     alt: "Front view of School Chandan campus",
-    title: "Admissions Open",
+    title: "Nurturing Excellence",
     subtitle: "Academic Year 2026–27",
     blurb:
       "A welcoming campus, An Institution of Chandan Education Society, designed to help every learner grow with confidence and discipline.",
