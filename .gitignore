@@ -7,3 +7,8 @@ yarn-debug.log*
 yarn-error.log*
 .DS_Store
 tsconfig.tsbuildinfo
+
+# Environment variables — never commit secrets
+.env
+.env.local
+.env*.local
