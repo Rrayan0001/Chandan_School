@@ -51,11 +51,11 @@ export default function AdminDashboardPage() {
 
         <div className="admin-simple-grid">
           {/* Gallery Card */}
-          <Link href="/gallery" className="admin-nav-card">
+          <Link href="/admin/gallery" className="admin-nav-card">
             <span className="admin-nav-card__icon">📸</span>
             <div>
               <strong>Gallery</strong>
-              <p>View the campus photo gallery</p>
+              <p>Upload &amp; manage gallery photos</p>
             </div>
             <svg className="admin-nav-card__arrow" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
               <polyline points="9 18 15 12 9 6" />

@@ -1,0 +1,454 @@
+"use client";
+
+import { useEffect, useRef, useState, useCallback } from "react";
+import { useRouter } from "next/navigation";
+import Link from "next/link";
+import Image from "next/image";
+
+interface BlobImage {
+  url: string;
+  pathname: string;
+  uploadedAt?: string;
+  size?: number;
+  // Client-side metadata (stored in localStorage alongside url)
+  title?: string;
+  caption?: string;
+}
+
+interface LocalMeta {
+  [url: string]: { title: string; caption: string };
+}
+
+const META_KEY = "gallery_blob_meta";
+
+function getLocalMeta(): LocalMeta {
+  if (typeof window === "undefined") return {};
+  try {
+    return JSON.parse(localStorage.getItem(META_KEY) || "{}");
+  } catch {
+    return {};
+  }
+}
+
+function saveLocalMeta(meta: LocalMeta) {
+  localStorage.setItem(META_KEY, JSON.stringify(meta));
+}
+
+export default function AdminGalleryPage() {
+  const router = useRouter();
+  const fileInputRef = useRef<HTMLInputElement>(null);
+
+  const [blobs, setBlobs] = useState<BlobImage[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [uploading, setUploading] = useState(false);
+  const [uploadProgress, setUploadProgress] = useState(0);
+  const [uploadError, setUploadError] = useState("");
+  const [successMsg, setSuccessMsg] = useState("");
+  const [deleteConfirm, setDeleteConfirm] = useState<string | null>(null);
+  const [deleting, setDeleting] = useState<string | null>(null);
+
+  // Form state
+  const [dragOver, setDragOver] = useState(false);
+  const [selectedFile, setSelectedFile] = useState<File | null>(null);
+  const [title, setTitle] = useState("");
+  const [caption, setCaption] = useState("");
+  const [preview, setPreview] = useState<string | null>(null);
+
+  useEffect(() => {
+    if (sessionStorage.getItem("admin_authenticated") !== "true") {
+      router.replace("/admin");
+      return;
+    }
+    fetchBlobs();
+  }, [router]);
+
+  const fetchBlobs = useCallback(async () => {
+    setLoading(true);
+    try {
+      const res = await fetch("/api/gallery/list");
+      const data = await res.json();
+      const meta = getLocalMeta();
+      const enriched = (data.blobs || []).map((b: BlobImage) => ({
+        ...b,
+        title: meta[b.url]?.title || prettifyName(b.pathname),
+        caption: meta[b.url]?.caption || "",
+      }));
+      setBlobs(enriched);
+    } catch {
+      setUploadError("Failed to load gallery images.");
+    } finally {
+      setLoading(false);
+    }
+  }, []);
+
+  function prettifyName(pathname: string): string {
+    const name = pathname.split("/").pop() || pathname;
+    return name
+      .replace(/^\d+-/, "")
+      .replace(/\.[^.]+$/, "")
+      .replace(/[_-]/g, " ")
+      .replace(/\b\w/g, (c) => c.toUpperCase());
+  }
+
+  function handleFileSelect(file: File) {
+    if (!file.type.startsWith("image/")) {
+      setUploadError("Please select an image file (JPG, PNG, WebP, etc.).");
+      return;
+    }
+    if (file.size > 10 * 1024 * 1024) {
+      setUploadError("File size must be under 10 MB.");
+      return;
+    }
+    setUploadError("");
+    setSelectedFile(file);
+    setPreview(URL.createObjectURL(file));
+    if (!title) setTitle(prettifyName(file.name));
+  }
+
+  const handleDrop = (e: React.DragEvent<HTMLDivElement>) => {
+    e.preventDefault();
+    setDragOver(false);
+    const file = e.dataTransfer.files[0];
+    if (file) handleFileSelect(file);
+  };
+
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) handleFileSelect(file);
+  };
+
+  const handleUpload = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!selectedFile) return;
+
+    setUploading(true);
+    setUploadError("");
+    setUploadProgress(0);
+
+    // Simulate progress while uploading
+    const progressInterval = setInterval(() => {
+      setUploadProgress((p) => Math.min(p + 10, 85));
+    }, 200);
+
+    try {
+      const formData = new FormData();
+      formData.append("file", selectedFile);
+      formData.append("title", title || prettifyName(selectedFile.name));
+      formData.append("caption", caption);
+
+      const res = await fetch("/api/gallery/upload", {
+        method: "POST",
+        body: formData,
+      });
+
+      clearInterval(progressInterval);
+      setUploadProgress(100);
+
+      if (!res.ok) {
+        const err = await res.json();
+        throw new Error(err.error || "Upload failed");
+      }
+
+      const result = await res.json();
+
+      // Store metadata locally
+      const meta = getLocalMeta();
+      meta[result.url] = {
+        title: title || prettifyName(selectedFile.name),
+        caption,
+      };
+      saveLocalMeta(meta);
+
+      setSuccessMsg(`"${meta[result.url].title}" uploaded successfully!`);
+      setTimeout(() => setSuccessMsg(""), 4000);
+
+      // Reset form
+      setSelectedFile(null);
+      setPreview(null);
+      setTitle("");
+      setCaption("");
+      if (fileInputRef.current) fileInputRef.current.value = "";
+
+      await fetchBlobs();
+    } catch (err: unknown) {
+      clearInterval(progressInterval);
+      setUploadError(err instanceof Error ? err.message : "Upload failed. Please check your BLOB_READ_WRITE_TOKEN.");
+    } finally {
+      setUploading(false);
+      setTimeout(() => setUploadProgress(0), 1000);
+    }
+  };
+
+  const handleDelete = async (url: string) => {
+    setDeleting(url);
+    try {
+      await fetch("/api/gallery/delete", {
+        method: "DELETE",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ url }),
+      });
+
+      // Clean up local meta
+      const meta = getLocalMeta();
+      delete meta[url];
+      saveLocalMeta(meta);
+
+      setBlobs((prev) => prev.filter((b) => b.url !== url));
+      setSuccessMsg("Image deleted successfully.");
+      setTimeout(() => setSuccessMsg(""), 3000);
+    } catch {
+      setUploadError("Failed to delete image.");
+    } finally {
+      setDeleting(null);
+      setDeleteConfirm(null);
+    }
+  };
+
+  const logoutAction = () => {
+    sessionStorage.removeItem("admin_authenticated");
+    router.push("/admin");
+  };
+
+  return (
+    <div className="admin-dash-shell">
+      {/* Sidebar */}
+      <aside className="admin-sidebar">
+        <div className="admin-sidebar__brand">
+          <span className="admin-sidebar__icon">🏫</span>
+          <div>
+            <strong>School Chandan</strong>
+            <span>Admin Panel</span>
+          </div>
+        </div>
+
+        <nav className="admin-sidebar__nav">
+          <Link href="/admin/dashboard" className="admin-sidebar__link">
+            <span>🏠</span> Dashboard
+          </Link>
+          <Link href="/admin/gallery" className="admin-sidebar__link admin-sidebar__link--active">
+            <span>📸</span> Gallery
+          </Link>
+          <Link href="/admin/addons" className="admin-sidebar__link">
+            <span>⚙️</span> Add-on&apos;s
+          </Link>
+        </nav>
+
+        <button className="admin-sidebar__logout" onClick={logoutAction}>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+            <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4" />
+            <polyline points="16 17 21 12 16 7" />
+            <line x1="21" y1="12" x2="9" y2="12" />
+          </svg>
+          Sign Out
+        </button>
+      </aside>
+
+      {/* Main */}
+      <main className="admin-dash-main">
+        <header className="admin-topbar">
+          <div>
+            <h1>Gallery Manager</h1>
+            <p>Upload and manage photos displayed on the public gallery page</p>
+          </div>
+          {successMsg && (
+            <span className="admin-saved-badge">✓ {successMsg}</span>
+          )}
+        </header>
+
+        <div className="admin-gallery-content">
+
+          {/* ─── Upload Section ─── */}
+          <section className="admin-gallery-upload-section">
+            <h2 className="admin-gallery-section-title">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+              Upload New Image
+            </h2>
+
+            <form className="admin-gallery-upload-form" onSubmit={handleUpload}>
+              {/* Drop zone */}
+              <div
+                className={`admin-gallery-dropzone ${dragOver ? "admin-gallery-dropzone--active" : ""} ${selectedFile ? "admin-gallery-dropzone--has-file" : ""}`}
+                onDragOver={(e) => { e.preventDefault(); setDragOver(true); }}
+                onDragLeave={() => setDragOver(false)}
+                onDrop={handleDrop}
+                onClick={() => fileInputRef.current?.click()}
+              >
+                <input
+                  ref={fileInputRef}
+                  type="file"
+                  accept="image/*"
+                  className="admin-gallery-file-input"
+                  onChange={handleInputChange}
+                />
+                {preview ? (
+                  <div className="admin-gallery-dropzone-preview">
+                    <Image src={preview} alt="Preview" fill style={{ objectFit: "contain" }} />
+                    <button
+                      type="button"
+                      className="admin-gallery-dropzone-clear"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        setSelectedFile(null);
+                        setPreview(null);
+                        setTitle("");
+                        if (fileInputRef.current) fileInputRef.current.value = "";
+                      }}
+                    >×</button>
+                  </div>
+                ) : (
+                  <div className="admin-gallery-dropzone-placeholder">
+                    <div className="admin-gallery-dropzone-icon">
+                      <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5"><rect x="3" y="3" width="18" height="18" rx="3"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+                    </div>
+                    <p className="admin-gallery-dropzone-label">Drag &amp; drop an image here</p>
+                    <p className="admin-gallery-dropzone-sub">or <span>click to browse</span> · JPG, PNG, WebP · Max 10 MB</p>
+                  </div>
+                )}
+              </div>
+
+              {/* Metadata fields */}
+              <div className="admin-gallery-meta-fields">
+                <div className="admin-gallery-field">
+                  <label htmlFor="img-title">Image Title</label>
+                  <input
+                    id="img-title"
+                    type="text"
+                    value={title}
+                    onChange={(e) => setTitle(e.target.value)}
+                    placeholder="e.g. Annual Day 2024"
+                    required
+                  />
+                </div>
+                <div className="admin-gallery-field">
+                  <label htmlFor="img-caption">Caption <span>(optional)</span></label>
+                  <input
+                    id="img-caption"
+                    type="text"
+                    value={caption}
+                    onChange={(e) => setCaption(e.target.value)}
+                    placeholder="Short description of the photo"
+                  />
+                </div>
+              </div>
+
+              {/* Progress bar */}
+              {uploading && (
+                <div className="admin-gallery-progress-wrap">
+                  <div className="admin-gallery-progress-bar" style={{ width: `${uploadProgress}%` }} />
+                  <span>{uploadProgress < 100 ? `Uploading… ${uploadProgress}%` : "Processing…"}</span>
+                </div>
+              )}
+
+              {/* Error */}
+              {uploadError && (
+                <div className="admin-gallery-error">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+                  {uploadError}
+                </div>
+              )}
+
+              <button
+                type="submit"
+                className="admin-gallery-upload-btn"
+                disabled={!selectedFile || uploading}
+              >
+                {uploading ? (
+                  <><span className="admin-login-spinner" /> Uploading…</>
+                ) : (
+                  <><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg> Upload to Gallery</>
+                )}
+              </button>
+            </form>
+          </section>
+
+          {/* ─── Uploaded Images Grid ─── */}
+          <section className="admin-gallery-grid-section">
+            <div className="admin-gallery-grid-header">
+              <h2 className="admin-gallery-section-title">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><rect x="3" y="3" width="18" height="18" rx="3"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+                Uploaded Images
+                <span className="admin-gallery-count">{blobs.length}</span>
+              </h2>
+              <Link href="/gallery" target="_blank" className="admin-gallery-view-link">
+                View Public Gallery →
+              </Link>
+            </div>
+
+            {loading ? (
+              <div className="admin-gallery-loading">
+                <span className="admin-gallery-spinner" />
+                Loading images…
+              </div>
+            ) : blobs.length === 0 ? (
+              <div className="admin-gallery-empty">
+                <div className="admin-gallery-empty-icon">📭</div>
+                <p>No images uploaded yet.</p>
+                <p>Upload your first image above and it will appear on the public gallery page.</p>
+              </div>
+            ) : (
+              <div className="admin-gallery-grid">
+                {blobs.map((blob) => (
+                  <div key={blob.url} className="admin-gallery-card">
+                    <div className="admin-gallery-card__img">
+                      <Image
+                        src={blob.url}
+                        alt={blob.title || "Gallery image"}
+                        fill
+                        sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 25vw"
+                        style={{ objectFit: "cover" }}
+                      />
+                      {/* Overlay actions */}
+                      <div className="admin-gallery-card__overlay">
+                        <a href={blob.url} target="_blank" rel="noopener noreferrer" className="admin-gallery-card__action">
+                          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+                        </a>
+                        <button
+                          className="admin-gallery-card__action admin-gallery-card__action--delete"
+                          onClick={() => setDeleteConfirm(blob.url)}
+                          disabled={!!deleting}
+                        >
+                          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/><path d="M10 11v6"/><path d="M14 11v6"/><path d="M9 6V4a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2"/></svg>
+                        </button>
+                      </div>
+                    </div>
+                    <div className="admin-gallery-card__body">
+                      <strong>{blob.title || "Untitled"}</strong>
+                      {blob.caption && <p>{blob.caption}</p>}
+                    </div>
+                  </div>
+                ))}
+              </div>
+            )}
+          </section>
+        </div>
+
+        {/* ─── Delete Confirm Modal ─── */}
+        {deleteConfirm && (
+          <div className="admin-gallery-modal-overlay" onClick={() => setDeleteConfirm(null)}>
+            <div className="admin-gallery-modal" onClick={(e) => e.stopPropagation()}>
+              <div className="admin-gallery-modal__icon">🗑️</div>
+              <h3>Delete Image?</h3>
+              <p>This will permanently remove the image from the Vercel Blob store and the public gallery. This action cannot be undone.</p>
+              <div className="admin-gallery-modal__actions">
+                <button className="admin-gallery-modal__cancel" onClick={() => setDeleteConfirm(null)}>
+                  Cancel
+                </button>
+                <button
+                  className="admin-gallery-modal__confirm"
+                  onClick={() => handleDelete(deleteConfirm)}
+                  disabled={!!deleting}
+                >
+                  {deleting ? <><span className="admin-login-spinner" /> Deleting…</> : "Yes, Delete"}
+                </button>
+              </div>
+            </div>
+          </div>
+        )}
+
+        <footer className="admin-dash-footer">
+          School Chandan Admin Portal · Chandan Education Society
+        </footer>
+      </main>
+    </div>
+  );
+}
