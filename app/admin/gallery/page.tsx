@@ -4,6 +4,7 @@ import { useEffect, useRef, useState, useCallback } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import Image from "next/image";
+import { AdminNavbar } from "../AdminNavbar";
 
 interface BlobImage {
   url: string;
@@ -15,24 +16,7 @@ interface BlobImage {
   caption?: string;
 }
 
-interface LocalMeta {
-  [url: string]: { title: string; caption: string };
-}
 
-const META_KEY = "gallery_blob_meta";
-
-function getLocalMeta(): LocalMeta {
-  if (typeof window === "undefined") return {};
-  try {
-    return JSON.parse(localStorage.getItem(META_KEY) || "{}");
-  } catch {
-    return {};
-  }
-}
-
-function saveLocalMeta(meta: LocalMeta) {
-  localStorage.setItem(META_KEY, JSON.stringify(meta));
-}
 
 export default function AdminGalleryPage() {
   const router = useRouter();
@@ -54,6 +38,11 @@ export default function AdminGalleryPage() {
   const [caption, setCaption] = useState("");
   const [preview, setPreview] = useState<string | null>(null);
 
+  // Edit metadata state
+  const [editingBlob, setEditingBlob] = useState<BlobImage | null>(null);
+  const [editTitle, setEditTitle] = useState("");
+  const [editCaption, setEditCaption] = useState("");
+
   useEffect(() => {
     if (sessionStorage.getItem("admin_authenticated") !== "true") {
       router.replace("/admin");
@@ -67,13 +56,7 @@ export default function AdminGalleryPage() {
     try {
       const res = await fetch("/api/gallery/list");
       const data = await res.json();
-      const meta = getLocalMeta();
-      const enriched = (data.blobs || []).map((b: BlobImage) => ({
-        ...b,
-        title: meta[b.url]?.title || prettifyName(b.pathname),
-        caption: meta[b.url]?.caption || "",
-      }));
-      setBlobs(enriched);
+      setBlobs(data.blobs || []);
     } catch {
       setUploadError("Failed to load gallery images.");
     } finally {
@@ -151,15 +134,7 @@ export default function AdminGalleryPage() {
 
       const result = await res.json();
 
-      // Store metadata locally
-      const meta = getLocalMeta();
-      meta[result.url] = {
-        title: title || prettifyName(selectedFile.name),
-        caption,
-      };
-      saveLocalMeta(meta);
-
-      setSuccessMsg(`"${meta[result.url].title}" uploaded successfully!`);
+      setSuccessMsg(`"${title || prettifyName(selectedFile.name)}" uploaded successfully!`);
       setTimeout(() => setSuccessMsg(""), 4000);
 
       // Reset form
@@ -188,10 +163,7 @@ export default function AdminGalleryPage() {
         body: JSON.stringify({ url }),
       });
 
-      // Clean up local meta
-      const meta = getLocalMeta();
-      delete meta[url];
-      saveLocalMeta(meta);
+
 
       setBlobs((prev) => prev.filter((b) => b.url !== url));
       setSuccessMsg("Image deleted successfully.");
@@ -204,44 +176,56 @@ export default function AdminGalleryPage() {
     }
   };
 
-  const logoutAction = () => {
-    sessionStorage.removeItem("admin_authenticated");
-    router.push("/admin");
+  const handleEditClick = (blob: BlobImage) => {
+    setEditingBlob(blob);
+    setEditTitle(blob.title || "");
+    setEditCaption(blob.caption || "");
+  };
+
+  const handleSaveEdit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!editingBlob) return;
+
+    try {
+      const res = await fetch("/api/gallery/edit", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          url: editingBlob.url,
+          title: editTitle.trim(),
+          caption: editCaption.trim(),
+        }),
+      });
+
+      if (!res.ok) {
+        throw new Error("Failed to save changes");
+      }
+
+      setBlobs((prev) =>
+        prev.map((b) =>
+          b.url === editingBlob.url
+            ? {
+                ...b,
+                title: editTitle.trim() || prettifyName(b.pathname),
+                caption: editCaption.trim(),
+              }
+            : b
+        )
+      );
+
+      setSuccessMsg("Image details updated successfully.");
+      setTimeout(() => setSuccessMsg(""), 3000);
+    } catch {
+      setUploadError("Failed to update image details.");
+      setTimeout(() => setUploadError(""), 3000);
+    } finally {
+      setEditingBlob(null);
+    }
   };
 
   return (
     <div className="admin-dash-shell">
-      {/* Sidebar */}
-      <aside className="admin-sidebar">
-        <div className="admin-sidebar__brand">
-          <span className="admin-sidebar__icon">🏫</span>
-          <div>
-            <strong>School Chandan</strong>
-            <span>Admin Panel</span>
-          </div>
-        </div>
-
-        <nav className="admin-sidebar__nav">
-          <Link href="/admin/dashboard" className="admin-sidebar__link">
-            <span>🏠</span> Dashboard
-          </Link>
-          <Link href="/admin/gallery" className="admin-sidebar__link admin-sidebar__link--active">
-            <span>📸</span> Gallery
-          </Link>
-          <Link href="/admin/addons" className="admin-sidebar__link">
-            <span>⚙️</span> Add-on&apos;s
-          </Link>
-        </nav>
-
-        <button className="admin-sidebar__logout" onClick={logoutAction}>
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-            <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4" />
-            <polyline points="16 17 21 12 16 7" />
-            <line x1="21" y1="12" x2="9" y2="12" />
-          </svg>
-          Sign Out
-        </button>
-      </aside>
+      <AdminNavbar activePage="gallery" />
 
       {/* Main */}
       <main className="admin-dash-main">
@@ -391,7 +375,7 @@ export default function AdminGalleryPage() {
                   <div key={blob.url} className="admin-gallery-card">
                     <div className="admin-gallery-card__img">
                       <Image
-                        src={blob.url}
+                        src={`/api/gallery/image?url=${encodeURIComponent(blob.url)}`}
                         alt={blob.title || "Gallery image"}
                         fill
                         sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 25vw"
@@ -399,13 +383,21 @@ export default function AdminGalleryPage() {
                       />
                       {/* Overlay actions */}
                       <div className="admin-gallery-card__overlay">
-                        <a href={blob.url} target="_blank" rel="noopener noreferrer" className="admin-gallery-card__action">
+                        <a href={`/api/gallery/image?url=${encodeURIComponent(blob.url)}`} target="_blank" rel="noopener noreferrer" className="admin-gallery-card__action" title="View full image">
                           <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
                         </a>
+                        <button
+                          className="admin-gallery-card__action admin-gallery-card__action--edit"
+                          onClick={() => handleEditClick(blob)}
+                          title="Edit details"
+                        >
+                          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
+                        </button>
                         <button
                           className="admin-gallery-card__action admin-gallery-card__action--delete"
                           onClick={() => setDeleteConfirm(blob.url)}
                           disabled={!!deleting}
+                          title="Delete image"
                         >
                           <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/><path d="M10 11v6"/><path d="M14 11v6"/><path d="M9 6V4a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2"/></svg>
                         </button>
@@ -441,6 +433,47 @@ export default function AdminGalleryPage() {
                   {deleting ? <><span className="admin-login-spinner" /> Deleting…</> : "Yes, Delete"}
                 </button>
               </div>
+            </div>
+          </div>
+        )}
+
+        {/* ─── Edit Details Modal ─── */}
+        {editingBlob && (
+          <div className="admin-gallery-modal-overlay" onClick={() => setEditingBlob(null)}>
+            <div className="admin-gallery-modal" onClick={(e) => e.stopPropagation()}>
+              <div className="admin-gallery-modal__icon">✏️</div>
+              <h3>Edit Image Details</h3>
+              <form onSubmit={handleSaveEdit} className="admin-gallery-edit-form" style={{ width: "100%", marginTop: "1rem", textAlign: "left" }}>
+                <div className="admin-gallery-field" style={{ marginBottom: "1rem" }}>
+                  <label htmlFor="edit-img-title" style={{ display: "block", marginBottom: "0.4rem", fontSize: "0.85rem", fontWeight: 700, color: "#333" }}>Image Title</label>
+                  <input
+                    id="edit-img-title"
+                    type="text"
+                    value={editTitle}
+                    onChange={(e) => setEditTitle(e.target.value)}
+                    required
+                    style={{ width: "100%", padding: "0.65rem 0.8rem", border: "1px solid #ddd", borderRadius: "10px", fontSize: "0.9rem", fontFamily: "var(--font-body)" }}
+                  />
+                </div>
+                <div className="admin-gallery-field" style={{ marginBottom: "1.5rem" }}>
+                  <label htmlFor="edit-img-caption" style={{ display: "block", marginBottom: "0.4rem", fontSize: "0.85rem", fontWeight: 700, color: "#333" }}>Caption (optional)</label>
+                  <input
+                    id="edit-img-caption"
+                    type="text"
+                    value={editCaption}
+                    onChange={(e) => setEditCaption(e.target.value)}
+                    style={{ width: "100%", padding: "0.65rem 0.8rem", border: "1px solid #ddd", borderRadius: "10px", fontSize: "0.9rem", fontFamily: "var(--font-body)" }}
+                  />
+                </div>
+                <div className="admin-gallery-modal__actions" style={{ display: "flex", gap: "0.75rem", justifyContent: "flex-end" }}>
+                  <button type="button" className="admin-gallery-modal__cancel" onClick={() => setEditingBlob(null)}>
+                    Cancel
+                  </button>
+                  <button type="submit" className="admin-gallery-modal__confirm" style={{ background: "#6a1b29" }}>
+                    Save Changes
+                  </button>
+                </div>
+              </form>
             </div>
           </div>
         )}

@@ -5,6 +5,7 @@ import { list } from "@vercel/blob";
 import { SiteFooter } from "@/components/SiteFooter";
 import { SiteHeader } from "@/components/SiteHeader";
 import { galleryPageImages } from "@/lib/site-data";
+import { getBlobMetadata, prettifyName } from "@/lib/gallery-metadata";
 
 // Revalidate every 60 seconds so new uploads appear quickly
 export const revalidate = 60;
@@ -12,7 +13,15 @@ export const revalidate = 60;
 async function getBlobImages() {
   try {
     const { blobs } = await list({ prefix: "gallery/" });
-    return blobs.filter((b) => !b.pathname.endsWith(".meta.json"));
+    const metadata = await getBlobMetadata();
+    
+    return blobs
+      .filter((b) => b.pathname !== "gallery/metadata.json" && !b.pathname.endsWith(".meta.json"))
+      .map((b) => ({
+        ...b,
+        title: metadata[b.url]?.title || prettifyName(b.pathname),
+        caption: metadata[b.url]?.caption || "",
+      }));
   } catch {
     return [];
   }
@@ -28,15 +37,11 @@ export default async function GalleryPage() {
       <main className="gallery-page">
         <section className="gallery-page__hero">
           <div className="container gallery-page__hero-inner">
-            <span className="section-heading__eyebrow">School Gallery</span>
+            <span className="gallery-page__eyebrow">School Gallery</span>
             <h1>School Chandan Photo Gallery</h1>
             <p>
-              A full gallery page presenting the campus, classroom,
-              activity, cultural, and achievement visuals from School Chandan.
+              A premium collection of campus, classroom, activity, cultural, and achievement memories from School Chandan.
             </p>
-            <Link className="button-link button-link--gold" href="/">
-              Back to Home
-            </Link>
           </div>
         </section>
 
@@ -54,23 +59,16 @@ export default async function GalleryPage() {
                 <article className="gallery-page__card" key={blob.url}>
                   <div className="gallery-page__image">
                     <Image
-                      alt={blob.pathname.split("/").pop() || "Gallery photo"}
+                      alt={blob.title || "Gallery photo"}
                       fill
                       sizes="(max-width: 1100px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                      src={blob.url}
+                      src={`/api/gallery/image?url=${encodeURIComponent(blob.url)}`}
                       style={{ objectPosition: "center center" }}
                     />
                   </div>
                   <div className="gallery-page__body">
-                    <h2>
-                      {blob.pathname
-                        .split("/")
-                        .pop()
-                        ?.replace(/^\d+-/, "")
-                        .replace(/\.[^.]+$/, "")
-                        .replace(/[_-]/g, " ")
-                        .replace(/\b\w/g, (c) => c.toUpperCase()) || "Gallery Image"}
-                    </h2>
+                    <h2>{blob.title}</h2>
+                    {blob.caption && <p>{blob.caption}</p>}
                   </div>
                 </article>
               ))}

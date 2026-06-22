@@ -9,6 +9,21 @@ import type { HeroSlide } from "@/lib/site-data";
 
 const ADMISSION_KEY = "admission_open";
 
+function formatDateString(dateStr: string) {
+  if (!dateStr) return "";
+  try {
+    const d = new Date(dateStr);
+    if (isNaN(d.getTime())) return dateStr;
+    return d.toLocaleDateString("en-US", {
+      month: "long",
+      day: "numeric",
+      year: "numeric",
+    });
+  } catch {
+    return dateStr;
+  }
+}
+
 type HeroSliderProps = {
   slides: HeroSlide[];
 };
@@ -16,18 +31,25 @@ type HeroSliderProps = {
 export function HeroSlider({ slides }: HeroSliderProps) {
   const [activeIndex, setActiveIndex] = useState(0);
   const [heroMinHeight, setHeroMinHeight] = useState<number | null>(null);
-  // Default true — shows tag unless admin explicitly turned it off
   const [showAdmissionTag, setShowAdmissionTag] = useState(true);
+  const [showResultTag, setShowResultTag] = useState(false);
+  const [resultDate, setResultDate] = useState("");
 
   if (slides.length === 0) {
     return null;
   }
 
-  // Load admission state from localStorage and listen for admin changes
+  // Load state from localStorage and listen for admin changes
   useEffect(() => {
     const read = () => {
-      const stored = localStorage.getItem(ADMISSION_KEY);
-      setShowAdmissionTag(stored === null ? true : stored === "true");
+      const storedAdmit = localStorage.getItem(ADMISSION_KEY);
+      setShowAdmissionTag(storedAdmit === null ? true : storedAdmit === "true");
+
+      const storedResult = localStorage.getItem("result_day_enabled");
+      setShowResultTag(storedResult === "true");
+
+      const storedDate = localStorage.getItem("result_day_date") || "";
+      setResultDate(storedDate);
     };
     read();
     window.addEventListener("storage", read);
@@ -115,12 +137,20 @@ export function HeroSlider({ slides }: HeroSliderProps) {
 
             <div className="container hero-slide__content">
               <div className="hero-slide__panel">
-                {showAdmissionTag && (
-                  <Link href="/about-us/admissions" className="hero-slide__tag">
-                    <span className="hero-slide__tag-dot" />
-                    Admission Open
-                  </Link>
-                )}
+                <div className="hero-slide__tags">
+                  {showAdmissionTag && (
+                    <Link href="/about-us/admissions" className="hero-slide__tag">
+                      <span className="hero-slide__tag-dot" />
+                      Admission Open
+                    </Link>
+                  )}
+                  {showResultTag && (
+                    <div className="hero-slide__tag hero-slide__tag--result">
+                      <span className="hero-slide__tag-dot hero-slide__tag-dot--result" />
+                      Result Day: {resultDate ? formatDateString(resultDate) : ""}
+                    </div>
+                  )}
+                </div>
                 <h2>{slide.title}</h2>
                 <p className="hero-slide__subtitle">{slide.subtitle}</p>
               </div>

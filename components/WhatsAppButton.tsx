@@ -1,11 +1,18 @@
 "use client";
 
+import { usePathname } from "next/navigation";
+
 export function WhatsAppButton() {
+  const pathname = usePathname();
   const phoneNumber = "917676532414"; // India country code + number
   const message = encodeURIComponent(
     "Hello! I would like to know more about School Chandan."
   );
   const whatsappUrl = `https://wa.me/${phoneNumber}?text=${message}`;
+
+  if (pathname?.startsWith("/admin")) {
+    return null;
+  }
 
   return (
     <a

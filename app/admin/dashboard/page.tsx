@@ -3,6 +3,7 @@
 import { useEffect } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
+import { AdminNavbar } from "../AdminNavbar";
 
 export default function AdminDashboardPage() {
   const router = useRouter();
@@ -13,32 +14,9 @@ export default function AdminDashboardPage() {
     }
   }, [router]);
 
-  const handleLogout = () => {
-    sessionStorage.removeItem("admin_authenticated");
-    router.push("/admin");
-  };
-
   return (
     <div className="admin-dash-shell">
-      {/* Sidebar */}
-      <aside className="admin-sidebar">
-        <div className="admin-sidebar__brand">
-          <span className="admin-sidebar__icon">🏫</span>
-          <div>
-            <strong>School Chandan</strong>
-            <span>Admin Panel</span>
-          </div>
-        </div>
-
-        <button className="admin-sidebar__logout" onClick={handleLogout}>
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-            <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4" />
-            <polyline points="16 17 21 12 16 7" />
-            <line x1="21" y1="12" x2="9" y2="12" />
-          </svg>
-          Sign Out
-        </button>
-      </aside>
+      <AdminNavbar activePage="dashboard" />
 
       {/* Main */}
       <main className="admin-dash-main">

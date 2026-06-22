@@ -92,6 +92,7 @@ export const navigation: NavItem[] = [
     children: buildNavigationChildren("activities")
   },
   { label: "Sports", href: getSectionPath("features", "sports-ground") },
+  { label: "Gallery", href: "/gallery" },
   { label: "Resources", href: "/#resources" },
   { label: "Contact Us", href: "/#contact" }
 ];

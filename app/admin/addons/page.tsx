@@ -3,12 +3,30 @@
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
+import { AdminNavbar } from "../AdminNavbar";
 
 const STORAGE_KEY = "admission_open";
+
+function formatDateString(dateStr: string) {
+  if (!dateStr) return "";
+  try {
+    const d = new Date(dateStr);
+    if (isNaN(d.getTime())) return dateStr;
+    return d.toLocaleDateString("en-US", {
+      month: "long",
+      day: "numeric",
+      year: "numeric",
+    });
+  } catch {
+    return dateStr;
+  }
+}
 
 export default function AddonsPage() {
   const router = useRouter();
   const [admissionOpen, setAdmissionOpen] = useState(true);
+  const [resultEnabled, setResultEnabled] = useState(false);
+  const [resultDate, setResultDate] = useState("");
   const [saved, setSaved] = useState(false);
 
   useEffect(() => {
@@ -17,16 +35,20 @@ export default function AddonsPage() {
       return;
     }
     // Load current state from localStorage
-    const stored = localStorage.getItem(STORAGE_KEY);
-    // Default to true if never set
-    setAdmissionOpen(stored === null ? true : stored === "true");
+    const storedAdmit = localStorage.getItem(STORAGE_KEY);
+    setAdmissionOpen(storedAdmit === null ? true : storedAdmit === "true");
+
+    const storedResult = localStorage.getItem("result_day_enabled");
+    setResultEnabled(storedResult === "true");
+
+    const storedDate = localStorage.getItem("result_day_date") || "";
+    setResultDate(storedDate);
   }, [router]);
 
   const handleToggle = () => {
     const newValue = !admissionOpen;
     setAdmissionOpen(newValue);
     localStorage.setItem(STORAGE_KEY, String(newValue));
-    // Dispatch storage event so HeroSlider reacts on same page (cross-tab already works)
     window.dispatchEvent(new StorageEvent("storage", {
       key: STORAGE_KEY,
       newValue: String(newValue),
@@ -35,42 +57,33 @@ export default function AddonsPage() {
     setTimeout(() => setSaved(false), 2000);
   };
 
+  const handleResultToggle = () => {
+    const newValue = !resultEnabled;
+    setResultEnabled(newValue);
+    localStorage.setItem("result_day_enabled", String(newValue));
+    window.dispatchEvent(new StorageEvent("storage", {
+      key: "result_day_enabled",
+      newValue: String(newValue),
+    }));
+    setSaved(true);
+    setTimeout(() => setSaved(false), 2000);
+  };
+
+  const handleDateChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const newValue = e.target.value;
+    setResultDate(newValue);
+    localStorage.setItem("result_day_date", newValue);
+    window.dispatchEvent(new StorageEvent("storage", {
+      key: "result_day_date",
+      newValue: newValue,
+    }));
+    setSaved(true);
+    setTimeout(() => setSaved(false), 2000);
+  };
+
   return (
     <div className="admin-dash-shell">
-      {/* Sidebar */}
-      <aside className="admin-sidebar">
-        <div className="admin-sidebar__brand">
-          <span className="admin-sidebar__icon">🏫</span>
-          <div>
-            <strong>School Chandan</strong>
-            <span>Admin Panel</span>
-          </div>
-        </div>
-
-        <nav className="admin-sidebar__nav">
-          <Link href="/admin/dashboard" className="admin-sidebar__link">
-            <span>🏠</span> Dashboard
-          </Link>
-          <Link href="/gallery" className="admin-sidebar__link">
-            <span>📸</span> Gallery
-          </Link>
-          <Link href="/admin/addons" className="admin-sidebar__link admin-sidebar__link--active">
-            <span>⚙️</span> Add-on's
-          </Link>
-        </nav>
-
-        <button
-          className="admin-sidebar__logout"
-          onClick={() => { sessionStorage.removeItem("admin_authenticated"); router.push("/admin"); }}
-        >
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-            <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4" />
-            <polyline points="16 17 21 12 16 7" />
-            <line x1="21" y1="12" x2="9" y2="12" />
-          </svg>
-          Sign Out
-        </button>
-      </aside>
+      <AdminNavbar activePage="addons" />
 
       {/* Main */}
       <main className="admin-dash-main">
@@ -93,7 +106,7 @@ export default function AddonsPage() {
               Control what is displayed on the hero slider across all slides on the homepage.
             </p>
 
-            {/* Toggle Row */}
+            {/* Admission Open Toggle Row */}
             <div className="admin-toggle-row">
               <div className="admin-toggle-row__info">
                 <span className="admin-toggle-row__label">Admission Open Tag</span>
@@ -117,13 +130,64 @@ export default function AddonsPage() {
               </div>
             </div>
 
-            {/* Live preview hint */}
-            <div className={`admin-addon-preview ${admissionOpen ? "admin-addon-preview--on" : "admin-addon-preview--off"}`}>
+            {/* Live preview hint for Admission Open */}
+            <div className={`admin-addon-preview ${admissionOpen ? "admin-addon-preview--on" : "admin-addon-preview--off"}`} style={{ marginBottom: "2rem" }}>
               <span>Preview:</span>
               {admissionOpen ? (
                 <span className="admin-preview-tag">
                   <span className="admin-preview-dot" />
                   Admission Open
+                </span>
+              ) : (
+                <span className="admin-preview-hidden">Tag hidden from visitors</span>
+              )}
+            </div>
+
+            {/* Result Day Toggle Row */}
+            <div className="admin-toggle-row">
+              <div className="admin-toggle-row__info">
+                <span className="admin-toggle-row__label">Result Day Tag</span>
+                <span className="admin-toggle-row__sub">
+                  Shows the "Result Day" badge with a specified date on every hero slide
+                </span>
+              </div>
+              <div className="admin-toggle-wrap">
+                <span className={`admin-toggle-status ${resultEnabled ? "admin-toggle-status--on" : "admin-toggle-status--off"}`}>
+                  {resultEnabled ? "ON" : "OFF"}
+                </span>
+                <button
+                  role="switch"
+                  aria-checked={resultEnabled}
+                  aria-label="Toggle Result Day tag"
+                  className={`admin-toggle ${resultEnabled ? "admin-toggle--on" : ""}`}
+                  onClick={handleResultToggle}
+                >
+                  <span className="admin-toggle__thumb" />
+                </button>
+              </div>
+            </div>
+
+            {/* Calendar Date Picker Row */}
+            {resultEnabled && (
+              <div className="admin-addon-date-picker-row">
+                <label htmlFor="result-date-input">Select Result Date:</label>
+                <input
+                  type="date"
+                  id="result-date-input"
+                  value={resultDate}
+                  onChange={handleDateChange}
+                  className="admin-addon-date-input"
+                />
+              </div>
+            )}
+
+            {/* Live preview hint for Result Day */}
+            <div className={`admin-addon-preview ${resultEnabled ? "admin-addon-preview--on" : "admin-addon-preview--off"}`}>
+              <span>Preview:</span>
+              {resultEnabled ? (
+                <span className="admin-preview-tag admin-preview-tag--result">
+                  <span className="admin-preview-dot admin-preview-dot--result" />
+                  Result Day: {resultDate ? formatDateString(resultDate) : "No date selected"}
                 </span>
               ) : (
                 <span className="admin-preview-hidden">Tag hidden from visitors</span>

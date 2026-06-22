@@ -1,14 +1,20 @@
 import { list } from "@vercel/blob";
 import { NextResponse } from "next/server";
+import { getBlobMetadata, prettifyName } from "@/lib/gallery-metadata";
 
 export async function GET() {
   const { blobs } = await list({ prefix: "gallery/" });
 
-  // Parse title and caption from the JSON metadata file that was stored alongside the blob.
-  // Since Vercel Blob doesn't support custom metadata directly, we store a parallel
-  // metadata JSON file for each image (gallery/<timestamp>-<name>.meta.json).
-  // Here we just return all non-meta blobs with their pathname-derived titles.
-  const imageBlobs = blobs.filter((b) => !b.pathname.endsWith(".meta.json"));
+  const metadata = await getBlobMetadata();
+
+  // Filter out metadata.json and other non-image files, and enrich with titles & captions
+  const imageBlobs = blobs
+    .filter((b) => b.pathname !== "gallery/metadata.json" && !b.pathname.endsWith(".meta.json"))
+    .map((b) => ({
+      ...b,
+      title: metadata[b.url]?.title || prettifyName(b.pathname),
+      caption: metadata[b.url]?.caption || "",
+    }));
 
   return NextResponse.json({ blobs: imageBlobs });
 }
