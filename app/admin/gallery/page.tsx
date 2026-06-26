@@ -266,7 +266,7 @@ export default function AdminGalleryPage() {
                 />
                 {preview ? (
                   <div className="admin-gallery-dropzone-preview">
-                    <Image src={preview} alt="Preview" fill style={{ objectFit: "contain" }} />
+                    <Image src={preview} alt="Preview" fill style={{ objectFit: "contain" }} unoptimized />
                     <button
                       type="button"
                       className="admin-gallery-dropzone-clear"
