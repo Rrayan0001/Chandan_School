@@ -7,8 +7,8 @@ import { SiteHeader } from "@/components/SiteHeader";
 import { galleryPageImages } from "@/lib/site-data";
 import { getBlobMetadata, prettifyName } from "@/lib/gallery-metadata";
 
-// Revalidate every 60 seconds so new uploads appear quickly
-export const revalidate = 60;
+// Force dynamic rendering so uploads and deletions reflect immediately
+export const dynamic = "force-dynamic";
 
 async function getBlobImages() {
   try {
