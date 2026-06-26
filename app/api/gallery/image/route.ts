@@ -1,3 +1,4 @@
+import { get } from "@vercel/blob";
 import { NextResponse } from "next/server";
 
 export async function GET(request: Request) {
@@ -14,30 +15,20 @@ export async function GET(request: Request) {
   }
 
   try {
-    const token = process.env.BLOB_READ_WRITE_TOKEN;
-    const response = await fetch(url, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
+    const result = await get(url, {
+      access: "private",
     });
 
-    if (!response.ok) {
-      return NextResponse.json(
-        { error: "Failed to fetch image from private storage" },
-        { status: response.status }
-      );
-    }
+    const contentType = result.blob.contentType || "image/png";
 
-    const contentType = response.headers.get("content-type") || "image/png";
-    const body = response.body;
-
-    return new Response(body, {
+    return new Response(result.stream, {
       headers: {
         "Content-Type": contentType,
         "Cache-Control": "public, max-age=31536000, immutable",
       },
     });
-  } catch {
-    return NextResponse.json({ error: "Error proxying private blob image" }, { status: 500 });
+  } catch (error: any) {
+    console.error("Error proxying private blob image:", error);
+    return NextResponse.json({ error: error.message || "Error proxying private blob image" }, { status: 500 });
   }
 }
