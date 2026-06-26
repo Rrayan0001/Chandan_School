@@ -64,6 +64,7 @@ export default async function GalleryPage() {
                       sizes="(max-width: 1100px) 100vw, (max-width: 1200px) 50vw, 33vw"
                       src={`/api/gallery/image?url=${encodeURIComponent(blob.url)}`}
                       style={{ objectPosition: "center center" }}
+                      unoptimized
                     />
                   </div>
                   <div className="gallery-page__body">
