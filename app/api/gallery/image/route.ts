@@ -19,6 +19,10 @@ export async function GET(request: Request) {
       access: "private",
     });
 
+    if (!result) {
+      return NextResponse.json({ error: "Image not found" }, { status: 404 });
+    }
+
     const contentType = result.blob.contentType || "image/png";
 
     return new Response(result.stream, {
