@@ -2,6 +2,8 @@ import { list } from "@vercel/blob";
 import { NextResponse } from "next/server";
 import { getBlobMetadata, prettifyName } from "@/lib/gallery-metadata";
 
+export const dynamic = "force-dynamic";
+
 export async function GET() {
   try {
     const { blobs } = await list({ prefix: "gallery/" });
@@ -15,6 +17,7 @@ export async function GET() {
         ...b,
         title: metadata[b.url]?.title || prettifyName(b.pathname),
         caption: metadata[b.url]?.caption || "",
+        category: metadata[b.url]?.category || "",
       }));
 
     return NextResponse.json({ blobs: imageBlobs });

@@ -5,6 +5,7 @@ const METADATA_PATH = "gallery/metadata.json";
 export interface ImageMeta {
   title: string;
   caption: string;
+  category?: string;
 }
 
 export type GalleryMetadata = Record<string, ImageMeta>;
@@ -54,5 +55,6 @@ export async function saveBlobMetadata(imagesMeta: GalleryMetadata): Promise<voi
     access: "private",
     contentType: "application/json",
     addRandomSuffix: false,
+    allowOverwrite: true,
   });
 }

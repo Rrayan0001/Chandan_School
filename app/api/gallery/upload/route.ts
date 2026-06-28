@@ -8,9 +8,14 @@ export async function POST(request: Request) {
     const file = formData.get("file") as File | null;
     const title = (formData.get("title") as string) || "Gallery Image";
     const caption = (formData.get("caption") as string) || "";
+    const category = (formData.get("category") as string) || "";
 
     if (!file) {
       return NextResponse.json({ error: "No file provided" }, { status: 400 });
+    }
+
+    if (file.size > 2 * 1024 * 1024) {
+      return NextResponse.json({ error: "File size must be under 2 MB." }, { status: 400 });
     }
 
     // Sanitize filename: prefix with timestamp to avoid collisions
@@ -28,6 +33,7 @@ export async function POST(request: Request) {
       metadata[blob.url] = {
         title: title.trim() || prettifyName(blob.pathname),
         caption: caption.trim(),
+        category: category.trim(),
       };
       await saveBlobMetadata(metadata);
     } catch (err) {

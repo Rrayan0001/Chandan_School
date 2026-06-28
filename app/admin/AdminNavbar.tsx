@@ -4,7 +4,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 
 interface AdminNavbarProps {
-  activePage: "dashboard" | "gallery" | "addons";
+  activePage: "dashboard" | "gallery" | "addons" | "news" | "circulars" | "events";
 }
 
 export function AdminNavbar({ activePage }: AdminNavbarProps) {
@@ -37,6 +37,24 @@ export function AdminNavbar({ activePage }: AdminNavbarProps) {
           className={`admin-navbar__link ${activePage === "gallery" ? "admin-navbar__link--active" : ""}`}
         >
           <span>📸</span> Gallery
+        </Link>
+        <Link
+          href="/admin/news"
+          className={`admin-navbar__link ${activePage === "news" ? "admin-navbar__link--active" : ""}`}
+        >
+          <span>📰</span> News
+        </Link>
+        <Link
+          href="/admin/circulars"
+          className={`admin-navbar__link ${activePage === "circulars" ? "admin-navbar__link--active" : ""}`}
+        >
+          <span>📋</span> Circulars
+        </Link>
+        <Link
+          href="/admin/events"
+          className={`admin-navbar__link ${activePage === "events" ? "admin-navbar__link--active" : ""}`}
+        >
+          <span>📅</span> Events
         </Link>
         <Link
           href="/admin/addons"

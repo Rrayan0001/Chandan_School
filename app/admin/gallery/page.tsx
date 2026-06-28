@@ -11,10 +11,18 @@ interface BlobImage {
   pathname: string;
   uploadedAt?: string;
   size?: number;
-  // Client-side metadata (stored in localStorage alongside url)
   title?: string;
   caption?: string;
+  category?: string;
 }
+
+const GALLERY_CATEGORIES = [
+  "Sports",
+  "Events",
+  "Co-curricular Activities",
+  "Achievements",
+  "Paper Cuttings"
+];
 
 
 
@@ -36,12 +44,14 @@ export default function AdminGalleryPage() {
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const [title, setTitle] = useState("");
   const [caption, setCaption] = useState("");
+  const [category, setCategory] = useState(GALLERY_CATEGORIES[0]);
   const [preview, setPreview] = useState<string | null>(null);
 
   // Edit metadata state
   const [editingBlob, setEditingBlob] = useState<BlobImage | null>(null);
   const [editTitle, setEditTitle] = useState("");
   const [editCaption, setEditCaption] = useState("");
+  const [editCategory, setEditCategory] = useState(GALLERY_CATEGORIES[0]);
 
   useEffect(() => {
     if (sessionStorage.getItem("admin_authenticated") !== "true") {
@@ -78,14 +88,13 @@ export default function AdminGalleryPage() {
       setUploadError("Please select an image file (JPG, PNG, WebP, etc.).");
       return;
     }
-    if (file.size > 10 * 1024 * 1024) {
-      setUploadError("File size must be under 10 MB.");
+    if (file.size > 2 * 1024 * 1024) {
+      setUploadError("File size must be under 2 MB.");
       return;
     }
     setUploadError("");
     setSelectedFile(file);
     setPreview(URL.createObjectURL(file));
-    if (!title) setTitle(prettifyName(file.name));
   }
 
   const handleDrop = (e: React.DragEvent<HTMLDivElement>) => {
@@ -116,8 +125,9 @@ export default function AdminGalleryPage() {
     try {
       const formData = new FormData();
       formData.append("file", selectedFile);
-      formData.append("title", title || prettifyName(selectedFile.name));
+      formData.append("title", title.trim());
       formData.append("caption", caption);
+      formData.append("category", category);
 
       const res = await fetch("/api/gallery/upload", {
         method: "POST",
@@ -142,6 +152,7 @@ export default function AdminGalleryPage() {
       setPreview(null);
       setTitle("");
       setCaption("");
+      setCategory(GALLERY_CATEGORIES[0]);
       if (fileInputRef.current) fileInputRef.current.value = "";
 
       await fetchBlobs();
@@ -180,6 +191,7 @@ export default function AdminGalleryPage() {
     setEditingBlob(blob);
     setEditTitle(blob.title || "");
     setEditCaption(blob.caption || "");
+    setEditCategory(blob.category || GALLERY_CATEGORIES[0]);
   };
 
   const handleSaveEdit = async (e: React.FormEvent) => {
@@ -194,6 +206,7 @@ export default function AdminGalleryPage() {
           url: editingBlob.url,
           title: editTitle.trim(),
           caption: editCaption.trim(),
+          category: editCategory,
         }),
       });
 
@@ -208,6 +221,7 @@ export default function AdminGalleryPage() {
                 ...b,
                 title: editTitle.trim() || prettifyName(b.pathname),
                 caption: editCaption.trim(),
+                category: editCategory,
               }
             : b
         )
@@ -302,6 +316,19 @@ export default function AdminGalleryPage() {
                     placeholder="e.g. Annual Day 2024"
                     required
                   />
+                </div>
+                <div className="admin-gallery-field">
+                  <label htmlFor="img-category">Category</label>
+                  <select
+                    id="img-category"
+                    value={category}
+                    onChange={(e) => setCategory(e.target.value)}
+                    style={{ width: "100%", padding: "0.65rem 0.8rem", border: "1px solid #ddd", borderRadius: "10px", fontSize: "0.9rem", fontFamily: "var(--font-body)", background: "#fff" }}
+                  >
+                    {GALLERY_CATEGORIES.map((cat) => (
+                      <option key={cat} value={cat}>{cat}</option>
+                    ))}
+                  </select>
                 </div>
                 <div className="admin-gallery-field">
                   <label htmlFor="img-caption">Caption <span>(optional)</span></label>
@@ -406,6 +433,11 @@ export default function AdminGalleryPage() {
                     </div>
                     <div className="admin-gallery-card__body">
                       <strong>{blob.title || "Untitled"}</strong>
+                      {blob.category && (
+                        <span className="admin-gallery-card__tag" style={{ display: "inline-block", background: "#f0ecec", color: "#6a1b29", padding: "0.2rem 0.5rem", borderRadius: "5px", fontSize: "0.75rem", fontWeight: 700, marginTop: "0.25rem", marginBottom: "0.25rem" }}>
+                          {blob.category}
+                        </span>
+                      )}
                       {blob.caption && <p>{blob.caption}</p>}
                     </div>
                   </div>
@@ -421,7 +453,7 @@ export default function AdminGalleryPage() {
             <div className="admin-gallery-modal" onClick={(e) => e.stopPropagation()}>
               <div className="admin-gallery-modal__icon">🗑️</div>
               <h3>Delete Image?</h3>
-              <p>This will permanently remove the image from the Vercel Blob store and the public gallery. This action cannot be undone.</p>
+              <p>This will permanently remove the image from cloud storage and the public gallery. This action cannot be undone.</p>
               <div className="admin-gallery-modal__actions">
                 <button className="admin-gallery-modal__cancel" onClick={() => setDeleteConfirm(null)}>
                   Cancel
@@ -455,6 +487,19 @@ export default function AdminGalleryPage() {
                     required
                     style={{ width: "100%", padding: "0.65rem 0.8rem", border: "1px solid #ddd", borderRadius: "10px", fontSize: "0.9rem", fontFamily: "var(--font-body)" }}
                   />
+                </div>
+                <div className="admin-gallery-field" style={{ marginBottom: "1rem" }}>
+                  <label htmlFor="edit-img-category" style={{ display: "block", marginBottom: "0.4rem", fontSize: "0.85rem", fontWeight: 700, color: "#333" }}>Category</label>
+                  <select
+                    id="edit-img-category"
+                    value={editCategory}
+                    onChange={(e) => setEditCategory(e.target.value)}
+                    style={{ width: "100%", padding: "0.65rem 0.8rem", border: "1px solid #ddd", borderRadius: "10px", fontSize: "0.9rem", fontFamily: "var(--font-body)", background: "#fff" }}
+                  >
+                    {GALLERY_CATEGORIES.map((cat) => (
+                      <option key={cat} value={cat}>{cat}</option>
+                    ))}
+                  </select>
                 </div>
                 <div className="admin-gallery-field" style={{ marginBottom: "1.5rem" }}>
                   <label htmlFor="edit-img-caption" style={{ display: "block", marginBottom: "0.4rem", fontSize: "0.85rem", fontWeight: 700, color: "#333" }}>Caption (optional)</label>

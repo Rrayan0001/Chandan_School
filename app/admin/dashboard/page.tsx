@@ -40,6 +40,42 @@ export default function AdminDashboardPage() {
             </svg>
           </Link>
 
+          {/* News Card */}
+          <Link href="/admin/news" className="admin-nav-card">
+            <span className="admin-nav-card__icon">📰</span>
+            <div>
+              <strong>News</strong>
+              <p>Post school news &amp; updates</p>
+            </div>
+            <svg className="admin-nav-card__arrow" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+              <polyline points="9 18 15 12 9 6" />
+            </svg>
+          </Link>
+
+          {/* Circulars Card */}
+          <Link href="/admin/circulars" className="admin-nav-card">
+            <span className="admin-nav-card__icon">📋</span>
+            <div>
+              <strong>Circulars</strong>
+              <p>Manage circulars &amp; PDF notices</p>
+            </div>
+            <svg className="admin-nav-card__arrow" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+              <polyline points="9 18 15 12 9 6" />
+            </svg>
+          </Link>
+
+          {/* Events Card */}
+          <Link href="/admin/events" className="admin-nav-card">
+            <span className="admin-nav-card__icon">📅</span>
+            <div>
+              <strong>Events</strong>
+              <p>Publish upcoming events &amp; highlights</p>
+            </div>
+            <svg className="admin-nav-card__arrow" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+              <polyline points="9 18 15 12 9 6" />
+            </svg>
+          </Link>
+
           {/* Add-ons Card */}
           <Link href="/admin/addons" className="admin-nav-card">
             <span className="admin-nav-card__icon">⚙️</span>

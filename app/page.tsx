@@ -11,6 +11,9 @@ import { PageAnimations } from "@/components/PageAnimations";
 import { getSectionPath } from "@/lib/subpage-data";
 import { contactDetails, heroSlides } from "@/lib/site-data";
 import { YoutubeCarousel } from "@/components/YoutubeCarousel";
+import { getNewsMetadata } from "@/lib/news-metadata";
+import { getCircularsMetadata } from "@/lib/circulars-metadata";
+import { getEventsMetadata } from "@/lib/events-metadata";
 
 /* ── Data ── */
 
@@ -113,7 +116,38 @@ function ReadMoreButton({
 
 /* ── Page ── */
 
-export default function HomePage() {
+export default async function HomePage() {
+  let news: any[] = [];
+  let circulars: any[] = [];
+  let events: any[] = [];
+
+  try {
+    const rawNews = await getNewsMetadata();
+    news = [...rawNews]
+      .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
+      .slice(0, 3);
+  } catch (err) {
+    console.error("Failed to load news for home", err);
+  }
+
+  try {
+    const rawCirculars = await getCircularsMetadata();
+    circulars = [...rawCirculars]
+      .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
+      .slice(0, 5);
+  } catch (err) {
+    console.error("Failed to load circulars for home", err);
+  }
+
+  try {
+    const rawEvents = await getEventsMetadata();
+    events = [...rawEvents]
+      .sort((a, b) => new Date(b.eventDate).getTime() - new Date(a.eventDate).getTime())
+      .slice(0, 3);
+  } catch (err) {
+    console.error("Failed to load events for home", err);
+  }
+
   return (
     <div className="page-shell" id="top">
       <SiteHeader />
@@ -291,6 +325,104 @@ export default function HomePage() {
               </div>
             </div>
           </section>
+
+          {/* ── Latest News Section ── */}
+          {news.length > 0 && (
+            <section className="content-block" id="latest-news" data-aos="fade-up">
+              <SectionHeading title="Latest News & Announcements" description="Keep up to date with the latest stories, achievements, and notices from School Chandan." />
+              <div className="news-grid">
+                {news.map((item) => (
+                  <article className="news-card" key={item.id} data-aos="fade-up">
+                    {item.gifUrl && (
+                      <div className="news-card__image-container">
+                        <Image
+                          src={`/api/news/gif?url=${encodeURIComponent(item.gifUrl)}`}
+                          alt={item.title}
+                          fill
+                          sizes="(max-width: 768px) 100vw, 33vw"
+                          style={{ objectFit: "cover" }}
+                          unoptimized
+                        />
+                      </div>
+                    )}
+                    <div className="news-card__body">
+                      <span className="news-card__date">{item.date}</span>
+                      <h3 className="news-card__title">{item.title}</h3>
+                      {item.caption && <p className="news-card__caption">{item.caption}</p>}
+                      <p className="news-card__content">{item.content}</p>
+                    </div>
+                  </article>
+                ))}
+              </div>
+            </section>
+          )}
+
+          {/* ── Circulars Section ── */}
+          {circulars.length > 0 && (
+            <section className="content-block" id="circulars" data-aos="fade-up">
+              <SectionHeading title="Circulars & Notices" description="Download official notices, guidelines, and schedule documents issued by school administration." />
+              <div className="circulars-board">
+                <div className="circulars-board__header">
+                  <span>Circular Title</span>
+                  <span className="circulars-board__header-meta">Details</span>
+                </div>
+                <div className="circulars-board__list">
+                  {circulars.map((item) => (
+                    <div className="circular-row" key={item.id}>
+                      <div className="circular-row__info">
+                        <span className="circular-row__icon">📄</span>
+                        <div>
+                          <h3 className="circular-row__title">{item.title}</h3>
+                          <span className="circular-row__date">Published Date: {item.date}</span>
+                        </div>
+                      </div>
+                      <div className="circular-row__actions">
+                        {(item.fromDate || item.toDate) && (
+                          <span className="circular-row__duration">
+                            Active: {item.fromDate || "N/A"} to {item.toDate || "N/A"}
+                          </span>
+                        )}
+                        <a
+                          href={`/api/circulars/download?url=${encodeURIComponent(item.pdfUrl)}&filename=${encodeURIComponent(item.title)}`}
+                          className="circular-row__download"
+                          title="Download Circular PDF"
+                        >
+                          📥 Download PDF
+                        </a>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </section>
+          )}
+
+          {/* ── Events Section ── */}
+          {events.length > 0 && (
+            <section className="content-block" id="upcoming-events" data-aos="fade-up">
+              <SectionHeading title="Events & Highlights" description="Explore images and updates from recent school events, sports meets, and co-curricular programs." />
+              <div className="events-grid">
+                {events.map((item) => (
+                  <article className="event-card" key={item.id} data-aos="zoom-in">
+                    <div className="event-card__image-container">
+                      <Image
+                        src={`/api/events/image?url=${encodeURIComponent(item.imageUrl)}`}
+                        alt={item.title}
+                        fill
+                        sizes="(max-width: 768px) 100vw, 33vw"
+                        style={{ objectFit: "cover" }}
+                        unoptimized
+                      />
+                      <span className="event-card__date-badge">{item.eventDate}</span>
+                    </div>
+                    <div className="event-card__body">
+                      <h3 className="event-card__title">{item.title}</h3>
+                    </div>
+                  </article>
+                ))}
+              </div>
+            </section>
+          )}
 
           {/* ── 6. Vibrant Campus Gallery ── */}
           <section className="content-block" id="gallery" data-aos="fade-up">
