@@ -119,6 +119,12 @@ export default function AdminNewsPage() {
         throw new Error(err.error || "Failed to post news");
       }
 
+      const data = await res.json();
+      // Inject new item directly from server response — avoids stale CDN reads
+      if (data.item) {
+        setNews((prev) => [data.item, ...prev]);
+      }
+
       setSuccessMsg("News item posted successfully!");
       setTimeout(() => setSuccessMsg(""), 4000);
 
@@ -130,8 +136,6 @@ export default function AdminNewsPage() {
       setContent("");
       setDate(new Date().toISOString().split("T")[0]);
       if (fileInputRef.current) fileInputRef.current.value = "";
-
-      await fetchNews();
     } catch (err: unknown) {
       clearInterval(progressInterval);
       setUploadError(err instanceof Error ? err.message : "Failed to save news.");

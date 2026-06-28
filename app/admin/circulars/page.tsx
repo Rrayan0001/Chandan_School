@@ -118,6 +118,12 @@ export default function AdminCircularsPage() {
         throw new Error(err.error || "Failed to publish circular");
       }
 
+      const data = await res.json();
+      // Inject new item directly from server response — avoids stale CDN reads
+      if (data.item) {
+        setCirculars((prev) => [data.item, ...prev]);
+      }
+
       setSuccessMsg("Circular published successfully!");
       setTimeout(() => setSuccessMsg(""), 4000);
 
@@ -128,8 +134,6 @@ export default function AdminCircularsPage() {
       setToDate("");
       setDate(new Date().toISOString().split("T")[0]);
       if (fileInputRef.current) fileInputRef.current.value = "";
-
-      await fetchCirculars();
     } catch (err: unknown) {
       clearInterval(progressInterval);
       setUploadError(err instanceof Error ? err.message : "Failed to publish circular.");

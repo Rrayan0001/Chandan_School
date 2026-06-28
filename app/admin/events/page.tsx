@@ -111,6 +111,12 @@ export default function AdminEventsPage() {
         throw new Error(err.error || "Failed to publish event");
       }
 
+      const data = await res.json();
+      // Inject new item directly from server response — avoids stale CDN reads
+      if (data.item) {
+        setEvents((prev) => [data.item, ...prev]);
+      }
+
       setSuccessMsg("Event published successfully!");
       setTimeout(() => setSuccessMsg(""), 4000);
 
@@ -120,8 +126,6 @@ export default function AdminEventsPage() {
       setTitle("");
       setEventDate(new Date().toISOString().split("T")[0]);
       if (fileInputRef.current) fileInputRef.current.value = "";
-
-      await fetchEvents();
     } catch (err: unknown) {
       clearInterval(progressInterval);
       setUploadError(err instanceof Error ? err.message : "Failed to publish event.");
