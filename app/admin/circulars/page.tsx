@@ -170,7 +170,10 @@ export default function AdminCircularsPage() {
             <p>Publish school circulars, specify duration dates, upload PDF notices and verify downloads</p>
           </div>
           {successMsg && (
-            <span className="admin-saved-badge">✓ {successMsg}</span>
+            <div className="admin-toast">
+              <span className="admin-toast__icon">✓</span>
+              <span>{successMsg}</span>
+            </div>
           )}
         </header>
 

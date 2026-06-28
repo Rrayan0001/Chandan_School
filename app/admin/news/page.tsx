@@ -172,7 +172,10 @@ export default function AdminNewsPage() {
             <p>Publish latest news, captions, contents (supports GIFs), and dates for the homepage</p>
           </div>
           {successMsg && (
-            <span className="admin-saved-badge">✓ {successMsg}</span>
+            <div className="admin-toast">
+              <span className="admin-toast__icon">✓</span>
+              <span>{successMsg}</span>
+            </div>
           )}
         </header>
 

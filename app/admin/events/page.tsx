@@ -162,7 +162,10 @@ export default function AdminEventsPage() {
             <p>Publish upcoming event highlights and details (enforcing ≤ 2MB limit on image uploads)</p>
           </div>
           {successMsg && (
-            <span className="admin-saved-badge">✓ {successMsg}</span>
+            <div className="admin-toast">
+              <span className="admin-toast__icon">✓</span>
+              <span>{successMsg}</span>
+            </div>
           )}
         </header>
 

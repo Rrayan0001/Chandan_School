@@ -249,7 +249,10 @@ export default function AdminGalleryPage() {
             <p>Upload and manage photos displayed on the public gallery page</p>
           </div>
           {successMsg && (
-            <span className="admin-saved-badge">✓ {successMsg}</span>
+            <div className="admin-toast">
+              <span className="admin-toast__icon">✓</span>
+              <span>{successMsg}</span>
+            </div>
           )}
         </header>
 
