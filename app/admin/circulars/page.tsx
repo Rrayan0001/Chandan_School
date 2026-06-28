@@ -80,6 +80,15 @@ export default function AdminCircularsPage() {
       return;
     }
 
+    if (
+      (date && new Date(date).getTime() > new Date("2026-12-31").getTime()) ||
+      (fromDate && new Date(fromDate).getTime() > new Date("2026-12-31").getTime()) ||
+      (toDate && new Date(toDate).getTime() > new Date("2026-12-31").getTime())
+    ) {
+      setUploadError("Circular dates cannot be after 31st December 2026.");
+      return;
+    }
+
     setUploading(true);
     setUploadError("");
     setUploadProgress(0);
@@ -187,32 +196,35 @@ export default function AdminCircularsPage() {
                 </div>
 
                 <div className="admin-gallery-field">
-                  <label htmlFor="circ-from">Applicable From Date <span>(optional)</span></label>
+                  <label htmlFor="circular-from">Applicable From Date <span style={{ fontWeight: 400, opacity: 0.8 }}>(optional)</span></label>
                   <input
-                    id="circ-from"
+                    id="circular-from"
                     type="date"
                     value={fromDate}
                     onChange={(e) => setFromDate(e.target.value)}
+                    max="2026-12-31"
                   />
                 </div>
 
                 <div className="admin-gallery-field">
-                  <label htmlFor="circ-to">Applicable To Date <span>(optional)</span></label>
+                  <label htmlFor="circular-to">Applicable To Date <span style={{ fontWeight: 400, opacity: 0.8 }}>(optional)</span></label>
                   <input
-                    id="circ-to"
+                    id="circular-to"
                     type="date"
                     value={toDate}
                     onChange={(e) => setToDate(e.target.value)}
+                    max="2026-12-31"
                   />
                 </div>
 
                 <div className="admin-gallery-field">
-                  <label htmlFor="circ-date">Publish Date</label>
+                  <label htmlFor="circular-date">Publish Date</label>
                   <input
-                    id="circ-date"
+                    id="circular-date"
                     type="date"
                     value={date}
                     onChange={(e) => setDate(e.target.value)}
+                    max="2026-12-31"
                     required
                   />
                 </div>

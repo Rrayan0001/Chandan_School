@@ -79,6 +79,11 @@ export default function AdminEventsPage() {
       return;
     }
 
+    if (eventDate && new Date(eventDate).getTime() > new Date("2026-12-31").getTime()) {
+      setUploadError("Event date cannot be after 31st December 2026.");
+      return;
+    }
+
     setUploading(true);
     setUploadError("");
     setUploadProgress(0);
@@ -189,6 +194,7 @@ export default function AdminEventsPage() {
                     type="date"
                     value={eventDate}
                     onChange={(e) => setEventDate(e.target.value)}
+                    max="2026-12-31"
                     required
                   />
                 </div>

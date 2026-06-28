@@ -22,6 +22,10 @@ export async function POST(request: Request) {
     const eventDate = (formData.get("eventDate") as string) || new Date().toISOString().split("T")[0];
     const file = formData.get("file") as File | null;
 
+    if (eventDate && new Date(eventDate).getTime() > new Date("2026-12-31").getTime()) {
+      return NextResponse.json({ error: "Event date cannot be after 31st December 2026" }, { status: 400 });
+    }
+
     if (!title || !file) {
       return NextResponse.json({ error: "Caption and Event Image are required" }, { status: 400 });
     }

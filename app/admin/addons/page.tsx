@@ -71,6 +71,10 @@ export default function AddonsPage() {
 
   const handleDateChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const newValue = e.target.value;
+    if (newValue && new Date(newValue).getTime() > new Date("2026-12-31").getTime()) {
+      alert("Date cannot be after 31st December 2026.");
+      return;
+    }
     setResultDate(newValue);
     localStorage.setItem("result_day_date", newValue);
     window.dispatchEvent(new StorageEvent("storage", {
@@ -176,6 +180,7 @@ export default function AddonsPage() {
                   id="result-date-input"
                   value={resultDate}
                   onChange={handleDateChange}
+                  max="2026-12-31"
                   className="admin-addon-date-input"
                 />
               </div>

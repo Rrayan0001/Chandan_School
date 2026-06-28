@@ -83,6 +83,11 @@ export default function AdminNewsPage() {
       return;
     }
 
+    if (date && new Date(date).getTime() > new Date("2026-12-31").getTime()) {
+      setUploadError("Publish date cannot be after 31st December 2026.");
+      return;
+    }
+
     setUploading(true);
     setUploadError("");
     setUploadProgress(0);
@@ -210,6 +215,7 @@ export default function AdminNewsPage() {
                     type="date"
                     value={date}
                     onChange={(e) => setDate(e.target.value)}
+                    max="2026-12-31"
                     required
                   />
                 </div>

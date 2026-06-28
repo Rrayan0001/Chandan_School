@@ -23,7 +23,13 @@ export async function POST(request: Request) {
     const toDate = (formData.get("toDate") as string) || "";
     const date = (formData.get("date") as string) || new Date().toISOString().split("T")[0];
     const file = formData.get("file") as File | null;
-
+    if (
+      (date && new Date(date).getTime() > new Date("2026-12-31").getTime()) ||
+      (fromDate && new Date(fromDate).getTime() > new Date("2026-12-31").getTime()) ||
+      (toDate && new Date(toDate).getTime() > new Date("2026-12-31").getTime())
+    ) {
+      return NextResponse.json({ error: "Circular dates cannot be after 31st December 2026" }, { status: 400 });
+    }
     if (!title || !file) {
       return NextResponse.json({ error: "Title and PDF file are required" }, { status: 400 });
     }
