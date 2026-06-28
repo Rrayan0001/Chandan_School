@@ -1,4 +1,4 @@
-import { list, put } from "@vercel/blob";
+import { list, put, get } from "@vercel/blob";
 
 const METADATA_PATH = "circulars/metadata.json";
 
@@ -20,17 +20,11 @@ export async function getCircularsMetadata(): Promise<CircularItem[]> {
       return [];
     }
 
-    const response = await fetch(metaBlob.url, {
-      headers: {
-        Authorization: `Bearer ${process.env.BLOB_READ_WRITE_TOKEN}`,
-      },
-      cache: "no-store",
-    });
-
-    if (!response.ok) {
+    const result = await get(metaBlob.url, { access: "private" });
+    if (!result) {
       return [];
     }
-
+    const response = new Response(result.stream);
     const data = await response.json();
     return data.circulars || [];
   } catch {
