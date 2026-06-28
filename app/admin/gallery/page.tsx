@@ -64,7 +64,7 @@ export default function AdminGalleryPage() {
   const fetchBlobs = useCallback(async () => {
     setLoading(true);
     try {
-      const res = await fetch("/api/gallery/list");
+      const res = await fetch(`/api/gallery/list?t=${Date.now()}`);
       const data = await res.json();
       setBlobs(data.blobs || []);
     } catch {

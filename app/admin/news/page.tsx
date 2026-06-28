@@ -47,7 +47,7 @@ export default function AdminNewsPage() {
   const fetchNews = useCallback(async () => {
     setLoading(true);
     try {
-      const res = await fetch("/api/news");
+      const res = await fetch(`/api/news?t=${Date.now()}`);
       const data = await res.json();
       setNews(data.news || []);
     } catch {

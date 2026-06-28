@@ -45,7 +45,7 @@ export default function AdminCircularsPage() {
   const fetchCirculars = useCallback(async () => {
     setLoading(true);
     try {
-      const res = await fetch("/api/circulars");
+      const res = await fetch(`/api/circulars?t=${Date.now()}`);
       const data = await res.json();
       setCirculars(data.circulars || []);
     } catch {

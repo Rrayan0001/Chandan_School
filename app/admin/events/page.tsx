@@ -43,7 +43,7 @@ export default function AdminEventsPage() {
   const fetchEvents = useCallback(async () => {
     setLoading(true);
     try {
-      const res = await fetch("/api/events");
+      const res = await fetch(`/api/events?t=${Date.now()}`);
       const data = await res.json();
       setEvents(data.events || []);
     } catch {
