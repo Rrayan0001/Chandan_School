@@ -24,6 +24,7 @@ export async function getNewsMetadata(): Promise<NewsItem[]> {
       headers: {
         Authorization: `Bearer ${process.env.BLOB_READ_WRITE_TOKEN}`,
       },
+      cache: "no-store",
     });
 
     if (!response.ok) {

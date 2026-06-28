@@ -34,6 +34,7 @@ export async function getBlobMetadata(): Promise<GalleryMetadata> {
       headers: {
         Authorization: `Bearer ${process.env.BLOB_READ_WRITE_TOKEN}`,
       },
+      cache: "no-store",
     });
 
     if (!response.ok) {

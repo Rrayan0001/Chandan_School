@@ -22,6 +22,7 @@ export async function getEventsMetadata(): Promise<EventItem[]> {
       headers: {
         Authorization: `Bearer ${process.env.BLOB_READ_WRITE_TOKEN}`,
       },
+      cache: "no-store",
     });
 
     if (!response.ok) {

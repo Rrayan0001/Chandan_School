@@ -3,6 +3,8 @@ import Link from "next/link";
 import type { ReactNode } from "react";
 import { BookOpen, Shield, TrendingUp } from "lucide-react";
 
+export const dynamic = "force-dynamic";
+
 import { HeroSlider } from "@/components/HeroSlider";
 import { InfoTicker } from "@/components/InfoTicker";
 import { SiteFooter } from "@/components/SiteFooter";
