@@ -142,17 +142,23 @@ export default function AdminCircularsPage() {
   const handleDelete = async (id: string) => {
     setDeleting(id);
     try {
-      await fetch("/api/circulars", {
+      const res = await fetch("/api/circulars", {
         method: "DELETE",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ id }),
       });
 
+      if (!res.ok) {
+        const err = await res.json();
+        throw new Error(err.error || "Failed to delete circular.");
+      }
+
       setCirculars((prev) => prev.filter((item) => item.id !== id));
       setSuccessMsg("Circular deleted successfully.");
       setTimeout(() => setSuccessMsg(""), 3000);
-    } catch {
-      setUploadError("Failed to delete circular.");
+    } catch (err: unknown) {
+      setUploadError(err instanceof Error ? err.message : "Failed to delete circular.");
+      setTimeout(() => setUploadError(""), 4000);
     } finally {
       setDeleting(null);
       setDeleteConfirm(null);

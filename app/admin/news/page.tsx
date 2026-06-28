@@ -144,17 +144,23 @@ export default function AdminNewsPage() {
   const handleDelete = async (id: string) => {
     setDeleting(id);
     try {
-      await fetch("/api/news", {
+      const res = await fetch("/api/news", {
         method: "DELETE",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ id }),
       });
 
+      if (!res.ok) {
+        const err = await res.json();
+        throw new Error(err.error || "Failed to delete news item.");
+      }
+
       setNews((prev) => prev.filter((item) => item.id !== id));
       setSuccessMsg("News item deleted successfully.");
       setTimeout(() => setSuccessMsg(""), 3000);
-    } catch {
-      setUploadError("Failed to delete news item.");
+    } catch (err: unknown) {
+      setUploadError(err instanceof Error ? err.message : "Failed to delete news item.");
+      setTimeout(() => setUploadError(""), 4000);
     } finally {
       setDeleting(null);
       setDeleteConfirm(null);

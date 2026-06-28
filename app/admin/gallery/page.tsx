@@ -168,19 +168,23 @@ export default function AdminGalleryPage() {
   const handleDelete = async (url: string) => {
     setDeleting(url);
     try {
-      await fetch("/api/gallery/delete", {
+      const res = await fetch("/api/gallery/delete", {
         method: "DELETE",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ url }),
       });
 
-
+      if (!res.ok) {
+        const err = await res.json();
+        throw new Error(err.error || "Failed to delete image.");
+      }
 
       setBlobs((prev) => prev.filter((b) => b.url !== url));
       setSuccessMsg("Image deleted successfully.");
       setTimeout(() => setSuccessMsg(""), 3000);
-    } catch {
-      setUploadError("Failed to delete image.");
+    } catch (err: unknown) {
+      setUploadError(err instanceof Error ? err.message : "Failed to delete image.");
+      setTimeout(() => setUploadError(""), 4000);
     } finally {
       setDeleting(null);
       setDeleteConfirm(null);

@@ -134,17 +134,23 @@ export default function AdminEventsPage() {
   const handleDelete = async (id: string) => {
     setDeleting(id);
     try {
-      await fetch("/api/events", {
+      const res = await fetch("/api/events", {
         method: "DELETE",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ id }),
       });
 
+      if (!res.ok) {
+        const err = await res.json();
+        throw new Error(err.error || "Failed to delete event.");
+      }
+
       setEvents((prev) => prev.filter((item) => item.id !== id));
       setSuccessMsg("Event deleted successfully.");
       setTimeout(() => setSuccessMsg(""), 3000);
-    } catch {
-      setUploadError("Failed to delete event.");
+    } catch (err: unknown) {
+      setUploadError(err instanceof Error ? err.message : "Failed to delete event.");
+      setTimeout(() => setUploadError(""), 4000);
     } finally {
       setDeleting(null);
       setDeleteConfirm(null);
