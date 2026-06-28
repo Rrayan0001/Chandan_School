@@ -76,17 +76,21 @@ export async function DELETE(request: Request) {
     const newsList = await getNewsMetadata();
     const itemToDelete = newsList.find((item) => item.id === id);
 
-    if (itemToDelete) {
-      if (itemToDelete.gifUrl) {
-        try {
-          await del(itemToDelete.gifUrl);
-        } catch (err) {
-          console.error("Failed to delete blob file", err);
-        }
+    // Delete associated media file if we know its URL
+    if (itemToDelete?.gifUrl) {
+      try {
+        await del(itemToDelete.gifUrl);
+      } catch (err) {
+        console.error("Failed to delete blob file", err);
       }
-      const filtered = newsList.filter((item) => item.id !== id);
-      await saveNewsMetadata(filtered);
     }
+
+    // Always filter and save — even if item wasn't found in this read.
+    // Vercel Blob CDN can return a stale metadata.json on first read right after a
+    // write, causing itemToDelete to be undefined even though the item exists.
+    // By unconditionally saving the filtered list we guarantee the item is removed.
+    const filtered = newsList.filter((item) => item.id !== id);
+    await saveNewsMetadata(filtered);
 
     return NextResponse.json({ success: true });
   } catch (error: any) {

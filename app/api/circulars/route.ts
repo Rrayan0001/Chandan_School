@@ -79,17 +79,18 @@ export async function DELETE(request: Request) {
     const circularsList = await getCircularsMetadata();
     const itemToDelete = circularsList.find((item) => item.id === id);
 
-    if (itemToDelete) {
-      if (itemToDelete.pdfUrl) {
-        try {
-          await del(itemToDelete.pdfUrl);
-        } catch (err) {
-          console.error("Failed to delete blob file", err);
-        }
+    // Delete associated PDF file if we know its URL
+    if (itemToDelete?.pdfUrl) {
+      try {
+        await del(itemToDelete.pdfUrl);
+      } catch (err) {
+        console.error("Failed to delete blob file", err);
       }
-      const filtered = circularsList.filter((item) => item.id !== id);
-      await saveCircularsMetadata(filtered);
     }
+
+    // Always filter and save unconditionally to handle stale CDN reads
+    const filtered = circularsList.filter((item) => item.id !== id);
+    await saveCircularsMetadata(filtered);
 
     return NextResponse.json({ success: true });
   } catch (error: any) {

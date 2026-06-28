@@ -73,17 +73,18 @@ export async function DELETE(request: Request) {
     const eventsList = await getEventsMetadata();
     const itemToDelete = eventsList.find((item) => item.id === id);
 
-    if (itemToDelete) {
-      if (itemToDelete.imageUrl) {
-        try {
-          await del(itemToDelete.imageUrl);
-        } catch (err) {
-          console.error("Failed to delete blob file", err);
-        }
+    // Delete associated image file if we know its URL
+    if (itemToDelete?.imageUrl) {
+      try {
+        await del(itemToDelete.imageUrl);
+      } catch (err) {
+        console.error("Failed to delete blob file", err);
       }
-      const filtered = eventsList.filter((item) => item.id !== id);
-      await saveEventsMetadata(filtered);
     }
+
+    // Always filter and save unconditionally to handle stale CDN reads
+    const filtered = eventsList.filter((item) => item.id !== id);
+    await saveEventsMetadata(filtered);
 
     return NextResponse.json({ success: true });
   } catch (error: any) {
