@@ -2,8 +2,10 @@
 
 import { useEffect, useRef, useState, useCallback } from "react";
 import { useRouter } from "next/navigation";
+import Link from "next/link";
 import Image from "next/image";
 import { AdminNavbar } from "../AdminNavbar";
+import { insertMarkdown, renderFormattedText } from "@/lib/format";
 
 interface EventItem {
   id: string;
@@ -189,7 +191,14 @@ export default function AdminEventsPage() {
             <form className="admin-gallery-upload-form" onSubmit={handleUpload}>
               <div className="admin-gallery-meta-fields">
                 <div className="admin-gallery-field" style={{ gridColumn: "span 2" }}>
-                  <label htmlFor="event-title">Event Caption</label>
+                  <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", minHeight: "28px" }}>
+                    <label htmlFor="event-title" style={{ margin: 0 }}>Event Caption</label>
+                    <div className="formatting-toolbar" style={{ margin: 0 }}>
+                      <button type="button" className="formatting-btn" onClick={() => insertMarkdown("event-title", "**", title, setTitle)}><b>B</b></button>
+                      <button type="button" className="formatting-btn" onClick={() => insertMarkdown("event-title", "*", title, setTitle)}><i>I</i></button>
+                      <span className="formatting-hint">Use **bold** or *italics*</span>
+                    </div>
+                  </div>
                   <input
                     id="event-title"
                     type="text"
@@ -201,7 +210,9 @@ export default function AdminEventsPage() {
                 </div>
 
                 <div className="admin-gallery-field">
-                  <label htmlFor="event-date">Event Date</label>
+                  <div style={{ display: "flex", alignItems: "center", minHeight: "28px" }}>
+                    <label htmlFor="event-date" style={{ margin: 0 }}>Event Date</label>
+                  </div>
                   <input
                     id="event-date"
                     type="date"
@@ -213,7 +224,9 @@ export default function AdminEventsPage() {
                 </div>
 
                 <div className="admin-gallery-field">
-                  <label htmlFor="event-file">Event Image <span>(under 2MB)</span></label>
+                  <div style={{ display: "flex", alignItems: "center", minHeight: "28px" }}>
+                    <label htmlFor="event-file" style={{ margin: 0 }}>Event Image <span>(under 2MB)</span></label>
+                  </div>
                   <input
                     id="event-file"
                     type="file"
@@ -284,10 +297,15 @@ export default function AdminEventsPage() {
 
           {/* List Section */}
           <section className="admin-gallery-grid-section">
-            <h2 className="admin-gallery-section-title">
-              📅 Published Events List
-              <span className="admin-gallery-count">{events.length}</span>
-            </h2>
+            <div className="admin-gallery-grid-header" style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "1.5rem" }}>
+              <h2 className="admin-gallery-section-title" style={{ margin: 0 }}>
+                📅 Published Events List
+                <span className="admin-gallery-count">{events.length}</span>
+              </h2>
+              <Link href="/student-corner/events" target="_blank" className="admin-gallery-view-link">
+                View Public Events →
+              </Link>
+            </div>
 
             {loading ? (
               <div className="admin-gallery-loading">
@@ -325,7 +343,7 @@ export default function AdminEventsPage() {
                       </div>
                     </div>
                     <div className="admin-gallery-card__body">
-                      <strong>{item.title}</strong>
+                      <strong>{renderFormattedText(item.title)}</strong>
                       <p style={{ fontSize: "0.8rem", color: "#888", marginTop: "0.25rem" }}>Event Date: {item.eventDate}</p>
                     </div>
                   </div>

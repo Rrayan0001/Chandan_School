@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import Link from "next/link";
 import Image from "next/image";
 import { AdminNavbar } from "../AdminNavbar";
+import { insertMarkdown, renderFormattedText } from "@/lib/format";
 
 interface BlobImage {
   url: string;
@@ -314,7 +315,14 @@ export default function AdminGalleryPage() {
               {/* Metadata fields */}
               <div className="admin-gallery-meta-fields">
                 <div className="admin-gallery-field">
-                  <label htmlFor="img-title">Image Title</label>
+                  <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", minHeight: "28px" }}>
+                    <label htmlFor="img-title" style={{ margin: 0 }}>Image Title</label>
+                    <div className="formatting-toolbar" style={{ margin: 0 }}>
+                      <button type="button" className="formatting-btn" onClick={() => insertMarkdown("img-title", "**", title, setTitle)}><b>B</b></button>
+                      <button type="button" className="formatting-btn" onClick={() => insertMarkdown("img-title", "*", title, setTitle)}><i>I</i></button>
+                      <span className="formatting-hint">Use **bold** or *italics*</span>
+                    </div>
+                  </div>
                   <input
                     id="img-title"
                     type="text"
@@ -325,7 +333,9 @@ export default function AdminGalleryPage() {
                   />
                 </div>
                 <div className="admin-gallery-field">
-                  <label htmlFor="img-category">Category</label>
+                  <div style={{ display: "flex", alignItems: "center", minHeight: "28px" }}>
+                    <label htmlFor="img-category" style={{ margin: 0 }}>Category</label>
+                  </div>
                   <select
                     id="img-category"
                     value={category}
@@ -338,7 +348,14 @@ export default function AdminGalleryPage() {
                   </select>
                 </div>
                 <div className="admin-gallery-field">
-                  <label htmlFor="img-caption">Caption <span>(optional)</span></label>
+                  <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", minHeight: "28px" }}>
+                    <label htmlFor="img-caption" style={{ margin: 0 }}>Caption <span>(optional)</span></label>
+                    <div className="formatting-toolbar" style={{ margin: 0 }}>
+                      <button type="button" className="formatting-btn" onClick={() => insertMarkdown("img-caption", "**", caption, setCaption)}><b>B</b></button>
+                      <button type="button" className="formatting-btn" onClick={() => insertMarkdown("img-caption", "*", caption, setCaption)}><i>I</i></button>
+                      <span className="formatting-hint">Use **bold** or *italics*</span>
+                    </div>
+                  </div>
                   <input
                     id="img-caption"
                     type="text"
@@ -439,13 +456,13 @@ export default function AdminGalleryPage() {
                       </div>
                     </div>
                     <div className="admin-gallery-card__body">
-                      <strong>{blob.title || "Untitled"}</strong>
+                      <strong>{blob.title ? renderFormattedText(blob.title) : "Untitled"}</strong>
                       {blob.category && (
                         <span className="admin-gallery-card__tag" style={{ display: "inline-block", background: "#f0ecec", color: "#6a1b29", padding: "0.2rem 0.5rem", borderRadius: "5px", fontSize: "0.75rem", fontWeight: 700, marginTop: "0.25rem", marginBottom: "0.25rem" }}>
                           {blob.category}
                         </span>
                       )}
-                      {blob.caption && <p>{blob.caption}</p>}
+                      {blob.caption && <p>{renderFormattedText(blob.caption)}</p>}
                     </div>
                   </div>
                 ))}
@@ -486,6 +503,11 @@ export default function AdminGalleryPage() {
               <form onSubmit={handleSaveEdit} className="admin-gallery-edit-form" style={{ width: "100%", marginTop: "1rem", textAlign: "left" }}>
                 <div className="admin-gallery-field" style={{ marginBottom: "1rem" }}>
                   <label htmlFor="edit-img-title" style={{ display: "block", marginBottom: "0.4rem", fontSize: "0.85rem", fontWeight: 700, color: "#333" }}>Image Title</label>
+                  <div className="formatting-toolbar">
+                    <button type="button" className="formatting-btn" onClick={() => insertMarkdown("edit-img-title", "**", editTitle, setEditTitle)}><b>B</b></button>
+                    <button type="button" className="formatting-btn" onClick={() => insertMarkdown("edit-img-title", "*", editTitle, setEditTitle)}><i>I</i></button>
+                    <span className="formatting-hint">Use **bold** or *italics*</span>
+                  </div>
                   <input
                     id="edit-img-title"
                     type="text"
@@ -510,6 +532,11 @@ export default function AdminGalleryPage() {
                 </div>
                 <div className="admin-gallery-field" style={{ marginBottom: "1.5rem" }}>
                   <label htmlFor="edit-img-caption" style={{ display: "block", marginBottom: "0.4rem", fontSize: "0.85rem", fontWeight: 700, color: "#333" }}>Caption (optional)</label>
+                  <div className="formatting-toolbar">
+                    <button type="button" className="formatting-btn" onClick={() => insertMarkdown("edit-img-caption", "**", editCaption, setEditCaption)}><b>B</b></button>
+                    <button type="button" className="formatting-btn" onClick={() => insertMarkdown("edit-img-caption", "*", editCaption, setEditCaption)}><i>I</i></button>
+                    <span className="formatting-hint">Use **bold** or *italics*</span>
+                  </div>
                   <input
                     id="edit-img-caption"
                     type="text"

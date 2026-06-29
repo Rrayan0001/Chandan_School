@@ -36,7 +36,7 @@ export function SocialLinksList({ className }: { className?: string }) {
       {socialLinks.map((link) => (
         <Link
           aria-label={link.label}
-          className="social-link"
+          className={`social-link social-link--${link.kind}`}
           href={link.href}
           key={link.label}
           target="_blank"

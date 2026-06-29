@@ -6,6 +6,7 @@ import { SiteFooter } from "@/components/SiteFooter";
 import { SiteHeader } from "@/components/SiteHeader";
 import { galleryPageImages } from "@/lib/site-data";
 import { getBlobMetadata, prettifyName } from "@/lib/gallery-metadata";
+import { renderFormattedText } from "@/lib/format";
 
 // Force dynamic rendering so uploads and deletions reflect immediately
 export const dynamic = "force-dynamic";
@@ -117,8 +118,8 @@ export default async function GalleryPage() {
                           />
                         </div>
                         <div className="gallery-page__body">
-                          <h2>{img.title}</h2>
-                          {img.caption && <p>{img.caption}</p>}
+                          <h2>{renderFormattedText(img.title)}</h2>
+                          {img.caption && <p>{renderFormattedText(img.caption)}</p>}
                         </div>
                       </article>
                     ))}

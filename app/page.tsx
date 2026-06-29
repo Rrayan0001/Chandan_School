@@ -12,6 +12,7 @@ import { SiteHeader } from "@/components/SiteHeader";
 import { PageAnimations } from "@/components/PageAnimations";
 import { getSectionPath } from "@/lib/subpage-data";
 import { contactDetails, heroSlides } from "@/lib/site-data";
+import { renderFormattedText } from "@/lib/format";
 import { YoutubeCarousel } from "@/components/YoutubeCarousel";
 import { getNewsMetadata } from "@/lib/news-metadata";
 import { getCircularsMetadata } from "@/lib/circulars-metadata";
@@ -156,7 +157,12 @@ export default async function HomePage() {
       <PageAnimations />
 
       <main className="main-shell">
-        <HeroSlider slides={heroSlides} />
+        <HeroSlider
+          slides={heroSlides}
+          latestNews={news}
+          latestCirculars={circulars}
+          latestEvents={events}
+        />
         <InfoTicker />
 
         <div className="content-frame">
@@ -349,9 +355,9 @@ export default async function HomePage() {
                     )}
                     <div className="news-card__body">
                       <span className="news-card__date">{item.date}</span>
-                      <h3 className="news-card__title">{item.title}</h3>
-                      {item.caption && <p className="news-card__caption">{item.caption}</p>}
-                      <p className="news-card__content">{item.content}</p>
+                      <h3 className="news-card__title">{renderFormattedText(item.title)}</h3>
+                      {item.caption && <p className="news-card__caption">{renderFormattedText(item.caption)}</p>}
+                      <p className="news-card__content">{renderFormattedText(item.content)}</p>
                     </div>
                   </article>
                 ))}
@@ -374,7 +380,7 @@ export default async function HomePage() {
                       <div className="circular-row__info">
                         <span className="circular-row__icon">📄</span>
                         <div>
-                          <h3 className="circular-row__title">{item.title}</h3>
+                          <h3 className="circular-row__title">{renderFormattedText(item.title)}</h3>
                           <span className="circular-row__date">Published Date: {item.date}</span>
                         </div>
                       </div>
@@ -418,7 +424,7 @@ export default async function HomePage() {
                       <span className="event-card__date-badge">{item.eventDate}</span>
                     </div>
                     <div className="event-card__body">
-                      <h3 className="event-card__title">{item.title}</h3>
+                      <h3 className="event-card__title">{renderFormattedText(item.title)}</h3>
                     </div>
                   </article>
                 ))}

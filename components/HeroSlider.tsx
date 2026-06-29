@@ -6,6 +6,7 @@ import { useEffect, useState } from "react";
 import type { CSSProperties } from "react";
 
 import type { HeroSlide } from "@/lib/site-data";
+import { renderFormattedText } from "@/lib/format";
 
 const ADMISSION_KEY = "admission_open";
 
@@ -26,14 +27,26 @@ function formatDateString(dateStr: string) {
 
 type HeroSliderProps = {
   slides: HeroSlide[];
+  latestNews?: any[];
+  latestCirculars?: any[];
+  latestEvents?: any[];
 };
 
-export function HeroSlider({ slides }: HeroSliderProps) {
+export function HeroSlider({
+  slides,
+  latestNews = [],
+  latestCirculars = [],
+  latestEvents = []
+}: HeroSliderProps) {
   const [activeIndex, setActiveIndex] = useState(0);
   const [heroMinHeight, setHeroMinHeight] = useState<number | null>(null);
   const [showAdmissionTag, setShowAdmissionTag] = useState(true);
   const [showResultTag, setShowResultTag] = useState(false);
   const [resultDate, setResultDate] = useState("");
+
+  const latestNewsItem = latestNews && latestNews[0];
+  const latestCircularItem = latestCirculars && latestCirculars[0];
+  const latestEventItem = latestEvents && latestEvents[0];
 
   if (slides.length === 0) {
     return null;
@@ -117,6 +130,33 @@ export function HeroSlider({ slides }: HeroSliderProps) {
       className="hero-slider"
       style={heroStyle}
     >
+      {/* Separate premium floating notifications container */}
+      {(latestNewsItem || latestCircularItem || latestEventItem) && (
+        <div className="hero-notifications-container">
+          {latestNewsItem && (
+            <Link href="#latest-news" className="hero-notification-card hero-notification-card--news">
+              <span className="hero-notification-badge">Latest News</span>
+              <span className="hero-notification-title">{renderFormattedText(latestNewsItem.title)}</span>
+              <span className="hero-notification-date">({formatDateString(latestNewsItem.date)})</span>
+            </Link>
+          )}
+          {latestCircularItem && (
+            <Link href="#circulars" className="hero-notification-card hero-notification-card--circular">
+              <span className="hero-notification-badge">Latest Circular</span>
+              <span className="hero-notification-title">{renderFormattedText(latestCircularItem.title)}</span>
+              <span className="hero-notification-date">({formatDateString(latestCircularItem.date)})</span>
+            </Link>
+          )}
+          {latestEventItem && (
+            <Link href="#upcoming-events" className="hero-notification-card hero-notification-card--event">
+              <span className="hero-notification-badge">Latest Event</span>
+              <span className="hero-notification-title">{renderFormattedText(latestEventItem.title)}</span>
+              <span className="hero-notification-date">({formatDateString(latestEventItem.eventDate)})</span>
+            </Link>
+          )}
+        </div>
+      )}
+
       <div className="hero-slider__viewport">
         {slides.map((slide, index) => (
           <article

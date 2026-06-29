@@ -2,7 +2,9 @@
 
 import { useEffect, useRef, useState, useCallback } from "react";
 import { useRouter } from "next/navigation";
+import Link from "next/link";
 import { AdminNavbar } from "../AdminNavbar";
+import { insertMarkdown, renderFormattedText } from "@/lib/format";
 
 interface CircularItem {
   id: string;
@@ -197,7 +199,14 @@ export default function AdminCircularsPage() {
             <form className="admin-gallery-upload-form" onSubmit={handleUpload}>
               <div className="admin-gallery-meta-fields">
                 <div className="admin-gallery-field" style={{ gridColumn: "span 2" }}>
-                  <label htmlFor="circ-title">Circular Caption / Title</label>
+                  <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", minHeight: "28px" }}>
+                    <label htmlFor="circ-title" style={{ margin: 0 }}>Circular Caption / Title</label>
+                    <div className="formatting-toolbar" style={{ margin: 0 }}>
+                      <button type="button" className="formatting-btn" onClick={() => insertMarkdown("circ-title", "**", title, setTitle)}><b>B</b></button>
+                      <button type="button" className="formatting-btn" onClick={() => insertMarkdown("circ-title", "*", title, setTitle)}><i>I</i></button>
+                      <span className="formatting-hint">Use **bold** or *italics*</span>
+                    </div>
+                  </div>
                   <input
                     id="circ-title"
                     type="text"
@@ -209,7 +218,9 @@ export default function AdminCircularsPage() {
                 </div>
 
                 <div className="admin-gallery-field">
-                  <label htmlFor="circular-from">Applicable From Date <span style={{ fontWeight: 400, opacity: 0.8 }}>(optional)</span></label>
+                  <div style={{ display: "flex", alignItems: "center", minHeight: "28px" }}>
+                    <label htmlFor="circular-from" style={{ margin: 0 }}>Applicable From Date <span style={{ fontWeight: 400, opacity: 0.8 }}>(optional)</span></label>
+                  </div>
                   <input
                     id="circular-from"
                     type="date"
@@ -220,7 +231,9 @@ export default function AdminCircularsPage() {
                 </div>
 
                 <div className="admin-gallery-field">
-                  <label htmlFor="circular-to">Applicable To Date <span style={{ fontWeight: 400, opacity: 0.8 }}>(optional)</span></label>
+                  <div style={{ display: "flex", alignItems: "center", minHeight: "28px" }}>
+                    <label htmlFor="circular-to" style={{ margin: 0 }}>Applicable To Date <span style={{ fontWeight: 400, opacity: 0.8 }}>(optional)</span></label>
+                  </div>
                   <input
                     id="circular-to"
                     type="date"
@@ -231,7 +244,9 @@ export default function AdminCircularsPage() {
                 </div>
 
                 <div className="admin-gallery-field">
-                  <label htmlFor="circular-date">Publish Date</label>
+                  <div style={{ display: "flex", alignItems: "center", minHeight: "28px" }}>
+                    <label htmlFor="circular-date" style={{ margin: 0 }}>Publish Date</label>
+                  </div>
                   <input
                     id="circular-date"
                     type="date"
@@ -243,7 +258,9 @@ export default function AdminCircularsPage() {
                 </div>
 
                 <div className="admin-gallery-field">
-                  <label htmlFor="circ-file">PDF Circular File</label>
+                  <div style={{ display: "flex", alignItems: "center", minHeight: "28px" }}>
+                    <label htmlFor="circ-file" style={{ margin: 0 }}>PDF Circular File</label>
+                  </div>
                   <input
                     id="circ-file"
                     type="file"
@@ -282,10 +299,15 @@ export default function AdminCircularsPage() {
 
           {/* List Section */}
           <section className="admin-gallery-grid-section">
-            <h2 className="admin-gallery-section-title">
-              📋 Published Circulars List
-              <span className="admin-gallery-count">{circulars.length}</span>
-            </h2>
+            <div className="admin-gallery-grid-header" style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "1.5rem" }}>
+              <h2 className="admin-gallery-section-title" style={{ margin: 0 }}>
+                📋 Published Circulars List
+                <span className="admin-gallery-count">{circulars.length}</span>
+              </h2>
+              <Link href="/#circulars" target="_blank" className="admin-gallery-view-link">
+                View Public Circulars →
+              </Link>
+            </div>
 
             {loading ? (
               <div className="admin-gallery-loading">
@@ -313,7 +335,7 @@ export default function AdminCircularsPage() {
                     }}
                   >
                     <div>
-                      <h3 style={{ margin: "0 0 0.25rem 0", fontSize: "1.05rem", color: "#6a1b29" }}>{item.title}</h3>
+                      <h3 style={{ margin: "0 0 0.25rem 0", fontSize: "1.05rem", color: "#6a1b29" }}>{renderFormattedText(item.title)}</h3>
                       <div style={{ display: "flex", gap: "1rem", fontSize: "0.8rem", color: "#666" }}>
                         <span>Published: <strong>{item.date}</strong></span>
                         {(item.fromDate || item.toDate) && (

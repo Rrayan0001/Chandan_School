@@ -2,8 +2,10 @@
 
 import { useEffect, useRef, useState, useCallback } from "react";
 import { useRouter } from "next/navigation";
+import Link from "next/link";
 import Image from "next/image";
 import { AdminNavbar } from "../AdminNavbar";
+import { insertMarkdown, renderFormattedText } from "@/lib/format";
 
 interface NewsItem {
   id: string;
@@ -199,7 +201,14 @@ export default function AdminNewsPage() {
             <form className="admin-gallery-upload-form" onSubmit={handleUpload}>
               <div className="admin-gallery-meta-fields">
                 <div className="admin-gallery-field">
-                  <label htmlFor="news-title">News Title</label>
+                  <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", minHeight: "28px" }}>
+                    <label htmlFor="news-title" style={{ margin: 0 }}>News Title</label>
+                    <div className="formatting-toolbar" style={{ margin: 0 }}>
+                      <button type="button" className="formatting-btn" onClick={() => insertMarkdown("news-title", "**", title, setTitle)}><b>B</b></button>
+                      <button type="button" className="formatting-btn" onClick={() => insertMarkdown("news-title", "*", title, setTitle)}><i>I</i></button>
+                      <span className="formatting-hint">Use **bold** or *italics*</span>
+                    </div>
+                  </div>
                   <input
                     id="news-title"
                     type="text"
@@ -211,7 +220,14 @@ export default function AdminNewsPage() {
                 </div>
 
                 <div className="admin-gallery-field">
-                  <label htmlFor="news-caption">Caption</label>
+                  <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", minHeight: "28px" }}>
+                    <label htmlFor="news-caption" style={{ margin: 0 }}>Caption</label>
+                    <div className="formatting-toolbar" style={{ margin: 0 }}>
+                      <button type="button" className="formatting-btn" onClick={() => insertMarkdown("news-caption", "**", caption, setCaption)}><b>B</b></button>
+                      <button type="button" className="formatting-btn" onClick={() => insertMarkdown("news-caption", "*", caption, setCaption)}><i>I</i></button>
+                      <span className="formatting-hint">Use **bold** or *italics*</span>
+                    </div>
+                  </div>
                   <input
                     id="news-caption"
                     type="text"
@@ -222,7 +238,9 @@ export default function AdminNewsPage() {
                 </div>
 
                 <div className="admin-gallery-field">
-                  <label htmlFor="news-date">Publish Date</label>
+                  <div style={{ display: "flex", alignItems: "center", minHeight: "28px" }}>
+                    <label htmlFor="news-date" style={{ margin: 0 }}>Publish Date</label>
+                  </div>
                   <input
                     id="news-date"
                     type="date"
@@ -234,7 +252,14 @@ export default function AdminNewsPage() {
                 </div>
 
                 <div className="admin-gallery-field" style={{ gridColumn: "span 2" }}>
-                  <label htmlFor="news-content">Content Body</label>
+                  <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", minHeight: "28px" }}>
+                    <label htmlFor="news-content" style={{ margin: 0 }}>Content Body</label>
+                    <div className="formatting-toolbar" style={{ margin: 0 }}>
+                      <button type="button" className="formatting-btn" onClick={() => insertMarkdown("news-content", "**", content, setContent)}><b>B</b></button>
+                      <button type="button" className="formatting-btn" onClick={() => insertMarkdown("news-content", "*", content, setContent)}><i>I</i></button>
+                      <span className="formatting-hint">Use **bold** or *italics*</span>
+                    </div>
+                  </div>
                   <textarea
                     id="news-content"
                     value={content}
@@ -252,50 +277,6 @@ export default function AdminNewsPage() {
                       resize: "vertical",
                     }}
                   />
-                </div>
-
-                <div className="admin-gallery-field" style={{ gridColumn: "span 2" }}>
-                  <label htmlFor="news-file">News GIF / Image <span>(optional, under 10MB)</span></label>
-                  <input
-                    id="news-file"
-                    type="file"
-                    ref={fileInputRef}
-                    accept="image/*"
-                    onChange={handleInputChange}
-                    style={{ marginBottom: "1rem" }}
-                  />
-
-                  {preview && (
-                    <div style={{ position: "relative", width: "150px", height: "150px", border: "1px solid #ddd", borderRadius: "10px", overflow: "hidden", background: "#f9f9f9" }}>
-                      <Image src={preview} alt="Selected GIF preview" fill style={{ objectFit: "contain" }} unoptimized />
-                      <button
-                        type="button"
-                        onClick={() => {
-                          setSelectedFile(null);
-                          setPreview(null);
-                          if (fileInputRef.current) fileInputRef.current.value = "";
-                        }}
-                        style={{
-                          position: "absolute",
-                          top: "5px",
-                          right: "5px",
-                          background: "rgba(0,0,0,0.6)",
-                          color: "#fff",
-                          border: "none",
-                          borderRadius: "50%",
-                          width: "22px",
-                          height: "22px",
-                          cursor: "pointer",
-                          display: "flex",
-                          alignItems: "center",
-                          justifyContent: "center",
-                          fontSize: "12px"
-                        }}
-                      >
-                        ×
-                      </button>
-                    </div>
-                  )}
                 </div>
               </div>
 
@@ -326,10 +307,15 @@ export default function AdminNewsPage() {
 
           {/* List Section */}
           <section className="admin-gallery-grid-section">
-            <h2 className="admin-gallery-section-title">
-              📰 Published News List
-              <span className="admin-gallery-count">{news.length}</span>
-            </h2>
+            <div className="admin-gallery-grid-header" style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "1.5rem" }}>
+              <h2 className="admin-gallery-section-title" style={{ margin: 0 }}>
+                📰 Published News List
+                <span className="admin-gallery-count">{news.length}</span>
+              </h2>
+              <Link href="/#latest-news" target="_blank" className="admin-gallery-view-link">
+                View Public News →
+              </Link>
+            </div>
 
             {loading ? (
               <div className="admin-gallery-loading">
@@ -370,11 +356,11 @@ export default function AdminNewsPage() {
                     )}
                     <div style={{ flexGrow: 1 }}>
                       <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginBottom: "0.25rem" }}>
-                        <h3 style={{ margin: 0, fontSize: "1.1rem", color: "#6a1b29" }}>{item.title}</h3>
+                        <h3 style={{ margin: 0, fontSize: "1.1rem", color: "#6a1b29" }}>{renderFormattedText(item.title)}</h3>
                         <span style={{ fontSize: "0.8rem", color: "#888", fontWeight: 700 }}>{item.date}</span>
                       </div>
-                      {item.caption && <strong style={{ display: "block", fontSize: "0.85rem", color: "#555", marginBottom: "0.5rem" }}>{item.caption}</strong>}
-                      <p style={{ margin: 0, fontSize: "0.9rem", color: "#666", lineHeight: 1.5 }}>{item.content}</p>
+                      {item.caption && <strong style={{ display: "block", fontSize: "0.85rem", color: "#555", marginBottom: "0.5rem" }}>{renderFormattedText(item.caption)}</strong>}
+                      <p style={{ margin: 0, fontSize: "0.9rem", color: "#666", lineHeight: 1.5 }}>{renderFormattedText(item.content)}</p>
                     </div>
 
                     <button
