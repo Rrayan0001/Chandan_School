@@ -3,30 +3,30 @@ import type { Metadata } from "next";
 
 import { SiteFooter } from "@/components/SiteFooter";
 import { SiteHeader } from "@/components/SiteHeader";
-import type { DisclosureDoc, InfoRow } from "@/lib/disclosure-data";
-import {
-  disclosureB,
-  disclosureC,
-  generalInfo,
-  infrastructureInfo,
-  staffInfo,
-} from "@/lib/disclosure-data";
+import type { DisclosureDoc } from "@/lib/disclosure-data";
+import { disclosureB, disclosureC } from "@/lib/disclosure-data";
 
 export const metadata: Metadata = {
   title: "Mandatory Public Disclosure | School Chandan",
   description:
-    "CBSE Mandatory Public Disclosure — affiliation, safety certificates, fee structure, academic calendar, SMC, PTA and board results for School Chandan (Affiliation No. 830305).",
+    "CBSE Affiliation Mandatory Documents / Website Links — School Chandan, Laxmeshwar. All documents open directly as PDFs, no login required.",
 };
 
-function DocTable({ docs }: { docs: DisclosureDoc[] }) {
+function DocTable({
+  docs,
+  columns,
+}: {
+  docs: DisclosureDoc[];
+  columns: [string, string, string];
+}) {
   return (
     <div className="mpd-table-wrap">
       <table className="mpd-table">
         <thead>
           <tr>
-            <th className="mpd-table__sno">S.No</th>
-            <th>Document / Information</th>
-            <th className="mpd-table__link">View Document</th>
+            <th className="mpd-table__sno">{columns[0]}</th>
+            <th>{columns[1]}</th>
+            <th className="mpd-table__link">{columns[2]}</th>
           </tr>
         </thead>
         <tbody>
@@ -36,40 +36,15 @@ function DocTable({ docs }: { docs: DisclosureDoc[] }) {
               <td className="mpd-table__title">{doc.title}</td>
               <td className="mpd-table__link">
                 <a
-                  className="mpd-pdf-link"
+                  className="mpd-url-link"
                   data-disclosure={doc.id}
                   href={doc.href}
                   rel="noopener noreferrer"
                   target="_blank"
                 >
-                  <span aria-hidden="true">📄</span> View PDF
+                  {doc.publicUrl}
                 </a>
               </td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
-    </div>
-  );
-}
-
-function InfoTable({ rows }: { rows: InfoRow[] }) {
-  return (
-    <div className="mpd-table-wrap">
-      <table className="mpd-table">
-        <thead>
-          <tr>
-            <th className="mpd-table__sno">S.No</th>
-            <th>Information</th>
-            <th>Details</th>
-          </tr>
-        </thead>
-        <tbody>
-          {rows.map((row) => (
-            <tr key={row.serial}>
-              <td className="mpd-table__sno">{row.serial}</td>
-              <td className="mpd-table__title">{row.label}</td>
-              <td>{row.value}</td>
             </tr>
           ))}
         </tbody>
@@ -86,12 +61,9 @@ export default function MandatoryPublicDisclosurePage() {
       <main className="main-shell">
         <div className="content-frame">
           <section className="content-block">
-            <div className="section-heading">
-              <h2>Mandatory Public Disclosure</h2>
-              <p>
-                As prescribed by CBSE (Appendix-IX). All documents open
-                directly as PDFs — no login required. Affiliation No. 830305.
-              </p>
+            <div className="mpd-doc-header">
+              <h2>School Chandan, Laxmeshwar</h2>
+              <p>CBSE Affiliation – Mandatory Documents / Website Links</p>
             </div>
 
             <div
@@ -103,51 +75,29 @@ export default function MandatoryPublicDisclosurePage() {
               <span aria-current="page">Mandatory Public Disclosure</span>
             </div>
 
-            {/* ── A: General Information ── */}
-            <section className="mpd-section" id="general-information">
+            {/* ── A: Affiliation / Certification Documents ── */}
+            <section className="mpd-section" id="affiliation-documents">
               <h3 className="mpd-section__title">
-                A. General Information
+                A. Affiliation / Certification Documents
               </h3>
-              <InfoTable rows={generalInfo} />
+              <DocTable
+                columns={["Sl. No.", "Particulars", "Website Link"]}
+                docs={disclosureB}
+              />
             </section>
 
-            {/* ── B: Documents & Information ── */}
-            <section className="mpd-section" id="documents-information">
+            {/* ── B: School Information / Disclosure Documents ── */}
+            <section className="mpd-section" id="school-information">
               <h3 className="mpd-section__title">
-                B. Documents &amp; Information
+                B. School Information / Disclosure Documents
               </h3>
-              <DocTable docs={disclosureB} />
-              <p className="mpd-note">
-                Note: Self-attested copies by Chairman / Manager / Secretary
-                and Principal. If any uploaded document is later found not
-                genuine, the school shall be liable for action as per CBSE
-                norms.
-              </p>
+              <DocTable
+                columns={["Sl. No.", "Particulars", "Website Link"]}
+                docs={disclosureC}
+              />
             </section>
 
-            {/* ── C: Result & Academics ── */}
-            <section className="mpd-section" id="result-academics">
-              <h3 className="mpd-section__title">
-                C. Result &amp; Academics
-              </h3>
-              <DocTable docs={disclosureC} />
-            </section>
-
-            {/* ── D: Staff ── */}
-            <section className="mpd-section" id="staff-details">
-              <h3 className="mpd-section__title">
-                D. Teaching Staff Details
-              </h3>
-              <InfoTable rows={staffInfo} />
-            </section>
-
-            {/* ── E: Infrastructure ── */}
-            <section className="mpd-section" id="infrastructure">
-              <h3 className="mpd-section__title">
-                E. School Infrastructure Details
-              </h3>
-              <InfoTable rows={infrastructureInfo} />
-            </section>
+            <p className="mpd-signoff">School Chandan, Laxmeshwar</p>
           </section>
         </div>
       </main>
