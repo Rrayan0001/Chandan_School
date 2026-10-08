@@ -36,13 +36,14 @@ function DocTable({
               <td className="mpd-table__title">{doc.title}</td>
               <td className="mpd-table__link">
                 <a
-                  className="mpd-url-link"
+                  className="mpd-pdf-link"
                   data-disclosure={doc.id}
                   href={doc.href}
                   rel="noopener noreferrer"
                   target="_blank"
+                  title={doc.publicUrl}
                 >
-                  {doc.publicUrl}
+                  <span aria-hidden="true">📄</span> View Document
                 </a>
               </td>
             </tr>
