@@ -500,7 +500,27 @@ export default async function HomePage() {
             </article>
           </section>
 
-          {/* ── 8. Contact ── */}
+          {/* ── 8. Mandatory Public Disclosure ── */}
+          <section className="content-block" id="mandatory-disclosure" data-aos="fade-up">
+            <div className="mpd-banner">
+              <div>
+                <h3>Mandatory Public Disclosure (CBSE)</h3>
+                <p>
+                  Affiliation No. 830305 — affiliation letters, safety
+                  certificates, fee structure, SMC / PTA lists and board
+                  results. All PDFs open directly, no login required.
+                </p>
+              </div>
+              <Link
+                className="button-link button-link--gold"
+                href="/mandatory-public-disclosure"
+              >
+                View Disclosure →
+              </Link>
+            </div>
+          </section>
+
+          {/* ── 9. Contact ── */}
           <section className="content-block content-block--contact" id="contact" data-aos="fade-up">
             <div className="contact-panel">
               <SectionHeading title="Contact Us" />

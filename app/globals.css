@@ -5611,4 +5611,166 @@ section[id] {
   }
 }
 
+/* ═══════════════════════════════════════════════════════════
+   MANDATORY PUBLIC DISCLOSURE (mpd-*)
+   CBSE Appendix-IX tables — public, no login, print-friendly
+   ═══════════════════════════════════════════════════════════ */
+
+.mpd-breadcrumbs {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 1.5rem;
+  color: var(--text-soft);
+  font-size: 0.88rem;
+}
+
+.mpd-breadcrumbs a {
+  color: var(--blue);
+  font-weight: 600;
+}
+
+.mpd-section {
+  margin-top: 2.5rem;
+}
+
+.mpd-section__title {
+  margin: 0 0 1rem;
+  padding-bottom: 0.5rem;
+  color: var(--red-dark);
+  font-size: 1.25rem;
+  font-weight: 700;
+  border-bottom: 2px solid var(--saffron);
+}
+
+.mpd-table-wrap {
+  overflow-x: auto;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background: #fff;
+  box-shadow: 0 8px 20px rgba(62, 49, 40, 0.06);
+}
+
+.mpd-table {
+  width: 100%;
+  min-width: 560px;
+  border-collapse: collapse;
+  text-align: left;
+  font-size: 0.92rem;
+}
+
+.mpd-table thead th {
+  padding: 0.85rem 1rem;
+  color: #fff;
+  background: linear-gradient(135deg, var(--red-dark), var(--red));
+  font-size: 0.82rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  white-space: nowrap;
+}
+
+.mpd-table tbody td {
+  padding: 0.85rem 1rem;
+  color: var(--text-soft);
+  border-bottom: 1px solid #eee7d3;
+  vertical-align: middle;
+  line-height: 1.55;
+}
+
+.mpd-table tbody tr:last-child td {
+  border-bottom: none;
+}
+
+.mpd-table tbody tr:hover td {
+  background: #fffdf4;
+}
+
+.mpd-table__sno {
+  width: 64px;
+  text-align: center;
+  font-weight: 700;
+  color: var(--red-dark);
+}
+
+.mpd-table__title {
+  color: var(--text);
+  font-weight: 600;
+}
+
+.mpd-table__link {
+  width: 150px;
+  text-align: center;
+  white-space: nowrap;
+}
+
+.mpd-pdf-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.45rem 0.85rem;
+  color: #fff;
+  background: linear-gradient(135deg, var(--blue) 0%, var(--blue-light) 100%);
+  border-radius: 8px;
+  font-size: 0.82rem;
+  font-weight: 700;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.mpd-pdf-link:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 6px 14px rgba(30, 107, 58, 0.3);
+}
+
+.mpd-note {
+  margin: 0.9rem 0 0;
+  color: var(--text-soft);
+  font-size: 0.82rem;
+  font-style: italic;
+  line-height: 1.6;
+}
+
+/* Homepage disclosure banner */
+.mpd-banner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.25rem;
+  padding: 1.4rem 1.6rem;
+  background: linear-gradient(135deg, #fdf8f0 0%, #f7edd8 100%);
+  border: 1px solid #e8d8bf;
+  border-radius: 16px;
+}
+
+.mpd-banner h3 {
+  margin: 0 0 0.3rem;
+  color: var(--red-dark);
+  font-size: 1.1rem;
+}
+
+.mpd-banner p {
+  margin: 0;
+  color: var(--text-soft);
+  font-size: 0.9rem;
+}
+
+@media (max-width: 640px) {
+  .mpd-banner {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
+
+@media print {
+  .nav-shell,
+  .site-header,
+  .site-footer,
+  .mpd-pdf-link {
+    display: none;
+  }
+  .mpd-table-wrap {
+    box-shadow: none;
+  }
+}
+
 

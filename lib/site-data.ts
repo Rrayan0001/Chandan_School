@@ -93,6 +93,7 @@ export const navigation: NavItem[] = [
   },
   { label: "Sports", href: getSectionPath("features", "sports-ground") },
   { label: "Gallery", href: "/gallery" },
+  { label: "Mandatory Disclosure", href: "/mandatory-public-disclosure" },
   { label: "Resources", href: "/#resources" },
   { label: "Contact Us", href: "/#contact" }
 ];

@@ -33,6 +33,11 @@ export function SiteFooter() {
             <li>
               <Link href="/gallery">Gallery</Link>
             </li>
+            <li>
+              <Link href="/mandatory-public-disclosure">
+                Mandatory Public Disclosure
+              </Link>
+            </li>
           </ul>
         </div>
 
