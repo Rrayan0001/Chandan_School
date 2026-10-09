@@ -4,7 +4,7 @@ import { usePathname } from "next/navigation";
 
 export function WhatsAppButton() {
   const pathname = usePathname();
-  const phoneNumber = "917676532414"; // India country code + number
+  const phoneNumber = "919448432414"; // India country code + phonePrimary
   const message = encodeURIComponent(
     "Hello! I would like to know more about School Chandan."
   );

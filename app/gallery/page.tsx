@@ -7,9 +7,16 @@ import { SiteHeader } from "@/components/SiteHeader";
 import { galleryPageImages } from "@/lib/site-data";
 import { getBlobMetadata, prettifyName } from "@/lib/gallery-metadata";
 import { renderFormattedText } from "@/lib/format";
+import type { Metadata } from "next";
 
 // Force dynamic rendering so uploads and deletions reflect immediately
 export const dynamic = "force-dynamic";
+
+export const metadata: Metadata = {
+  title: "Photo Gallery | School Chandan",
+  description:
+    "Campus, classroom, activity, cultural, and achievement memories from School Chandan, Laxmeshwar.",
+};
 
 interface GalleryImageItem {
   url: string;
@@ -67,6 +74,9 @@ export default async function GalleryPage() {
   }));
 
   const allImages = [...blobImages, ...staticImages];
+  const visibleCategories = CATEGORIES.filter((category) =>
+    allImages.some((img) => img.category.toLowerCase() === category.toLowerCase())
+  );
 
   return (
     <div className="page-shell">
@@ -85,7 +95,12 @@ export default async function GalleryPage() {
 
         {/* Categories as Sections */}
         <div style={{ padding: "3rem 0" }}>
-          {CATEGORIES.map((category) => {
+          {allImages.length === 0 && (
+            <div className="container">
+              <p>No gallery images published yet. Please check back soon.</p>
+            </div>
+          )}
+          {visibleCategories.map((category) => {
             const images = allImages.filter(
               (img) => img.category.toLowerCase() === category.toLowerCase()
             );

@@ -4,8 +4,6 @@ import { useState, useRef, useEffect } from "react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 
-const ADMIN_PASSWORD = "Chandan@0786";
-
 export default function AdminLoginPage() {
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
@@ -29,25 +27,47 @@ export default function AdminLoginPage() {
     if (isLoading) return;
 
     setIsLoading(true);
-    // Small artificial delay for UX
-    await new Promise((r) => setTimeout(r, 600));
+    setError("");
 
-    if (password === ADMIN_PASSWORD) {
-      sessionStorage.setItem("admin_authenticated", "true");
-      router.push("/admin/dashboard");
-    } else {
+    try {
+      const res = await fetch("/api/admin/login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ password }),
+      });
+      const data = (await res.json().catch(() => null)) as { error?: string } | null;
+
+      if (res.ok) {
+        // Server sets the httpOnly admin session cookie; this flag only
+        // satisfies the client-side page gates (real auth is the cookie).
+        sessionStorage.setItem("admin_authenticated", "true");
+        router.push("/admin/dashboard");
+        return;
+      }
+
       setAttempts((a) => a + 1);
-      setError(
-        attempts >= 2
-          ? "Multiple failed attempts. Please verify the password."
-          : "Incorrect password. Please try again."
-      );
+      if (res.status === 503) {
+        setError(
+          data?.error || "Admin login is not configured on the server."
+        );
+      } else if (res.status === 429) {
+        setError("Too many login attempts. Try again later.");
+      } else {
+        setError(
+          attempts >= 2
+            ? "Multiple failed attempts. Please verify the password."
+            : data?.error || "Incorrect password. Please try again."
+        );
+      }
       setIsShaking(true);
       setPassword("");
       setTimeout(() => setIsShaking(false), 600);
       inputRef.current?.focus();
+    } catch {
+      setError("Could not reach the server. Please try again.");
+    } finally {
+      setIsLoading(false);
     }
-    setIsLoading(false);
   };
 
   return (

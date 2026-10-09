@@ -686,55 +686,6 @@ export const sectionPages: SectionPage[] = [
   },
   {
     section: "features",
-    slug: "sports-ground",
-    label: "Sports Ground",
-    title: "Sports & Physical Excellence",
-    intro:
-      "Sports and physical activities are part of everyday school life, helping students build strength, teamwork, and confidence.",
-    paragraphs: [
-      "At School Chandan, we believe physical fitness is the heart of a balanced education. Students engage in yoga, outdoor games, and team sports to build strength, discipline, and team spirit.",
-      "The sports programme encourages healthy habits, coordination, and leadership while giving students an active break from classroom learning.",
-    ],
-    highlights: [
-      "Team sports that build leadership and cooperation",
-      "Yoga and wellness for physical and mental balance",
-      "Daily fitness routines that support discipline",
-      "Outdoor play that keeps school life active and healthy"
-    ],
-    image: "/assets/hero/sports.jpg",
-    imageAlt: "Students participating in sports and physical activities",
-    imageFit: "cover",
-    imagePosition: "center 25%",
-    imageAspectRatio: "4 / 2.25",
-    galleryImages: [
-      {
-        image: "/assets/sports/sports1.JPG",
-        alt: "Team sports activity at School Chandan"
-      },
-      {
-        image: "/assets/sports/sports2.JPG",
-        alt: "Physical fitness activity at School Chandan"
-      },
-      {
-        image: "/assets/sports/sports3.JPG",
-        alt: "Yoga and wellness activity at School Chandan"
-      }
-    ],
-    subSections: [
-      {
-        title: "Yoga",
-        body: "Yoga and meditation are deeply integrated into our daily routine to promote mindfulness, physical well-being, and mental clarity among students. Regular practice helps students build concentration and maintain physical fitness.",
-        images: [
-          { image: "/assets/sports/yoga.jpg", alt: "Students doing yoga" },
-          { image: "/assets/sports/yoga1.jpg", alt: "Yoga poses" },
-          { image: "/assets/sports/yoga2.jpg", alt: "Yoga group activity" },
-          { image: "/assets/sports/yoga3.jpg", alt: "Meditation and focus" }
-        ]
-      }
-    ]
-  },
-  {
-    section: "features",
     slug: "science-lab",
     label: "Science Lab",
     title: "Science Lab",

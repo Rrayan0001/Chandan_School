@@ -9,9 +9,8 @@ import { HeroSlider } from "@/components/HeroSlider";
 import { InfoTicker } from "@/components/InfoTicker";
 import { SiteFooter } from "@/components/SiteFooter";
 import { SiteHeader } from "@/components/SiteHeader";
-import { PageAnimations } from "@/components/PageAnimations";
 import { getSectionPath } from "@/lib/subpage-data";
-import { contactDetails, heroSlides } from "@/lib/site-data";
+import { contactDetails, heroSlides, homeVideos } from "@/lib/site-data";
 import { renderFormattedText } from "@/lib/format";
 import { YoutubeCarousel } from "@/components/YoutubeCarousel";
 import { getNewsMetadata } from "@/lib/news-metadata";
@@ -124,10 +123,17 @@ export default async function HomePage() {
   let circulars: any[] = [];
   let events: any[] = [];
 
+  // NaN-safe newest-first sort: unparseable dates sink to the end
+  const timeOf = (value: unknown): number => {
+    if (typeof value !== "string" || value === "") return Number.NEGATIVE_INFINITY;
+    const t = new Date(value).getTime();
+    return Number.isNaN(t) ? Number.NEGATIVE_INFINITY : t;
+  };
+
   try {
     const rawNews = await getNewsMetadata();
     news = [...rawNews]
-      .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
+      .sort((a, b) => timeOf(b.date) - timeOf(a.date))
       .slice(0, 3);
   } catch (err) {
     console.error("Failed to load news for home", err);
@@ -136,7 +142,7 @@ export default async function HomePage() {
   try {
     const rawCirculars = await getCircularsMetadata();
     circulars = [...rawCirculars]
-      .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
+      .sort((a, b) => timeOf(b.date) - timeOf(a.date))
       .slice(0, 5);
   } catch (err) {
     console.error("Failed to load circulars for home", err);
@@ -145,7 +151,7 @@ export default async function HomePage() {
   try {
     const rawEvents = await getEventsMetadata();
     events = [...rawEvents]
-      .sort((a, b) => new Date(b.eventDate).getTime() - new Date(a.eventDate).getTime())
+      .sort((a, b) => timeOf(b.eventDate) - timeOf(a.eventDate))
       .slice(0, 3);
   } catch (err) {
     console.error("Failed to load events for home", err);
@@ -154,7 +160,6 @@ export default async function HomePage() {
   return (
     <div className="page-shell" id="top">
       <SiteHeader />
-      <PageAnimations />
 
       <main className="main-shell">
         <HeroSlider
@@ -273,28 +278,7 @@ export default async function HomePage() {
               description="Watch our student activities and special interactions with Bharata Ratna Prof. C.N.R. Rao, ISRO Chairman A.S. Kiran Kumar and other dignitaries."
             />
 
-            <YoutubeCarousel items={[
-                  {
-                    id: "DVmeB-Hi-34",
-                    title: "School Activities & Events",
-                    description: "Showcasing assemblies, cultural events, celebrations, and vibrant student life.",
-                  },
-                  {
-                    id: "e6VkcwPset4",
-                    title: "Honorable Chief Minister Visit",
-                    description: "An inspiring visit and interaction with the Honorable Chief Minister Shri Siddaramaiah.",
-                  },
-                  {
-                    id: "AgKcCv7JnV4",
-                    title: "School Exhibition",
-                    description: "Highlights from the science exhibition and expert reviews.",
-                  },
-                  {
-                    id: "V2OehYIJI4E",
-                    title: "T. Ishwar Interaction",
-                    description: "An inspiring interaction and address by T. Ishwar.",
-                  },
-                ]} />
+            <YoutubeCarousel items={homeVideos} />
           </section>
 
           {/* ── 5. A Memorable Visit (CM) ── */}
@@ -335,9 +319,9 @@ export default async function HomePage() {
           </section>
 
           {/* ── Latest News Section ── */}
-          {news.length > 0 && (
-            <section className="content-block" id="latest-news" data-aos="fade-up">
-              <SectionHeading title="Latest News & Announcements" description="Keep up to date with the latest stories, achievements, and notices from School Chandan." />
+          <section className="content-block" id="latest-news" data-aos="fade-up">
+            <SectionHeading title="Latest News & Announcements" description="Keep up to date with the latest stories, achievements, and notices from School Chandan." />
+            {news.length > 0 ? (
               <div className="news-grid">
                 {news.map((item) => (
                   <article className="news-card" key={item.id} data-aos="fade-up">
@@ -362,13 +346,15 @@ export default async function HomePage() {
                   </article>
                 ))}
               </div>
-            </section>
-          )}
+            ) : (
+              <p>No news published yet. Please check back soon.</p>
+            )}
+          </section>
 
           {/* ── Circulars Section ── */}
-          {circulars.length > 0 && (
-            <section className="content-block" id="circulars" data-aos="fade-up">
-              <SectionHeading title="Circulars & Notices" description="Download official notices, guidelines, and schedule documents issued by school administration." />
+          <section className="content-block" id="circulars" data-aos="fade-up">
+            <SectionHeading title="Circulars & Notices" description="Download official notices, guidelines, and schedule documents issued by school administration." />
+            {circulars.length > 0 ? (
               <div className="circulars-board">
                 <div className="circulars-board__header">
                   <span>Circular Title</span>
@@ -402,13 +388,15 @@ export default async function HomePage() {
                   ))}
                 </div>
               </div>
-            </section>
-          )}
+            ) : (
+              <p>No circulars published yet. Please check back soon.</p>
+            )}
+          </section>
 
           {/* ── Events Section ── */}
-          {events.length > 0 && (
-            <section className="content-block" id="upcoming-events" data-aos="fade-up">
-              <SectionHeading title="Events & Highlights" description="Explore images and updates from recent school events, sports meets, and co-curricular programs." />
+          <section className="content-block" id="upcoming-events" data-aos="fade-up">
+            <SectionHeading title="Events & Highlights" description="Explore images and updates from recent school events, sports meets, and co-curricular programs." />
+            {events.length > 0 ? (
               <div className="events-grid">
                 {events.map((item) => (
                   <article className="event-card" key={item.id} data-aos="zoom-in">
@@ -429,8 +417,10 @@ export default async function HomePage() {
                   </article>
                 ))}
               </div>
-            </section>
-          )}
+            ) : (
+              <p>No events published yet. Please check back soon.</p>
+            )}
+          </section>
 
           {/* ── 6. Vibrant Campus Gallery ── */}
           <section className="content-block" id="gallery" data-aos="fade-up">

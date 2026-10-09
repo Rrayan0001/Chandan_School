@@ -34,6 +34,20 @@ export default function AdminEventsPage() {
   const [eventDate, setEventDate] = useState(new Date().toISOString().split("T")[0]);
   const [preview, setPreview] = useState<string | null>(null);
 
+  // Revoke object URLs when replaced or on unmount (avoids blob URL leaks)
+  const prevPreviewRef = useRef<string | null>(null);
+  useEffect(() => {
+    if (prevPreviewRef.current && prevPreviewRef.current !== preview) {
+      URL.revokeObjectURL(prevPreviewRef.current);
+    }
+    prevPreviewRef.current = preview;
+  }, [preview]);
+  useEffect(() => {
+    return () => {
+      if (prevPreviewRef.current) URL.revokeObjectURL(prevPreviewRef.current);
+    };
+  }, []);
+
   useEffect(() => {
     if (sessionStorage.getItem("admin_authenticated") !== "true") {
       router.replace("/admin");

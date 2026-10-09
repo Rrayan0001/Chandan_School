@@ -1,40 +1,42 @@
 import { get } from "@vercel/blob";
 import { NextResponse } from "next/server";
+import {
+  capStream,
+  jsonError,
+  parseAllowedBlobUrl,
+  proxyTimeout,
+  sanitizeFilename,
+} from "@/lib/api-security";
 
 export async function GET(request: Request) {
   const { searchParams } = new URL(request.url);
-  const url = searchParams.get("url");
-  const filename = searchParams.get("filename") || "circular.pdf";
-
-  if (!url || typeof url !== "string") {
-    return NextResponse.json({ error: "Missing url parameter" }, { status: 400 });
-  }
-
-  if (!url.includes(".blob.vercel-storage.com")) {
-    return NextResponse.json({ error: "Invalid URL domain" }, { status: 400 });
-  }
+  const allowed = parseAllowedBlobUrl(searchParams.get("url"));
+  if (!allowed.ok) return allowed.response;
 
   try {
-    const result = await get(url, {
-      access: "private",
-    });
+    const result = await proxyTimeout(get(allowed.url, { access: "private" }));
 
     if (!result) {
-      return NextResponse.json({ error: "PDF not found" }, { status: 404 });
+      return jsonError("PDF not found.", 404);
     }
 
     // Force attachment headers so it initiates a browser download instead of rendering in-browser
-    const safeFilename = filename.toLowerCase().endsWith(".pdf") ? filename : `${filename}.pdf`;
+    const { header } = sanitizeFilename(
+      searchParams.get("filename") || "circular.pdf",
+      "circular.pdf",
+      ".pdf"
+    );
 
-    return new Response(result.stream, {
+    return new Response(capStream(result.stream), {
       headers: {
         "Content-Type": "application/pdf",
-        "Content-Disposition": `attachment; filename="${encodeURIComponent(safeFilename)}"`,
+        "Content-Disposition": header,
         "Cache-Control": "no-cache",
+        "X-Content-Type-Options": "nosniff",
       },
     });
-  } catch (error: any) {
+  } catch (error) {
     console.error("Error proxying PDF download:", error);
-    return NextResponse.json({ error: error.message || "Error proxying PDF download" }, { status: 500 });
+    return jsonError("Failed to download PDF.", 500);
   }
 }

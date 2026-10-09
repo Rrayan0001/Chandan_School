@@ -31,10 +31,23 @@ export async function getEventsMetadata(): Promise<EventItem[]> {
 }
 
 export async function saveEventsMetadata(events: EventItem[]): Promise<void> {
-  await put(METADATA_PATH, JSON.stringify({ version: 1, events }), {
-    access: "private",
-    contentType: "application/json",
-    addRandomSuffix: false,
-    allowOverwrite: true,
-  });
+  await enqueueSave(() =>
+    put(METADATA_PATH, JSON.stringify({ version: 1, events }), {
+      access: "private",
+      contentType: "application/json",
+      addRandomSuffix: false,
+      allowOverwrite: true,
+    }).then(() => undefined)
+  );
+}
+
+// Serializes saves within this runtime so concurrent mutations cannot
+// interleave their Blob writes. (Cross-instance races still resolve as
+// last-writer-wins — a store with transactions would be needed for more.)
+let saveQueue: Promise<void> = Promise.resolve();
+
+function enqueueSave(task: () => Promise<void>): Promise<void> {
+  const run = saveQueue.then(task);
+  saveQueue = run.catch(() => undefined);
+  return run;
 }

@@ -49,7 +49,13 @@ export function SiteHeader() {
             <div className="header-info-row">
               <div className="header-info__item">
                 <span className="header-info__label">Phone</span>
-                <span className="header-info__value">9448432414, 9945163848</span>
+                <span className="header-info__value">
+                  <a href="tel:+919448432414">9448432414</a>
+                  {", "}
+                  <a href="tel:+917619162017">7619162017</a>
+                  {", "}
+                  <a href="tel:+919945163848">9945163848</a>
+                </span>
               </div>
               
               {/* Language Switcher integrated here */}

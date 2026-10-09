@@ -59,11 +59,18 @@ export default async function SectionDetailPage({ params }: PageProps) {
     notFound();
   }
 
+  // NaN-safe newest-first sort: unparseable dates sink to the end
+  const timeOf = (value: unknown): number => {
+    if (typeof value !== "string" || value === "") return Number.NEGATIVE_INFINITY;
+    const t = new Date(value).getTime();
+    return Number.isNaN(t) ? Number.NEGATIVE_INFINITY : t;
+  };
+
   let events: any[] = [];
   if (slug === "events") {
     try {
       const rawEvents = await getEventsMetadata();
-      events = [...rawEvents].sort((a, b) => new Date(b.eventDate).getTime() - new Date(a.eventDate).getTime());
+      events = [...rawEvents].sort((a, b) => timeOf(b.eventDate) - timeOf(a.eventDate));
     } catch (err) {
       console.error("Failed to load events for subpage", err);
     }
@@ -73,7 +80,7 @@ export default async function SectionDetailPage({ params }: PageProps) {
   if (slug.includes("circular")) {
     try {
       const rawCirculars = await getCircularsMetadata();
-      circulars = [...rawCirculars].sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
+      circulars = [...rawCirculars].sort((a, b) => timeOf(b.date) - timeOf(a.date));
     } catch (err) {
       console.error("Failed to load circulars for subpage", err);
     }
@@ -83,13 +90,18 @@ export default async function SectionDetailPage({ params }: PageProps) {
   if (slug.includes("news")) {
     try {
       const rawNews = await getNewsMetadata();
-      news = [...rawNews].sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
+      news = [...rawNews].sort((a, b) => timeOf(b.date) - timeOf(a.date));
     } catch (err) {
       console.error("Failed to load news for subpage", err);
     }
   }
 
   const sectionLinks = getSectionPages(section);
+  const firstSectionLink = sectionLinks[0];
+
+  if (!firstSectionLink) {
+    notFound();
+  }
 
   return (
     <div className="page-shell">
@@ -104,7 +116,7 @@ export default async function SectionDetailPage({ params }: PageProps) {
                   <div className="section-page__breadcrumbs" aria-label="Breadcrumb">
                     <Link href="/">Home</Link>
                     <span>/</span>
-                    <Link href={getSectionPath(sectionLinks[0].section, sectionLinks[0].slug)}>
+                    <Link href={getSectionPath(firstSectionLink.section, firstSectionLink.slug)}>
                       {group.label}
                     </Link>
                     <span>/</span>
@@ -280,6 +292,13 @@ export default async function SectionDetailPage({ params }: PageProps) {
                     </div>
                   )}
 
+                  {slug === "events" && events.length === 0 && (
+                    <div style={{ marginTop: "3rem" }}>
+                      <h2 style={{ fontSize: "1.75rem", color: "#6a1b29", borderBottom: "2px solid #6a1b29", paddingBottom: "0.5rem", marginBottom: "1.5rem" }}>Event Highlights</h2>
+                      <p>No events published yet. Please check back soon.</p>
+                    </div>
+                  )}
+
                   {slug.includes("circular") && circulars.length > 0 && (
                     <div style={{ marginTop: "3rem" }}>
                       <h2 style={{ fontSize: "1.75rem", color: "#6a1b29", borderBottom: "2px solid #6a1b29", paddingBottom: "0.5rem", marginBottom: "1.5rem" }}>Official Circulars & Notices</h2>
@@ -313,6 +332,13 @@ export default async function SectionDetailPage({ params }: PageProps) {
                     </div>
                   )}
 
+                  {slug.includes("circular") && circulars.length === 0 && (
+                    <div style={{ marginTop: "3rem" }}>
+                      <h2 style={{ fontSize: "1.75rem", color: "#6a1b29", borderBottom: "2px solid #6a1b29", paddingBottom: "0.5rem", marginBottom: "1.5rem" }}>Official Circulars & Notices</h2>
+                      <p>No circulars published yet. Please check back soon.</p>
+                    </div>
+                  )}
+
                   {slug.includes("news") && news.length > 0 && (
                     <div style={{ marginTop: "3rem" }}>
                       <h2 style={{ fontSize: "1.75rem", color: "#6a1b29", borderBottom: "2px solid #6a1b29", paddingBottom: "0.5rem", marginBottom: "1.5rem" }}>Latest News & Announcements</h2>
@@ -340,6 +366,13 @@ export default async function SectionDetailPage({ params }: PageProps) {
                           </article>
                         ))}
                       </div>
+                    </div>
+                  )}
+
+                  {slug.includes("news") && news.length === 0 && (
+                    <div style={{ marginTop: "3rem" }}>
+                      <h2 style={{ fontSize: "1.75rem", color: "#6a1b29", borderBottom: "2px solid #6a1b29", paddingBottom: "0.5rem", marginBottom: "1.5rem" }}>Latest News & Announcements</h2>
+                      <p>No news published yet. Please check back soon.</p>
                     </div>
                   )}
                 </div>

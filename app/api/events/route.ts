@@ -1,54 +1,77 @@
 import { put, del } from "@vercel/blob";
 import { NextResponse } from "next/server";
 import { getEventsMetadata, saveEventsMetadata, EventItem } from "@/lib/events-metadata";
+import {
+  checkText,
+  isValidDateString,
+  isValidId,
+  jsonError,
+  MAX_LIST_ITEMS,
+  newId,
+  parseJsonBody,
+  requireAdmin,
+  SAFE_IMAGE_TYPES,
+  sortByDateDesc,
+  validateUpload,
+} from "@/lib/api-security";
 
 export const dynamic = "force-dynamic";
+
+const MAX_BYTES = 2 * 1024 * 1024;
+const IMAGE_EXTS = [".gif", ".jpg", ".jpeg", ".png", ".webp"];
+const MAX_DATE = new Date("2026-12-31").getTime();
 
 export async function GET() {
   try {
     const events = await getEventsMetadata();
     // Sort events by eventDate descending
-    const sorted = [...events].sort((a, b) => new Date(b.eventDate).getTime() - new Date(a.eventDate).getTime());
+    const sorted = sortByDateDesc(events, (item) => item.eventDate).slice(0, MAX_LIST_ITEMS);
     return NextResponse.json({ events: sorted });
-  } catch (error: any) {
-    return NextResponse.json({ error: error.message || "Failed to list events" }, { status: 500 });
+  } catch (error) {
+    console.error("Failed to list events:", error);
+    return NextResponse.json({ error: "Failed to list events." }, { status: 500 });
   }
 }
 
 export async function POST(request: Request) {
+  const forbidden = requireAdmin(request);
+  if (forbidden) return forbidden;
+
   try {
     const formData = await request.formData();
     const title = (formData.get("title") as string) || "";
     const eventDate = (formData.get("eventDate") as string) || new Date().toISOString().split("T")[0];
     const file = formData.get("file") as File | null;
 
-    if (eventDate && new Date(eventDate).getTime() > new Date("2026-12-31").getTime()) {
-      return NextResponse.json({ error: "Event date cannot be after 31st December 2026" }, { status: 400 });
+    if (!isValidDateString(eventDate)) {
+      return jsonError("Event date is invalid.", 400);
+    }
+    if (new Date(eventDate).getTime() > MAX_DATE) {
+      return jsonError("Event date cannot be after 31st December 2026.", 400);
     }
 
-    if (!title || !file) {
-      return NextResponse.json({ error: "Caption and Event Image are required" }, { status: 400 });
+    const titleCheck = checkText(title, "Caption", 300, true);
+    if (!titleCheck.ok) return titleCheck.response;
+
+    if (!file) {
+      return jsonError("Caption and Event Image are required.", 400);
     }
 
-    if (!file.type.startsWith("image/")) {
-      return NextResponse.json({ error: "Only image files are allowed." }, { status: 400 });
-    }
+    // Raster images only — SVG/HTML uploads are rejected (stored-XSS risk).
+    const upload = validateUpload(file, SAFE_IMAGE_TYPES, IMAGE_EXTS, MAX_BYTES, "image");
+    if (!upload.ok) return upload.response;
 
-    if (file.size > 2 * 1024 * 1024) {
-      return NextResponse.json({ error: "File size must not exceed 2 MB." }, { status: 400 });
-    }
-
-    const safeName = `events/img/${Date.now()}-${file.name.replace(/[^a-zA-Z0-9._-]/g, "_")}`;
+    const safeName = `events/img/${newId("img")}-${file.name.replace(/[^a-zA-Z0-9._-]/g, "_")}`;
     const blob = await put(safeName, file, {
       access: "private",
-      contentType: file.type,
+      contentType: upload.contentType,
       addRandomSuffix: false,
     });
 
     const eventsList = await getEventsMetadata();
     const newItem: EventItem = {
-      id: `event-${Date.now()}`,
-      title: title.trim(),
+      id: newId("event"),
+      title: titleCheck.value,
       eventDate,
       imageUrl: blob.url,
       createdAt: new Date().toISOString(),
@@ -58,16 +81,22 @@ export async function POST(request: Request) {
     await saveEventsMetadata(eventsList);
 
     return NextResponse.json({ success: true, item: newItem });
-  } catch (error: any) {
-    return NextResponse.json({ error: error.message || "Failed to save event" }, { status: 500 });
+  } catch (error) {
+    console.error("Failed to save event:", error);
+    return NextResponse.json({ error: "Failed to save event." }, { status: 500 });
   }
 }
 
 export async function DELETE(request: Request) {
+  const forbidden = requireAdmin(request);
+  if (forbidden) return forbidden;
+
   try {
-    const { id } = await request.json();
-    if (!id) {
-      return NextResponse.json({ error: "Missing id" }, { status: 400 });
+    const parsed = await parseJsonBody(request);
+    if (!parsed.ok) return parsed.response;
+    const { id } = parsed.body as { id?: unknown };
+    if (!isValidId(id)) {
+      return jsonError("Missing id.", 400);
     }
 
     const eventsList = await getEventsMetadata();
@@ -87,7 +116,8 @@ export async function DELETE(request: Request) {
     await saveEventsMetadata(filtered);
 
     return NextResponse.json({ success: true });
-  } catch (error: any) {
-    return NextResponse.json({ error: error.message || "Failed to delete event" }, { status: 500 });
+  } catch (error) {
+    console.error("Failed to delete event:", error);
+    return NextResponse.json({ error: "Failed to delete event." }, { status: 500 });
   }
 }

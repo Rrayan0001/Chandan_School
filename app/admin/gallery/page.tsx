@@ -48,6 +48,20 @@ export default function AdminGalleryPage() {
   const [category, setCategory] = useState(GALLERY_CATEGORIES[0]);
   const [preview, setPreview] = useState<string | null>(null);
 
+  // Revoke object URLs when replaced or on unmount (avoids blob URL leaks)
+  const prevPreviewRef = useRef<string | null>(null);
+  useEffect(() => {
+    if (prevPreviewRef.current && prevPreviewRef.current !== preview) {
+      URL.revokeObjectURL(prevPreviewRef.current);
+    }
+    prevPreviewRef.current = preview;
+  }, [preview]);
+  useEffect(() => {
+    return () => {
+      if (prevPreviewRef.current) URL.revokeObjectURL(prevPreviewRef.current);
+    };
+  }, []);
+
   // Edit metadata state
   const [editingBlob, setEditingBlob] = useState<BlobImage | null>(null);
   const [editTitle, setEditTitle] = useState("");
@@ -307,7 +321,7 @@ export default function AdminGalleryPage() {
                       <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5"><rect x="3" y="3" width="18" height="18" rx="3"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
                     </div>
                     <p className="admin-gallery-dropzone-label">Drag &amp; drop an image here</p>
-                    <p className="admin-gallery-dropzone-sub">or <span>click to browse</span> · JPG, PNG, WebP · Max 10 MB</p>
+                    <p className="admin-gallery-dropzone-sub">or <span>click to browse</span> · JPG, PNG, WebP · Max 2 MB</p>
                   </div>
                 )}
               </div>

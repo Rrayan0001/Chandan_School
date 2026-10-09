@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 
 interface WelcomeAnimationProps {
   onFinished: () => void;
@@ -10,7 +10,16 @@ interface WelcomeAnimationProps {
 export function WelcomeAnimation({ onFinished }: WelcomeAnimationProps) {
   const [phase, setPhase] = useState<"enter" | "hold" | "exit">("enter");
 
+  const finish = useCallback(() => {
+    onFinished();
+  }, [onFinished]);
+
   useEffect(() => {
+    // Reduced motion: skip the splash entirely
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      finish();
+      return;
+    }
     // Phase 1: Logo enters (0 – 800ms handled by CSS)
     // Phase 2: Hold for ~1.2s
     const holdTimer = setTimeout(() => {
@@ -18,27 +27,29 @@ export function WelcomeAnimation({ onFinished }: WelcomeAnimationProps) {
     }, 1200);
 
     return () => clearTimeout(holdTimer);
-  }, []);
+  }, [finish]);
 
   useEffect(() => {
     if (phase !== "exit") return;
     // After curtain exit animation (~900ms), signal parent
     const doneTimer = setTimeout(() => {
-      onFinished();
+      finish();
     }, 900);
     return () => clearTimeout(doneTimer);
-  }, [phase, onFinished]);
+  }, [phase, finish]);
 
   return (
     <div
       className={`wa-root wa-root--${phase}`}
-      aria-hidden="true"
+      role="dialog"
+      aria-modal="true"
+      aria-label="Welcome to School Chandan"
     >
       {/* Curtain panels */}
-      <div className="wa-curtain wa-curtain--left">
+      <div className="wa-curtain wa-curtain--left" aria-hidden="true">
         <div className="wa-curtain-bg" />
       </div>
-      <div className="wa-curtain wa-curtain--right">
+      <div className="wa-curtain wa-curtain--right" aria-hidden="true">
         <div className="wa-curtain-bg" />
       </div>
 
@@ -61,10 +72,14 @@ export function WelcomeAnimation({ onFinished }: WelcomeAnimationProps) {
             <span className="wa-name-green">CHANDAN</span>
           </h1>
           <p className="wa-tagline">Excellence Beyond Education</p>
-          <p className="wa-sub">Laxmeshwar · Est. 1994</p>
+          <p className="wa-sub">Laxmeshwar · Est. 2003</p>
         </div>
 
-        <div className="wa-divider" />
+        <div className="wa-divider" aria-hidden="true" />
+
+        <button type="button" className="wa-skip" onClick={finish}>
+          Skip
+        </button>
       </div>
     </div>
   );

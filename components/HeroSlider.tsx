@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import type { CSSProperties } from "react";
 
 import type { HeroSlide } from "@/lib/site-data";
@@ -43,16 +43,15 @@ export function HeroSlider({
   const [showAdmissionTag, setShowAdmissionTag] = useState(true);
   const [showResultTag, setShowResultTag] = useState(false);
   const [resultDate, setResultDate] = useState("");
+  const [isPaused, setIsPaused] = useState(false);
+  const [motionOK, setMotionOK] = useState(true);
+  const viewportRef = useRef<HTMLDivElement>(null);
 
   const latestNewsItem = latestNews && latestNews[0];
   const latestCircularItem = latestCirculars && latestCirculars[0];
   const latestEventItem = latestEvents && latestEvents[0];
 
-  if (slides.length === 0) {
-    return null;
-  }
-
-  // Load state from localStorage and listen for admin changes
+  // Load state from localStorage and listen for admin changes (client-only)
   useEffect(() => {
     const read = () => {
       const storedAdmit = localStorage.getItem(ADMISSION_KEY);
@@ -69,13 +68,26 @@ export function HeroSlider({
     return () => window.removeEventListener("storage", read);
   }, []);
 
+  // Respect reduced-motion preference for autoplay
   useEffect(() => {
+    const mq = window.matchMedia("(prefers-reduced-motion: reduce)");
+    setMotionOK(!mq.matches);
+    const onChange = (e: MediaQueryListEvent) => setMotionOK(!e.matches);
+    mq.addEventListener("change", onChange);
+    return () => mq.removeEventListener("change", onChange);
+  }, []);
+
+  // Autoplay: paused on hover/focus, hidden tab, or reduced motion
+  useEffect(() => {
+    if (slides.length === 0 || isPaused || !motionOK || document.hidden) {
+      return;
+    }
     const intervalId = window.setInterval(() => {
       setActiveIndex((currentIndex) => (currentIndex + 1) % slides.length);
     }, 5500);
 
     return () => window.clearInterval(intervalId);
-  }, [slides.length]);
+  }, [slides.length, isPaused, motionOK]);
 
   useEffect(() => {
     const header = document.querySelector<HTMLElement>(".site-header");
@@ -110,15 +122,31 @@ export function HeroSlider({
     };
   }, []);
 
-  const previousSlide = () => {
+  const previousSlide = useCallback(() => {
     setActiveIndex((currentIndex) =>
       currentIndex === 0 ? slides.length - 1 : currentIndex - 1
     );
-  };
+  }, [slides.length]);
 
-  const nextSlide = () => {
+  const nextSlide = useCallback(() => {
     setActiveIndex((currentIndex) => (currentIndex + 1) % slides.length);
-  };
+  }, [slides.length]);
+
+  // Keyboard arrows on the viewport
+  useEffect(() => {
+    const node = viewportRef.current;
+    if (!node) return;
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "ArrowLeft") previousSlide();
+      if (e.key === "ArrowRight") nextSlide();
+    };
+    node.addEventListener("keydown", onKey);
+    return () => node.removeEventListener("keydown", onKey);
+  }, [previousSlide, nextSlide]);
+
+  if (slides.length === 0) {
+    return null;
+  }
 
   const heroStyle = {
     "--hero-min-height": heroMinHeight ? `${heroMinHeight}px` : undefined
@@ -157,46 +185,64 @@ export function HeroSlider({
         </div>
       )}
 
-      <div className="hero-slider__viewport">
-        {slides.map((slide, index) => (
-          <article
-            aria-hidden={index !== activeIndex}
-            className={`hero-slide${index === activeIndex ? " is-active" : ""}`}
-            key={`${slide.title}-${slide.subtitle}`}
-          >
-            <Image
-              alt={slide.alt}
-              fill
-              priority={index <= 1}
-              quality={90}
-              sizes="100vw"
-              src={slide.image}
-              style={{ objectPosition: slide.position ?? "center center" }}
-            />
-            <div className="hero-slide__wash" />
+      <div
+        className="hero-slider__viewport"
+        ref={viewportRef}
+        tabIndex={0}
+        aria-roledescription="carousel"
+        aria-label="School highlights"
+        onMouseEnter={() => setIsPaused(true)}
+        onMouseLeave={() => setIsPaused(false)}
+        onFocus={() => setIsPaused(true)}
+        onBlur={() => setIsPaused(false)}
+      >
+        {slides.map((slide, index) => {
+          const isActive = index === activeIndex;
+          return (
+            <article
+              aria-hidden={!isActive}
+              aria-label={`Slide ${index + 1} of ${slides.length}`}
+              className={`hero-slide${isActive ? " is-active" : ""}`}
+              id={`hero-slide-${index}`}
+              inert={!isActive}
+              key={`${index}-${slide.title}-${slide.subtitle}`}
+              role="group"
+              aria-roledescription="slide"
+            >
+              <Image
+                alt={slide.alt}
+                fill
+                priority={index === 0}
+                quality={90}
+                sizes="100vw"
+                src={slide.image}
+                style={{ objectPosition: slide.position ?? "center center" }}
+              />
+              <div className="hero-slide__wash" aria-hidden="true" />
 
-            <div className="container hero-slide__content">
-              <div className="hero-slide__panel">
-                <div className="hero-slide__tags">
-                  {showAdmissionTag && (
-                    <Link href="/about-us/admissions" className="hero-slide__tag">
-                      <span className="hero-slide__tag-dot" />
-                      Admission Open
-                    </Link>
-                  )}
-                  {showResultTag && (
-                    <div className="hero-slide__tag hero-slide__tag--result">
-                      <span className="hero-slide__tag-dot hero-slide__tag-dot--result" />
-                      Result Day: {resultDate ? formatDateString(resultDate) : ""}
-                    </div>
-                  )}
+              <div className="container hero-slide__content">
+                <div className="hero-slide__panel">
+                  <div className="hero-slide__tags">
+                    {showAdmissionTag && isActive && (
+                      <Link href="/about-us/admissions" className="hero-slide__tag">
+                        <span className="hero-slide__tag-dot" aria-hidden="true" />
+                        Admission Open
+                      </Link>
+                    )}
+                    {showResultTag && isActive && (
+                      <div className="hero-slide__tag hero-slide__tag--result">
+                        <span className="hero-slide__tag-dot hero-slide__tag-dot--result" aria-hidden="true" />
+                        Result Day: {resultDate ? formatDateString(resultDate) : ""}
+                      </div>
+                    )}
+                  </div>
+                  <h2>{slide.title}</h2>
+                  <p className="hero-slide__subtitle">{slide.subtitle}</p>
                 </div>
-                <h2>{slide.title}</h2>
-                <p className="hero-slide__subtitle">{slide.subtitle}</p>
               </div>
-            </div>
-          </article>
-        ))}
+            </article>
+          );
+        })}
 
         <button
           aria-label="Previous slide"
@@ -219,12 +265,16 @@ export function HeroSlider({
         <div className="hero-slider__dots" role="tablist" aria-label="Hero slides">
           {slides.map((slide, index) => (
             <button
+              aria-controls={`hero-slide-${index}`}
               aria-label={`Show slide ${index + 1}: ${slide.title}`}
+              aria-selected={index === activeIndex}
               className={`hero-slider__dot${
                 index === activeIndex ? " is-active" : ""
               }`}
-              key={slide.title}
+              key={`dot-${index}-${slide.title}`}
               onClick={() => setActiveIndex(index)}
+              role="tab"
+              tabIndex={index === activeIndex ? 0 : -1}
               type="button"
             />
           ))}

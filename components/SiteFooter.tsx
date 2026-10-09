@@ -1,5 +1,6 @@
 import Link from "next/link";
 
+import { contactDetails } from "@/lib/site-data";
 import { getSectionPath } from "@/lib/subpage-data";
 import { SocialLinksList } from "./SocialLinks";
 
@@ -11,6 +12,25 @@ export function SiteFooter() {
           <h3>School Information</h3>
           <p className="site-footer__title">School Chandan</p>
           <p>Established with a focus on disciplined and value-based education.</p>
+          <ul className="footer-list footer-list--contact">
+            <li>{contactDetails.address}</li>
+            <li>
+              <a href={`tel:+91${contactDetails.phonePrimary}`}>
+                {contactDetails.phonePrimary}
+              </a>
+              {", "}
+              <a href={`tel:+91${contactDetails.phoneSecondary}`}>
+                {contactDetails.phoneSecondary}
+              </a>
+              {", "}
+              <a href={`tel:+91${contactDetails.phoneTertiary}`}>
+                {contactDetails.phoneTertiary}
+              </a>
+            </li>
+            <li>
+              <a href={`mailto:${contactDetails.email}`}>{contactDetails.email}</a>
+            </li>
+          </ul>
         </div>
 
         <div>
@@ -48,7 +68,7 @@ export function SiteFooter() {
               <Link href={getSectionPath("student-corner", "events")}>Events</Link>
             </li>
             <li>
-              <Link href={getSectionPath("features", "sports-ground")}>Sports</Link>
+              <Link href={getSectionPath("features", "unique-programs")}>Unique Programs</Link>
             </li>
             <li>
               <Link href={getSectionPath("activities", "co-curricular-activities")}>
@@ -69,7 +89,7 @@ export function SiteFooter() {
 
       <div className="site-footer__bottom">
         <div className="container site-footer__bottom-inner">
-          <p>© 2026 School Chandan. All Rights Reserved</p>
+          <p>© {new Date().getFullYear()} School Chandan. All Rights Reserved</p>
 
           <SocialLinksList className="social-links" />
         </div>

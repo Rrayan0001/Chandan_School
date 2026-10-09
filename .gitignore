@@ -12,3 +12,6 @@ tsconfig.tsbuildinfo
 .env
 .env.local
 .env*.local
+
+# Raw source assets
+Chandanschool/

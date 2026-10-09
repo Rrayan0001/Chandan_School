@@ -1,21 +1,54 @@
 import { put, del } from "@vercel/blob";
 import { NextResponse } from "next/server";
 import { getCircularsMetadata, saveCircularsMetadata, CircularItem } from "@/lib/circulars-metadata";
+import {
+  checkText,
+  fileStartsWith,
+  isValidDateString,
+  isValidId,
+  jsonError,
+  MAX_LIST_ITEMS,
+  newId,
+  parseJsonBody,
+  requireAdmin,
+  sortByDateDesc,
+  validateUpload,
+} from "@/lib/api-security";
 
 export const dynamic = "force-dynamic";
+
+const MAX_BYTES = 15 * 1024 * 1024;
+const PDF_TYPES = new Set(["application/pdf"]);
+const PDF_EXTS = [".pdf"];
+const MAX_DATE = new Date("2026-12-31").getTime();
+
+function dateFieldError(value: string, field: string): NextResponse | null {
+  if (value === "") return null;
+  if (!isValidDateString(value)) {
+    return jsonError(`${field} is invalid.`, 400);
+  }
+  if (new Date(value).getTime() > MAX_DATE) {
+    return jsonError("Circular dates cannot be after 31st December 2026.", 400);
+  }
+  return null;
+}
 
 export async function GET() {
   try {
     const circulars = await getCircularsMetadata();
     // Sort circulars by date descending
-    const sorted = [...circulars].sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
+    const sorted = sortByDateDesc(circulars, (item) => item.date).slice(0, MAX_LIST_ITEMS);
     return NextResponse.json({ circulars: sorted });
-  } catch (error: any) {
-    return NextResponse.json({ error: error.message || "Failed to list circulars" }, { status: 500 });
+  } catch (error) {
+    console.error("Failed to list circulars:", error);
+    return NextResponse.json({ error: "Failed to list circulars." }, { status: 500 });
   }
 }
 
 export async function POST(request: Request) {
+  const forbidden = requireAdmin(request);
+  if (forbidden) return forbidden;
+
   try {
     const formData = await request.formData();
     const title = (formData.get("title") as string) || "";
@@ -23,26 +56,30 @@ export async function POST(request: Request) {
     const toDate = (formData.get("toDate") as string) || "";
     const date = (formData.get("date") as string) || new Date().toISOString().split("T")[0];
     const file = formData.get("file") as File | null;
-    if (
-      (date && new Date(date).getTime() > new Date("2026-12-31").getTime()) ||
-      (fromDate && new Date(fromDate).getTime() > new Date("2026-12-31").getTime()) ||
-      (toDate && new Date(toDate).getTime() > new Date("2026-12-31").getTime())
-    ) {
-      return NextResponse.json({ error: "Circular dates cannot be after 31st December 2026" }, { status: 400 });
-    }
-    if (!title || !file) {
-      return NextResponse.json({ error: "Title and PDF file are required" }, { status: 400 });
+
+    for (const [value, field] of [
+      [date, "Date"],
+      [fromDate, "From date"],
+      [toDate, "To date"],
+    ] as const) {
+      const err = dateFieldError(value, field);
+      if (err) return err;
     }
 
-    if (!file.type.includes("pdf") && !file.name.toLowerCase().endsWith(".pdf")) {
-      return NextResponse.json({ error: "Only PDF files are allowed for circulars." }, { status: 400 });
+    const titleCheck = checkText(title, "Title", 300, true);
+    if (!titleCheck.ok) return titleCheck.response;
+    if (!file) {
+      return jsonError("Title and PDF file are required.", 400);
     }
 
-    if (file.size > 15 * 1024 * 1024) {
-      return NextResponse.json({ error: "File size must be under 15 MB." }, { status: 400 });
+    // PDF only: declared type + extension + magic bytes.
+    const upload = validateUpload(file, PDF_TYPES, PDF_EXTS, MAX_BYTES, "PDF");
+    if (!upload.ok) return upload.response;
+    if (!(await fileStartsWith(file, "%PDF-"))) {
+      return jsonError("Only PDF files are allowed for circulars.", 400);
     }
 
-    const safeName = `circulars/pdf/${Date.now()}-${file.name.replace(/[^a-zA-Z0-9._-]/g, "_")}`;
+    const safeName = `circulars/pdf/${newId("pdf")}-${file.name.replace(/[^a-zA-Z0-9._-]/g, "_")}`;
     const blob = await put(safeName, file, {
       access: "private",
       contentType: "application/pdf",
@@ -51,8 +88,8 @@ export async function POST(request: Request) {
 
     const circularsList = await getCircularsMetadata();
     const newItem: CircularItem = {
-      id: `circular-${Date.now()}`,
-      title: title.trim(),
+      id: newId("circular"),
+      title: titleCheck.value,
       fromDate,
       toDate,
       pdfUrl: blob.url,
@@ -64,16 +101,22 @@ export async function POST(request: Request) {
     await saveCircularsMetadata(circularsList);
 
     return NextResponse.json({ success: true, item: newItem });
-  } catch (error: any) {
-    return NextResponse.json({ error: error.message || "Failed to save circular" }, { status: 500 });
+  } catch (error) {
+    console.error("Failed to save circular:", error);
+    return NextResponse.json({ error: "Failed to save circular." }, { status: 500 });
   }
 }
 
 export async function DELETE(request: Request) {
+  const forbidden = requireAdmin(request);
+  if (forbidden) return forbidden;
+
   try {
-    const { id } = await request.json();
-    if (!id) {
-      return NextResponse.json({ error: "Missing id" }, { status: 400 });
+    const parsed = await parseJsonBody(request);
+    if (!parsed.ok) return parsed.response;
+    const { id } = parsed.body as { id?: unknown };
+    if (!isValidId(id)) {
+      return jsonError("Missing id.", 400);
     }
 
     const circularsList = await getCircularsMetadata();
@@ -93,7 +136,8 @@ export async function DELETE(request: Request) {
     await saveCircularsMetadata(filtered);
 
     return NextResponse.json({ success: true });
-  } catch (error: any) {
-    return NextResponse.json({ error: error.message || "Failed to delete circular" }, { status: 500 });
+  } catch (error) {
+    console.error("Failed to delete circular:", error);
+    return NextResponse.json({ error: "Failed to delete circular." }, { status: 500 });
   }
 }

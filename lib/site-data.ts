@@ -91,10 +91,9 @@ export const navigation: NavItem[] = [
     href: getSectionHref("activities"),
     children: buildNavigationChildren("activities")
   },
-  { label: "Sports", href: getSectionPath("features", "sports-ground") },
+  { label: "Sports", href: getSectionPath("features", "unique-programs") },
   { label: "Gallery", href: "/gallery" },
   { label: "Mandatory Disclosure", href: "/mandatory-public-disclosure" },
-  { label: "Resources", href: "/#resources" },
   { label: "Contact Us", href: "/#contact" }
 ];
 
@@ -164,25 +163,6 @@ export const heroSlides: HeroSlide[] = [
   }
 ];
 
-export const videoPreviews: MediaCard[] = [
-  {
-    title: "School Campus Tour",
-    image: "/assets/hero/campus-front.jpg",
-    alt: "Campus tour preview",
-    description:
-      "A guided walk through the main school block, classrooms, learning spaces, and student facilities.",
-    href: "#contact"
-  },
-  {
-    title: "School Activities & Events",
-    image: "/assets/sections/annual-day.jpg",
-    alt: "School activities preview",
-    description:
-      "A documentary-style preview area for showcasing assemblies, cultural events, celebrations, and student life.",
-    href: "#events"
-  }
-];
-
 export const informationCards: MediaCard[] = [
   {
     title: "About School Chandan",
@@ -220,12 +200,6 @@ export const academicResources: FeatureCard[] = [
     title: "Syllabus & Holidays",
     description:
       "Student-friendly access to academic planning, school routines, holiday lists, and handbook information."
-  },
-  {
-    code: "TC",
-    title: "Certificates & Disclosures",
-    description:
-      "Transfer certificate guidance, school disclosure references, and key administrative information in one place."
   }
 ];
 
@@ -435,6 +409,38 @@ export const galleryPageImages: GalleryImage[] = [
     image: "/assets/gallery/School-chandan-Prospectus-proof4.jpg",
     alt: "Exposure and campus visits collage",
     position: "center 52%"
+  }
+];
+
+export type YoutubeVideo = {
+  id: string;
+  title: string;
+  description: string;
+};
+
+export const homeVideos: YoutubeVideo[] = [
+  {
+    id: "DVmeB-Hi-34",
+    title: "School Activities & Events",
+    description:
+      "Showcasing assemblies, cultural events, celebrations, and vibrant student life."
+  },
+  {
+    id: "e6VkcwPset4",
+    title: "Honorable Chief Minister Visit",
+    description:
+      "An inspiring visit and interaction with the Honorable Chief Minister Shri Siddaramaiah."
+  },
+  {
+    id: "AgKcCv7JnV4",
+    title: "School Exhibition",
+    description:
+      "Highlights from the science exhibition and expert reviews."
+  },
+  {
+    id: "V2OehYIJI4E",
+    title: "T. Ishwar Interaction",
+    description: "An inspiring interaction and address by T. Ishwar."
   }
 ];
 

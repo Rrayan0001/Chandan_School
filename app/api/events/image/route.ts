@@ -1,37 +1,42 @@
 import { get } from "@vercel/blob";
 import { NextResponse } from "next/server";
+import {
+  capStream,
+  jsonError,
+  parseAllowedBlobUrl,
+  proxyTimeout,
+  safeProxyContentType,
+} from "@/lib/api-security";
 
 export async function GET(request: Request) {
   const { searchParams } = new URL(request.url);
-  const url = searchParams.get("url");
-
-  if (!url || typeof url !== "string") {
-    return NextResponse.json({ error: "Missing url parameter" }, { status: 400 });
-  }
-
-  if (!url.includes(".blob.vercel-storage.com")) {
-    return NextResponse.json({ error: "Invalid URL domain" }, { status: 400 });
-  }
+  const allowed = parseAllowedBlobUrl(searchParams.get("url"));
+  if (!allowed.ok) return allowed.response;
 
   try {
-    const result = await get(url, {
-      access: "private",
-    });
+    const result = await proxyTimeout(get(allowed.url, { access: "private" }));
 
     if (!result) {
-      return NextResponse.json({ error: "Image not found" }, { status: 404 });
+      return jsonError("Image not found.", 404);
     }
 
-    const contentType = result.blob.contentType || "image/jpeg";
+    const { contentType, forceDownload } = safeProxyContentType(
+      result.blob.contentType,
+      "application/octet-stream"
+    );
 
-    return new Response(result.stream, {
-      headers: {
-        "Content-Type": contentType,
-        "Cache-Control": "public, max-age=31536000, immutable",
-      },
-    });
-  } catch (error: any) {
+    const headers: Record<string, string> = {
+      "Content-Type": contentType,
+      "Cache-Control": "public, max-age=31536000, immutable",
+      "X-Content-Type-Options": "nosniff",
+    };
+    if (forceDownload) {
+      headers["Content-Disposition"] = "attachment";
+    }
+
+    return new Response(capStream(result.stream), { headers });
+  } catch (error) {
     console.error("Error proxying private event image:", error);
-    return NextResponse.json({ error: error.message || "Error proxying private event image" }, { status: 500 });
+    return jsonError("Failed to load image.", 500);
   }
 }

@@ -12,10 +12,16 @@ type YoutubeItem = {
 export function YoutubeCarousel({ items }: { items: YoutubeItem[] }) {
   const [active, setActive] = useState(0);
 
+  if (!items || items.length === 0) {
+    return null;
+  }
+
+  const safeActive = active % items.length;
   const prev = () => setActive((a) => (a - 1 + items.length) % items.length);
   const next = () => setActive((a) => (a + 1) % items.length);
 
-  const current = items[active]!;
+  const current = items[safeActive]!;
+
 
   return (
     <div style={{ width: "100%", maxWidth: "800px", margin: "2rem auto 0" }}>
@@ -23,8 +29,9 @@ export function YoutubeCarousel({ items }: { items: YoutubeItem[] }) {
       <div style={{ position: "relative", width: "100%", paddingBottom: "56.25%", borderRadius: "1rem", overflow: "hidden", boxShadow: "0 8px 32px rgba(0,0,0,0.13)" }}>
         <iframe
           key={current.id}
-          src={`https://www.youtube.com/embed/${current.id}?rel=0&modestbranding=1`}
-          title={current.title}
+          src={`https://www.youtube-nocookie.com/embed/${current.id}?rel=0&modestbranding=1`}
+          title={`YouTube video: ${current.title}`}
+          loading="lazy"
           allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
           allowFullScreen
           style={{ position: "absolute", inset: 0, width: "100%", height: "100%", border: "none" }}
